@@ -1,32 +1,56 @@
 # Pitch99
 
-**You have 99 problems. But this pitch ain't one.**
+### You have 99 problems. But this p*tch ain't one.
 
-Pitch99 is an AI-powered pitch generator that transforms your product into a polished, 99-second pitch presentation -- complete with market research, animated HTML slides, talking points, and Q&A prep.
+> AI-powered pitch generator that transforms your product into a polished 99-second pitch presentation -- complete with market research, animated slides, talking points, and Q&A prep.
 
-**Live:** [pitch99.vercel.app](https://pitch99.vercel.app)
-**Source:** [github.com/adambkovacs/pitch99](https://github.com/adambkovacs/pitch99)
+[![Live](https://img.shields.io/badge/Live-pitch99.help-orange?style=for-the-badge)](https://pitch99.help)
+[![GitHub](https://img.shields.io/badge/GitHub-adambkovacs%2Fpitch99-black?style=for-the-badge&logo=github)](https://github.com/adambkovacs/pitch99)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
 
-## What is Pitch99?
+![Pitch99 Hero](docs/screenshots/hero.png)
 
-Pitch99 takes the painful, 40+ hour process of creating a pitch deck and compresses it into minutes. You bring your product. Pitch99 brings the research, the story, the slides, and the confidence.
+---
 
-Built live at **Founders Live Build: Seattle** (March 26, 2026) in 2 hours.
+## The Problem
 
-The system ingests your product from multiple sources (GitHub, website, LinkedIn, docs), researches your market using live web search, and generates beautiful animated HTML slide presentations calibrated to exactly 99 seconds -- with talking points and timing cues for each slide.
+Founders spend **40+ hours** building pitch decks. They pitch **40 times** on average before closing a round. Investors spend just **2 minutes and 24 seconds** reviewing each deck. And **97% of pitches fail** to get funded.
+
+Different audiences need different pitches -- investors, customers, partners. Every. Single. Time.
+
+## The Solution
+
+Pitch99 takes the painful, 40+ hour process and compresses it into **minutes**. You bring your product. Pitch99 brings the research, the story, the slides, and the confidence.
+
+**How it works:**
+
+1. **Intake** -- Drop your GitHub repo, website URL, LinkedIn, or upload docs
+2. **Enrichment** -- AI scrapes and analyzes your product, founder profile, and branding
+3. **Research** -- Live market research: TAM/SAM/SOM, competitors, ICP, industry trends
+4. **Generation** -- 5 animated HTML slides with talking points, timing cues, and Q&A prep
+
+---
+
+## Built Live at Founders Live
+
+This project was built from scratch in **2 hours** at [Founders Live Build: Seattle](https://www.founderslive.com) on March 26, 2026. Five builders had 2 hours to vibecode an app using AI tools, then pitch it in 99 seconds to the audience.
+
+**Builder:** [Adam Kovacs](https://www.linkedin.com/in/adambkovacs/) -- Co-founder, AI Enablement Academy
 
 ---
 
 ## Features
 
-- **Multi-source intake** -- GitHub repo URL, product website, LinkedIn profile, file uploads (PDF, DOCX, PPTX), or free-text description
-- **AI-powered market research** -- TAM/SAM/SOM analysis, competitor mapping, industry trends, and ICP definition via Perplexity Sonar Pro Search
-- **Animated HTML slides** -- 5 slides optimized for 99-second delivery, animated with GSAP and Framer Motion
-- **Talking points and timing** -- Per-slide scripts with timing cues so you nail the delivery
-- **Q&A preparation** -- Anticipated audience questions with suggested answers
-- **Shareable via URL** -- Each generated pitch gets a unique link you can share with anyone
+| Feature | Description |
+|---------|-------------|
+| **Multi-source intake** | GitHub repo, product website, LinkedIn profile, file uploads (PDF, DOCX, PPTX) |
+| **AI market research** | TAM/SAM/SOM analysis, competitor mapping, ICP definition via Perplexity Sonar Pro |
+| **Animated HTML slides** | 5 slides optimized for 99-second delivery, animated with GSAP + Framer Motion |
+| **Talking points** | Per-slide scripts with timing cues for confident delivery |
+| **Q&A preparation** | Anticipated audience questions with suggested answers |
+| **Shareable links** | Each generated pitch gets a unique URL to share with anyone |
 
 ---
 
@@ -34,24 +58,13 @@ The system ingests your product from multiple sources (GitHub, website, LinkedIn
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
-| Frontend | Next.js 16, React 19 | App framework |
-| Styling | Tailwind CSS 4, Framer Motion, GSAP | Design and animations |
-| Database | Convex | Real-time backend |
-| AI (Agentic) | Grok 4.20 Multi-Agent via OpenRouter | Narrative and slide generation |
-| AI (Research) | Perplexity Sonar Pro Search via OpenRouter | Market research, TAM/SAM/SOM |
+| Framework | Next.js 16, React 19 | Full-stack app |
+| Styling | Tailwind CSS 4, Framer Motion, GSAP | Design + animations |
+| Database | Convex | Real-time backend-as-a-service |
+| AI -- Agentic | Grok 4.20 Multi-Agent (via OpenRouter) | Narrative + slide generation |
+| AI -- Research | Perplexity Sonar Pro Search (via OpenRouter) | Market research |
 | Enrichment | Apify | LinkedIn profile scraping |
-| Deployment | Vercel | Hosting and CI/CD |
-
----
-
-## Architecture
-
-Pitch99 runs a 4-stage agentic pipeline, with each stage orchestrating specialized AI agents behind the scenes.
-
-1. **Intake** -- User provides product info through a multi-step form: URLs, file uploads, or free-text description.
-2. **Enrichment** -- System scrapes and analyzes GitHub README, website content, and LinkedIn profiles via Apify.
-3. **Research** -- Perplexity Sonar Pro Search performs live market research: TAM/SAM/SOM sizing, competitor mapping, industry trends, and customer segmentation.
-4. **Generation** -- Grok 4.20 Multi-Agent generates 5 animated HTML slides with talking points, timing cues, and anticipated Q&A.
+| Hosting | Vercel | Deployment + CI/CD |
 
 ---
 
@@ -65,11 +78,11 @@ cp .env.example .env  # Add your API keys
 pnpm dev
 ```
 
-### Required Environment Variables
+### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `OPENROUTER_API_KEY` | API key for OpenRouter (Grok + Perplexity) |
+| `OPENROUTER_API_KEY` | API key for OpenRouter (routes to Grok + Perplexity) |
 | `APIFY_API_KEY` | API key for Apify LinkedIn scraping |
 | `NEXT_PUBLIC_CONVEX_URL` | Convex deployment URL |
 | `CONVEX_DEPLOYMENT` | Convex deployment identifier |
@@ -82,7 +95,6 @@ pnpm dev
 src/
   app/
     page.tsx                    # Pitch slide presentation (homepage)
-    layout.tsx                  # Root layout
     intake/page.tsx             # Multi-step intake form
     pitch/demo/page.tsx         # Dynamic pitch viewer
     api/pitch/
@@ -90,31 +102,23 @@ src/
       research/route.ts         # Market research via Perplexity
       generate/route.ts         # Slide generation via Grok
   components/
-    ConvexProvider.tsx           # Convex client provider
     slides/
-      SlidePresentation.tsx      # Horizontal slide navigation
-      SlideTemplate.tsx          # Reusable slide building blocks
-      Pitch99Slides.tsx          # The pitch about Pitch99 itself
-      MarketChart.tsx            # Animated bar charts
-      AnimatedCounter.tsx        # Number counting animation
+      SlidePresentation.tsx     # Horizontal slide navigator
+      SlideTemplate.tsx         # Reusable slide building blocks
+      Pitch99Slides.tsx         # The pitch about Pitch99 itself
+      MarketChart.tsx           # Animated bar charts
+      AnimatedCounter.tsx       # Number counting animation
   lib/
     openrouter.ts               # OpenRouter API client
     apify.ts                    # Apify LinkedIn client
-    utils.ts                    # Tailwind utilities
-  __tests__/
-    api/openrouter.test.ts      # OpenRouter client tests
-    components/
-      SlidePresentation.test.tsx
-      AnimatedCounter.test.tsx
-      MarketChart.test.tsx
 convex/
-  schema.ts                     # Database schema
-  pitches.ts                    # Queries and mutations
+  schema.ts                     # Database schema (pitches table)
+  pitches.ts                    # Queries + mutations
 docs/
   plans/PRD.md                  # Product Requirements Document
-  plans/DEV-PLAN.md             # Phased development plan
-  adr/                          # Architecture Decision Records
-  TALKING-POINTS.md             # 99-second pitch script
+  plans/DEV-PLAN.md             # Phased dev plan (65 tasks, 6 phases)
+  adr/                          # 4 Architecture Decision Records
+  TALKING-POINTS.md             # Full 99-second pitch script + FAQ
   CUE-CARD.md                   # Condensed presenter cue card
 ```
 
@@ -123,40 +127,34 @@ docs/
 ## Development
 
 ```bash
-pnpm dev          # Start dev server (Next.js Turbopack)
+pnpm dev          # Dev server (Turbopack)
 pnpm build        # Production build
-pnpm test         # Run tests (Vitest)
+pnpm test         # Run tests (19 tests, Vitest)
 pnpm lint         # Lint (ESLint)
 ```
 
----
+### Tests
 
-## Testing
+4 test files, London School approach (mock at boundaries):
 
-The project includes 4 test files using Vitest with Testing Library, following the London School approach (mock dependencies at boundaries).
-
-| Test File | Coverage |
-|-----------|----------|
-| `SlidePresentation.test.tsx` | Slide navigation, keyboard controls, touch events |
-| `AnimatedCounter.test.tsx` | Number animation, formatting |
+| Test | Coverage |
+|------|----------|
+| `SlidePresentation.test.tsx` | Navigation, keyboard, touch, progress bar |
+| `AnimatedCounter.test.tsx` | Number animation, prefix/suffix |
 | `MarketChart.test.tsx` | Chart rendering, data display |
-| `openrouter.test.ts` | API client, error handling, model constants |
-
-```bash
-pnpm test         # Run all tests
-pnpm test:ui      # Run tests with Vitest UI
-```
+| `openrouter.test.ts` | API client, headers, error handling |
 
 ---
 
-## Built at Founders Live
+## Links
 
-This project was built live at **Founders Live Build: Seattle** on March 26, 2026. Five builders had 2 hours to vibecode an app from scratch using AI tools, then pitch it in 99 seconds to the audience.
-
-**Builder:** Adam Kovacs -- Co-founder, AI Enablement Academy
+- **Live app:** [pitch99.help](https://pitch99.help)
+- **GitHub:** [github.com/adambkovacs/pitch99](https://github.com/adambkovacs/pitch99)
+- **Founders Live:** [founderslive.com](https://www.founderslive.com)
+- **Builder:** [linkedin.com/in/adambkovacs](https://www.linkedin.com/in/adambkovacs/)
 
 ---
 
 ## License
 
-MIT
+[MIT](LICENSE)
