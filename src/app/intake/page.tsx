@@ -243,28 +243,36 @@ function InputField({
     <div className="space-y-1.5">
       <label
         htmlFor={inputId}
-        className="block text-sm font-medium mb-1.5"
+        className="block text-sm font-semibold mb-1.5"
         style={{ color: "var(--foreground)" }}
       >
         {label}
       </label>
-      <input
-        id={inputId}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className={cn(
-          "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 shadow-sm",
-          "placeholder:text-[var(--muted)]",
-          "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
+      <div className="relative">
+        {Icon && (
+          <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--muted)" }} aria-hidden="true">
+            <Icon className="w-4 h-4" />
+          </div>
         )}
-        style={{
-          background: "var(--surface)",
-          borderColor: "var(--border-hover)",
-          color: "var(--foreground)",
-        }}
-      />
+        <input
+          id={inputId}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={cn(
+            "w-full rounded-xl border-2 py-3.5 text-base outline-none transition-all duration-200 shadow-sm",
+            "placeholder:text-[var(--muted)]",
+            "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
+            Icon ? "pl-10 pr-4" : "px-4"
+          )}
+          style={{
+            background: "var(--surface)",
+            borderColor: "var(--border-hover)",
+            color: "var(--foreground)",
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -527,7 +535,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
             className="mt-3 text-lg"
             style={{ color: "var(--foreground)", opacity: 0.7 }}
           >
-            Hang tight — this takes about 30-60 seconds.
+            Hang tight — this takes about 30 seconds.
           </p>
         </motion.div>
       </div>
@@ -1012,7 +1020,7 @@ function StepGenerate({
           className="text-center text-xs mt-3"
           style={{ color: "var(--muted)" }}
         >
-          Your 99-second pitch deck will be ready in about 60 seconds.
+          Your 99-second pitch deck will be ready in about 30 seconds.
         </p>
       </motion.div>
     </motion.div>
@@ -1266,7 +1274,7 @@ export default function IntakePage() {
               >
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
-                  style={{ background: "var(--coral)", opacity: 0.15 }}
+                  style={{ background: "rgba(249, 115, 22, 0.12)" }}
                 >
                   <AlertCircle
                     className="w-8 h-8"

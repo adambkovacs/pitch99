@@ -152,7 +152,7 @@ export function SlideTitle({ eyebrow, title, subtitle, className }: SlideTitlePr
           {eyebrow}
         </span>
       )}
-      <h2 data-animate className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight">
+      <h2 data-animate className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
         {title}
       </h2>
       {subtitle && (
