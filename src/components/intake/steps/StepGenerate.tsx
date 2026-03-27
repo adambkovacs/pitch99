@@ -53,12 +53,6 @@ export function StepGenerate({
       className="space-y-8"
     >
       <motion.div variants={fadeUp} className="pb-2">
-        <p
-          className="text-sm font-medium uppercase tracking-wider mb-2"
-          style={{ color: "var(--coral)" }}
-        >
-          Step 5 of 5
-        </p>
         <h1
           className="text-4xl sm:text-5xl font-bold leading-tight"
           style={{ color: "var(--foreground)" }}

@@ -332,7 +332,7 @@ export function SlideCTABlock({
   headline, subtext, primaryAction, secondaryAction, techStack, className,
 }: SlideCTABlockProps) {
   return (
-    <div className={cn("flex flex-col items-center gap-8 max-w-xl mx-auto", className)}>
+    <div className={cn("flex flex-col items-center gap-10 max-w-xl mx-auto", className)}>
       <h2 data-animate className="text-2xl sm:text-3xl font-bold leading-tight text-center">
         {headline}
       </h2>
@@ -371,7 +371,7 @@ export function SlideCTABlock({
         <div
           data-animate
           className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[11px] font-mono uppercase tracking-[0.2em]"
-          style={{ color: "rgba(120,113,108,0.7)" }}
+          style={{ color: "#78716c" }}
         >
           {techStack.map((tech, i) => (
             <span key={tech} className="flex items-center gap-6">

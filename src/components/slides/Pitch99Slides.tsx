@@ -231,7 +231,7 @@ function SlideCTA() {
       </h2>
 
       {/* Subtext */}
-      <p data-animate className="text-zinc-600 mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
@@ -255,7 +255,7 @@ function SlideCTA() {
       </div>
 
       {/* Tech stack */}
-      <div data-animate className="mt-16 flex items-center gap-8 text-[11px] text-zinc-400 font-mono uppercase tracking-[0.25em]">
+      <div data-animate className="mt-16 flex items-center gap-10 text-xs text-zinc-400 font-mono uppercase tracking-[0.25em]">
         <span>Next.js</span>
         <span className="w-1 h-1 rounded-full bg-zinc-300" />
         <span>OpenRouter</span>
