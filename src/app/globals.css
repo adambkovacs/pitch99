@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+:root {
+  /* Warm, premium palette — clean & elegant */
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --border: #e7e5e4;
+  --border-hover: #d6d3d1;
+  --muted: #78716c;
+  --muted-light: #a8a29e;
+
+  /* Brand accent — warm violet to coral gradient */
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-light: #ddd6fe;
+  --accent-soft: #f5f3ff;
+
+  /* Secondary — warm coral */
+  --coral: #f97316;
+  --coral-light: #fed7aa;
+  --coral-soft: #fff7ed;
+
+  /* Tertiary — teal for data/success */
+  --teal: #0d9488;
+  --teal-light: #99f6e4;
+  --teal-soft: #f0fdfa;
+
+  /* Presentation mode (slides) */
+  --slide-bg: #0f0f14;
+  --slide-fg: #f5f5f4;
+  --slide-muted: #71717a;
+  --slide-accent: #a78bfa;
+  --slide-accent-glow: rgba(167, 139, 250, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* =========================================
+   PRESENTATION / SLIDE MODE
+   ========================================= */
+
+.presentation-mode {
+  background: var(--slide-bg);
+  color: var(--slide-fg);
+}
+
+.slides-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  min-width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient text — works on both light and dark */
+.gradient-text {
+  background: linear-gradient(135deg, #7c3aed 0%, #f97316 50%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-slide {
+  background: linear-gradient(135deg, #a78bfa 0%, #f0abfc 40%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects (slide mode only) */
+.glow {
+  box-shadow: 0 0 30px var(--slide-accent-glow), 0 0 60px rgba(167, 139, 250, 0.1);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--slide-accent-glow);
+}
+
+/* =========================================
+   CARD SYSTEM — elegant, clean cards
+   ========================================= */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.card-slide {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.card-slide:hover {
+  border-color: rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.slide-nav {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 50;
+  padding: 8px 16px;
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.slide-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.slide-dot.active {
+  background: var(--slide-accent);
+  box-shadow: 0 0 12px var(--slide-accent-glow);
+  transform: scale(1.3);
+}
+
+.slide-dot:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.keyboard-hint {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+  opacity: 0.3;
+  font-size: 0.7rem;
+  color: var(--slide-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* =========================================
+   UTILITY
+   ========================================= */
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-light);
+}
