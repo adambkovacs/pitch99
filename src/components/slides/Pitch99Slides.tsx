@@ -72,7 +72,7 @@ function SlideProblem() {
       <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-16 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
@@ -82,7 +82,7 @@ function SlideProblem() {
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl bg-zinc-50/80 p-6 sm:p-8 relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-8 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-15`} />
             <div className="relative flex flex-col gap-5">
@@ -127,7 +127,7 @@ function SlideSolution() {
       <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-16 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
@@ -135,7 +135,7 @@ function SlideSolution() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="relative" data-animate>
-            <div className="rounded-2xl bg-zinc-50/80 p-6 sm:p-7 text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-5">
+            <div className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-7 shadow-sm text-center h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center gap-5">
               <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} shadow-md`}>
                 <span className="text-base font-bold text-white">{step.num}</span>
               </div>

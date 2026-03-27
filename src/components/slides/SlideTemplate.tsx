@@ -115,7 +115,7 @@ export function SlideLayout({ variant, background, children, className }: SlideL
     <div
       ref={ref}
       className={cn(
-        "flex flex-col items-center justify-center w-full min-h-full px-8 md:px-16 py-12",
+        "flex flex-col items-center justify-center w-full min-h-full px-8 md:px-16 py-8",
         variantStyles[variant],
         className,
       )}
@@ -179,7 +179,7 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
         >
           <div
             className="absolute inset-0 opacity-15 pointer-events-none"
@@ -243,7 +243,7 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
       {steps.map((step, i) => (
         <div key={step.num} className="relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl bg-zinc-50/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center gap-5"
+            className="text-center h-full rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center gap-5"
           >
             <div
               className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br shadow-md", step.gradient)}

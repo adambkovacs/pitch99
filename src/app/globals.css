@@ -77,7 +77,7 @@ body {
 
 /* Gradient text — works on both light and dark */
 .gradient-text {
-  background: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #0d9488 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #dc2626 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -85,10 +85,11 @@ body {
 }
 
 .gradient-text-slide {
-  background: linear-gradient(135deg, #ea580c 0%, #dc2626 40%, #0d9488 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #dc2626 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-bottom: 0.1em;
 }
 
 /* Glow effects (subtle on light) */
