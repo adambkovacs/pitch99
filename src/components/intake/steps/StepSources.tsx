@@ -36,7 +36,7 @@ export function StepSources({
       animate="center"
       className="space-y-8"
     >
-      <motion.div variants={fadeUp}>
+      <motion.div variants={fadeUp} className="pb-2">
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
           style={{ color: "var(--accent)" }}
