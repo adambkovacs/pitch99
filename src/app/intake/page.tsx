@@ -916,7 +916,7 @@ function StepGenerate({
   ].filter((item) => item.value);
 
   return (
-    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
+    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-10">
       <motion.div variants={fadeUp}>
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
@@ -1289,7 +1289,7 @@ export default function IntakePage() {
           step <= 4 ? "pt-24" : "pt-12"
         )}
       >
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-2xl">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={step}
@@ -1317,7 +1317,7 @@ export default function IntakePage() {
           }}
           aria-label="Step navigation"
         >
-          <div className="max-w-xl mx-auto flex items-center justify-between px-6 py-4">
+          <div className="max-w-2xl mx-auto flex items-center justify-between px-6 py-4">
             <motion.button
               onClick={goBack}
               className={cn(
