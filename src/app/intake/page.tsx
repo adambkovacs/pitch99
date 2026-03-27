@@ -1035,6 +1035,7 @@ export default function IntakePage() {
   const router = useRouter();
   const createPitch = useMutation(api.pitches.create);
   const updatePitch = useMutation(api.pitches.update);
+  const generateUploadUrl = useMutation(api.pitches.generateUploadUrl);
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -1064,7 +1065,7 @@ export default function IntakePage() {
   const canProceed = useCallback(() => {
     switch (step) {
       case 0:
-        return formData.productName.trim().length > 0;
+        return formData.productName.trim().length > 0 && formData.description.trim().length > 0;
       case 1:
         return true; // all optional
       case 2:
@@ -1193,6 +1194,23 @@ export default function IntakePage() {
         generatedAt: new Date().toISOString(),
       }));
 
+      // Upload files to Convex storage
+      let uploadedFiles: Array<{ name: string; url: string; type: string }> = [];
+      if (formData.files.length > 0) {
+        uploadedFiles = await Promise.all(
+          formData.files.map(async (file) => {
+            const uploadUrl = await generateUploadUrl();
+            const result = await fetch(uploadUrl, {
+              method: "POST",
+              headers: { "Content-Type": file.type },
+              body: file,
+            });
+            const { storageId } = await result.json() as { storageId: string };
+            return { name: file.name, url: `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${storageId}`, type: file.type };
+          })
+        );
+      }
+
       // Save to Convex for persistent storage
       try {
         const pitchId = await createPitch({
@@ -1201,10 +1219,11 @@ export default function IntakePage() {
           githubUrl: formData.githubUrl.trim() || undefined,
           websiteUrl: formData.websiteUrl.trim() || undefined,
           linkedinUrl: formData.linkedinUrl.trim() || undefined,
-          presenterName: formData.bio ? "Presenter" : undefined,
+          presenterName: undefined,
           presenterBio: formData.bio || undefined,
           audienceType: formData.audience as "investors" | "customers" | "partners" | "general" | "competition",
           desiredOutcome: formData.desiredOutcome || undefined,
+          files: uploadedFiles.length > 0 ? uploadedFiles : undefined,
         });
 
         await updatePitch({
@@ -1215,9 +1234,11 @@ export default function IntakePage() {
           status: "ready",
         });
 
+        setGenerating((prev) => ({ ...prev, active: false }));
         router.push(`/pitch/${pitchId}`);
       } catch {
         // Convex save failed — fall back to localStorage demo route
+        setGenerating((prev) => ({ ...prev, active: false }));
         router.push("/pitch/demo");
       }
     } catch (err) {
@@ -1226,7 +1247,7 @@ export default function IntakePage() {
       setGenerating((prev) => ({ ...prev, active: false, error: message }));
       // Stay on step 5 so user sees the error with a retry option
     }
-  }, [formData, router, createPitch, updatePitch]);
+  }, [formData, router, createPitch, updatePitch, generateUploadUrl]);
 
   const handleRetry = useCallback(() => {
     setGenerating({ active: false, stage: "enrich", error: null });

@@ -27,15 +27,24 @@ interface LinkedInProfile {
 export async function lookupLinkedInProfile(
   linkedinUrl: string
 ): Promise<LinkedInProfile | null> {
+  if (!process.env.APIFY_API_KEY) {
+    console.warn("APIFY_API_KEY not set — LinkedIn enrichment skipped");
+    return null;
+  }
+
   const response = await fetch(
-    `${APIFY_API_URL}/acts/anchor~linkedin-profile-scraper/run-sync-get-dataset-items?token=${process.env.APIFY_API_KEY}`,
+    `${APIFY_API_URL}/acts/anchor~linkedin-profile-scraper/run-sync-get-dataset-items`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.APIFY_API_KEY}`,
+      },
       body: JSON.stringify({
         profileUrls: [linkedinUrl],
         proxyConfiguration: { useApifyProxy: true },
       }),
+      signal: AbortSignal.timeout(15_000),
     }
   );
 

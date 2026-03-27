@@ -16,27 +16,18 @@ interface GenerateRequest {
 }
 
 const VALID_AUDIENCE_TYPES = [
-  "b2b",
-  "b2c",
-  "enterprise",
-  "smb",
-  "developer",
-  "consumer",
-  "marketplace",
-  "saas",
-  "hardware",
-  "biotech",
-  "fintech",
-  "edtech",
-  "healthtech",
-  "other",
+  "investors",
+  "customers",
+  "partners",
+  "general",
+  "competition",
 ];
 
 export async function POST(request: Request) {
   try {
     const forwarded = request.headers.get("x-forwarded-for");
     const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
-    const { allowed, remaining } = rateLimit(ip, 10, 60000);
+    const { allowed } = rateLimit(ip, 10, 60000);
 
     if (!allowed) {
       return NextResponse.json(
@@ -139,9 +130,13 @@ Return a JSON object: { "slides": [...] }`;
     } catch {
       const jsonMatch = result.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (jsonMatch?.[1]) {
-        parsed = JSON.parse(jsonMatch[1].trim());
+        try {
+          parsed = JSON.parse(jsonMatch[1].trim());
+        } catch {
+          throw new Error("Failed to parse AI response as JSON");
+        }
       } else {
-        throw new Error("Failed to parse slide generation response as JSON");
+        throw new Error("Failed to parse AI response as JSON");
       }
     }
 

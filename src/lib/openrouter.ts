@@ -16,6 +16,10 @@ interface OpenRouterOptions {
 export async function chatCompletion(
   options: OpenRouterOptions
 ): Promise<string> {
+  if (!process.env.OPENROUTER_API_KEY) {
+    throw new Error("OPENROUTER_API_KEY environment variable is not set");
+  }
+
   const response = await fetch(OPENROUTER_API_URL, {
     method: "POST",
     headers: {
@@ -31,6 +35,7 @@ export async function chatCompletion(
       max_tokens: options.max_tokens ?? 4096,
       stream: options.stream ?? false,
     }),
+    signal: AbortSignal.timeout(90000),
   });
 
   if (!response.ok) {

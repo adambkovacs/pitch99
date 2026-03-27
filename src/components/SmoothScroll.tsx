@@ -14,20 +14,16 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     });
 
     lenisRef.current = lenis;
-
-    // Respect prefers-reduced-motion
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      lenis.destroy();
-      return;
-    }
-
     let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
+
+    // Only start RAF loop if user has no reduced-motion preference
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      function raf(time: number) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
       rafId = requestAnimationFrame(raf);
     }
-    rafId = requestAnimationFrame(raf);
 
     return () => {
       cancelAnimationFrame(rafId);

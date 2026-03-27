@@ -67,6 +67,7 @@ async function fetchGitHubReadme(
           Accept: "application/vnd.github.v3+json",
           "User-Agent": "Pitch99",
         },
+        signal: AbortSignal.timeout(10_000),
       }
     );
 
@@ -85,6 +86,7 @@ async function fetchGitHubReadme(
           Accept: "application/vnd.github.v3+json",
           "User-Agent": "Pitch99",
         },
+        signal: AbortSignal.timeout(10_000),
       }
     );
 
@@ -179,7 +181,7 @@ export async function POST(request: Request) {
   try {
     const forwarded = request.headers.get("x-forwarded-for");
     const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
-    const { allowed, remaining } = rateLimit(ip, 10, 60000);
+    const { allowed } = rateLimit(ip, 10, 60000);
 
     if (!allowed) {
       return NextResponse.json(

@@ -39,6 +39,9 @@ export interface GeneratedSlide {
     type: string;
     text?: string;
     items?: Array<Record<string, string | number>>;
+    stats?: Array<Record<string, string | number>>;
+    steps?: Array<Record<string, string | number>>;
+    metrics?: Array<Record<string, string | number>>;
   }>;
   talking_points?: string;
   timing_seconds?: number;
@@ -78,7 +81,7 @@ export function buildSlidesFromGenerated(pitch: GeneratedPitch): SlideData[] {
 
     // Build stats from content blocks
     const stats: StatItem[] = statBlocks.flatMap(block =>
-      (block.items ?? []).map((item, j) => ({
+      (block.stats ?? block.items ?? []).map((item, j) => ({
         icon: pickIcon(j),
         value: String(item.value ?? ""),
         unit: item.unit ? String(item.unit) : undefined,
@@ -89,7 +92,7 @@ export function buildSlidesFromGenerated(pitch: GeneratedPitch): SlideData[] {
 
     // Build steps from content blocks
     const steps: StepItem[] = stepBlocks.flatMap(block =>
-      (block.items ?? []).map((item, j) => ({
+      (block.steps ?? block.items ?? []).map((item, j) => ({
         num: String(j + 1).padStart(2, "0"),
         title: String(item.title ?? ""),
         desc: String(item.desc ?? item.description ?? ""),
@@ -99,10 +102,10 @@ export function buildSlidesFromGenerated(pitch: GeneratedPitch): SlideData[] {
 
     // Build metrics from content blocks
     const metrics: MetricItem[] = metricBlocks.flatMap(block =>
-      (block.items ?? []).map((item, j) => ({
+      (block.metrics ?? block.items ?? []).map((item, j) => ({
         label: String(item.label ?? ""),
         value: Number(item.value ?? 0),
-        maxValue: Number(item.maxValue ?? 15),
+        maxValue: Number(item.max ?? item.maxValue ?? 15),
         color: barColors[j % barColors.length],
       }))
     );
@@ -138,7 +141,6 @@ export function buildSlidesFromGenerated(pitch: GeneratedPitch): SlideData[] {
               headline={<span>{slide.title}</span>}
               subtext={subtitle}
               primaryAction={{ label: "Create Your Pitch", href: "/intake" }}
-              secondaryAction={{ label: "View on GitHub", href: "https://github.com/adambkovacs/pitch99" }}
               techStack={["Next.js", "OpenRouter", "GSAP", "Framer Motion"]}
             />
           </SlideLayout>

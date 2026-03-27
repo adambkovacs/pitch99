@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
 
 export interface SlideData {
   id: number;
@@ -80,23 +79,8 @@ export default function SlidePresentation({
     touchStart.current = null;
   };
 
-  // GSAP entrance animation for slide content
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const elements = containerRef.current.querySelectorAll("[data-animate]");
-    gsap.fromTo(
-      elements,
-      { opacity: 0, y: 40, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power3.out",
-      }
-    );
-  }, [current]);
+  // GSAP entrance animation removed — SlideLayout in SlideTemplate.tsx
+  // already handles entrance animations with proper gsap.context() cleanup.
 
   const slideVariants = {
     enter: (dir: number) => ({
@@ -189,7 +173,7 @@ export default function SlidePresentation({
       {/* Click zones for navigation */}
       <button
         onClick={prev}
-        className="absolute left-0 top-0 w-1/5 h-full z-40 cursor-w-resize opacity-0 hover:opacity-100 transition-opacity"
+        className="absolute left-0 top-0 w-1/5 h-full z-40 cursor-w-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-white transition-opacity"
         aria-label="Previous slide"
       >
         <div className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">
@@ -200,7 +184,7 @@ export default function SlidePresentation({
       </button>
       <button
         onClick={next}
-        className="absolute right-0 top-0 w-1/5 h-full z-40 cursor-e-resize opacity-0 hover:opacity-100 transition-opacity"
+        className="absolute right-0 top-0 w-1/5 h-full z-40 cursor-e-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-white transition-opacity"
         aria-label="Next slide"
       >
         <div className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">
