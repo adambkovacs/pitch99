@@ -97,8 +97,8 @@ describe('SlidePresentation', () => {
   it('shows progress bar', () => {
     const { container } = render(<SlidePresentation slides={mockSlides} />)
 
-    // The progress bar container has class h-1 bg-zinc-200
-    const progressContainer = container.querySelector('.h-1.bg-zinc-200')
+    // The progress bar container has class h-1 bg-zinc-100
+    const progressContainer = container.querySelector('.h-1.bg-zinc-100')
     expect(progressContainer).toBeInTheDocument()
 
     // The inner gradient bar exists
