@@ -110,9 +110,22 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
     );
   }
 
+  // Schema now types generatedSlides as an array of slide objects.
+  // Map to GeneratedSlide[], defaulting content_blocks to [] since the
+  // schema marks it optional while GeneratedSlide requires it.
+  const slides_raw = pitch.generatedSlides ?? [];
+  const typedSlides: GeneratedSlide[] = slides_raw.map((s) => ({
+    title: s.title,
+    eyebrow: s.eyebrow,
+    content_blocks: (s.content_blocks ?? []) as GeneratedSlide["content_blocks"],
+    talking_points: s.talking_points,
+    timing_seconds: s.timing_seconds,
+  }));
+
   const generatedPitch: GeneratedPitch = {
     productName: pitch.productName,
-    slides: pitch.generatedSlides as GeneratedSlide[],
+    slides: typedSlides,
+    // researchData is still v.any() in the schema — cast for downstream use
     research: pitch.researchData as Record<string, unknown> | undefined,
     generatedAt: new Date(pitch.createdAt).toISOString(),
   };

@@ -67,6 +67,54 @@ export async function POST(request: Request) {
       );
     }
 
+    // Prompt injection mitigation: length caps on optional fields
+    if (body.askAmount && body.askAmount.length > 200) {
+      return NextResponse.json(
+        { error: "askAmount must be 200 characters or fewer" },
+        { status: 400 }
+      );
+    }
+    if (body.problemStatement && body.problemStatement.length > 2000) {
+      return NextResponse.json(
+        { error: "problemStatement must be 2000 characters or fewer" },
+        { status: 400 }
+      );
+    }
+    if (body.solution && body.solution.length > 2000) {
+      return NextResponse.json(
+        { error: "solution must be 2000 characters or fewer" },
+        { status: 400 }
+      );
+    }
+    if (body.businessModel && body.businessModel.length > 1000) {
+      return NextResponse.json(
+        { error: "businessModel must be 1000 characters or fewer" },
+        { status: 400 }
+      );
+    }
+    if (body.traction && body.traction.length > 1000) {
+      return NextResponse.json(
+        { error: "traction must be 1000 characters or fewer" },
+        { status: 400 }
+      );
+    }
+
+    // Cap serialized size of object fields
+    const researchStr = body.research ? JSON.stringify(body.research) : "";
+    const enrichmentStr = body.enrichment ? JSON.stringify(body.enrichment) : "";
+    if (researchStr.length > 20000) {
+      return NextResponse.json(
+        { error: "research payload too large" },
+        { status: 400 }
+      );
+    }
+    if (enrichmentStr.length > 20000) {
+      return NextResponse.json(
+        { error: "enrichment payload too large" },
+        { status: 400 }
+      );
+    }
+
     const systemPrompt = `You are an elite pitch deck architect. You generate structured JSON slide configurations for investor pitch decks. Every slide must be compelling, data-driven, and follow proven pitch frameworks (Sequoia, YC, etc.).
 
 Always respond with valid JSON only — no markdown, no code fences, no explanation outside the JSON.
@@ -142,9 +190,7 @@ Return a JSON object: { "slides": [...] }`;
 
     return NextResponse.json(parsed);
   } catch (error) {
-    console.error("Generate API error:", error);
-    const message =
-      error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[generate] error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -45,7 +45,11 @@ export async function chatCompletion(
   }
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) {
+    throw new Error("OpenRouter returned no content");
+  }
+  return content;
 }
 
 export const MODELS = {

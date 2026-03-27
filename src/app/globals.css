@@ -40,7 +40,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--background);
@@ -199,7 +199,7 @@ body {
   opacity: 0.5;
   font-size: 0.7rem;
   color: var(--muted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), monospace;
 }
 
 /* =========================================
@@ -207,7 +207,7 @@ body {
    ========================================= */
 
 .font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono), monospace;
 }
 
 /* Smooth scrollbar */

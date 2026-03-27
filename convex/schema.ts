@@ -35,11 +35,47 @@ export default defineSchema({
       v.literal("ready"),
       v.literal("error"),
     ),
-    enrichedData: v.optional(v.any()),
+    enrichedData: v.optional(
+      v.object({
+        github: v.optional(v.any()),
+        website: v.optional(
+          v.object({
+            title: v.string(),
+            description: v.string(),
+            text: v.string(),
+          }),
+        ),
+        linkedin: v.optional(v.any()),
+      }),
+    ),
+    // TODO: researchData is AI-generated JSON with a highly variable shape
+    // (tam, sam, som, competitors[], icp, market_trends[], key_stats[]).
+    // Fully typing it would be brittle since the LLM output varies. Keeping
+    // v.any() until the research prompt stabilises.
     researchData: v.optional(v.any()),
-    generatedSlides: v.optional(v.any()),
-    talkingPoints: v.optional(v.any()),
-    faq: v.optional(v.any()),
+    generatedSlides: v.optional(
+      v.array(
+        v.object({
+          title: v.string(),
+          eyebrow: v.optional(v.string()),
+          // TODO: content_blocks have a polymorphic "type" discriminator with
+          // varying fields (text, stats, steps, metrics, items). Using v.any()
+          // for the inner block shape until a tagged-union validator is viable.
+          content_blocks: v.optional(v.any()),
+          talking_points: v.optional(v.string()),
+          timing_seconds: v.optional(v.number()),
+        }),
+      ),
+    ),
+    talkingPoints: v.optional(v.array(v.string())),
+    faq: v.optional(
+      v.array(
+        v.object({
+          question: v.string(),
+          answer: v.string(),
+        }),
+      ),
+    ),
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_createdAt", ["createdAt"]),

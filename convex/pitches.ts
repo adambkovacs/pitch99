@@ -40,6 +40,7 @@ export const create = mutation({
   },
 });
 
+// TODO: Add authentication — currently any client can update any pitch
 export const update = mutation({
   args: {
     id: v.id("pitches"),
@@ -136,17 +137,28 @@ export const get = query({
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db
+    const pitches = await ctx.db
       .query("pitches")
       .withIndex("by_createdAt")
       .order("desc")
       .take(20);
+    // Only return non-sensitive fields until auth is implemented
+    return pitches.map(p => ({
+      _id: p._id,
+      _creationTime: p._creationTime,
+      productName: p.productName,
+      status: p.status,
+      audienceType: p.audienceType,
+      createdAt: p.createdAt,
+    }));
   },
 });
 
 export const generateUploadUrl = mutation({
   args: {},
   handler: async (ctx) => {
+    // TODO: Add authentication check before issuing upload URLs
+    // Currently unauthenticated — any client can generate upload URLs
     return await ctx.storage.generateUploadUrl();
   },
 });

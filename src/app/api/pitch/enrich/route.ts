@@ -3,6 +3,9 @@ import { URL } from "url";
 import { lookupLinkedInProfile } from "@/lib/apify";
 import { rateLimit } from "@/lib/rateLimit";
 
+// NOTE: DNS rebinding can bypass hostname-only checks. A resolved-IP check
+// (e.g. via dns.lookup before fetch) would close that gap but is not yet
+// implemented. The patterns below mitigate the most common SSRF vectors.
 const BLOCKED_PATTERNS = [
   /^127\./,
   /^10\./,
@@ -13,8 +16,11 @@ const BLOCKED_PATTERNS = [
   /^::1$/,
   /^fc00:/,
   /^fe80:/,
+  /^fd00:/,                            // IPv6 ULA
   /^localhost$/i,
   /^metadata\./i,
+  /^metadata\.google\.internal$/i,     // GCP metadata
+  /^169\.254\.169\.254$/,              // AWS/Azure metadata IP
 ];
 
 function isAllowedUrl(input: string): boolean {
@@ -66,6 +72,9 @@ async function fetchGitHubReadme(
         headers: {
           Accept: "application/vnd.github.v3+json",
           "User-Agent": "Pitch99",
+          ...(process.env.GITHUB_TOKEN && {
+            Authorization: `token ${process.env.GITHUB_TOKEN}`,
+          }),
         },
         signal: AbortSignal.timeout(10_000),
       }
@@ -85,6 +94,9 @@ async function fetchGitHubReadme(
         headers: {
           Accept: "application/vnd.github.v3+json",
           "User-Agent": "Pitch99",
+          ...(process.env.GITHUB_TOKEN && {
+            Authorization: `token ${process.env.GITHUB_TOKEN}`,
+          }),
         },
         signal: AbortSignal.timeout(10_000),
       }
@@ -199,6 +211,15 @@ export async function POST(request: Request) {
     if (linkedinUrl && linkedinUrl.length > 500) linkedinUrl = undefined;
 
     // SSRF protection: block private/internal URLs
+    if (githubUrl && !isAllowedUrl(githubUrl)) githubUrl = undefined;
+    if (githubUrl) {
+      try {
+        const u = new URL(githubUrl.startsWith("http") ? githubUrl : `https://${githubUrl}`);
+        if (u.hostname !== "github.com") githubUrl = undefined;
+      } catch {
+        githubUrl = undefined;
+      }
+    }
     if (websiteUrl && !isAllowedUrl(websiteUrl)) {
       websiteUrl = undefined;
     }
@@ -228,9 +249,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ enrichment });
   } catch (error) {
-    console.error("Enrich API error:", error);
-    const message =
-      error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[enrich] error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

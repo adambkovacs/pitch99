@@ -44,7 +44,7 @@ export async function lookupLinkedInProfile(
         profileUrls: [linkedinUrl],
         proxyConfiguration: { useApifyProxy: true },
       }),
-      signal: AbortSignal.timeout(15_000),
+      signal: AbortSignal.timeout(55_000),
     }
   );
 

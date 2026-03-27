@@ -146,9 +146,7 @@ Provide comprehensive research in this exact JSON structure:
 
     return NextResponse.json({ research: parsed });
   } catch (error) {
-    console.error("Research API error:", error);
-    const message =
-      error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[research] error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

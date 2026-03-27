@@ -98,6 +98,7 @@ export function SlideLayout({ variant, background, children, className }: SlideL
 
   useEffect(() => {
     if (!ref.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const targets = ref.current.querySelectorAll("[data-animate]");
     if (targets.length === 0) return;
     const ctx = gsap.context(() => {
@@ -273,6 +274,7 @@ export function SlideMetricBar({ metrics, className }: SlideMetricBarProps) {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const bars = containerRef.current.querySelectorAll<HTMLElement>("[data-metric-bar]");
     const ctx = gsap.context(() => {
       gsap.fromTo(

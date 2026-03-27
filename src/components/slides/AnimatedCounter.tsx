@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useMotionValue, animate } from "framer-motion";
 
 interface AnimatedCounterProps {
   from?: number;
@@ -25,19 +25,21 @@ export default function AnimatedCounter({
   decimals = 0,
 }: AnimatedCounterProps) {
   const count = useMotionValue(from);
-  const rounded = useTransform(count, (v) => v.toFixed(decimals));
   const [display, setDisplay] = useState(from.toFixed(decimals));
 
   useEffect(() => {
+    let controls: ReturnType<typeof animate> | null = null;
     const timeout = setTimeout(() => {
-      const controls = animate(count, to, {
+      controls = animate(count, to, {
         duration,
         ease: "easeOut",
         onUpdate: (v) => setDisplay(v.toFixed(decimals)),
       });
-      return () => controls.stop();
     }, delay * 1000);
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      controls?.stop();
+    };
   }, [count, to, duration, delay, decimals]);
 
   return (
