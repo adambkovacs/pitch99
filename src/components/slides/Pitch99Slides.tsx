@@ -33,7 +33,7 @@ function SlideHook() {
         <span className="gradient-text">But this p*tch ain&apos;t one.</span>
       </h1>
 
-      <p data-animate className="text-base sm:text-lg text-zinc-600 max-w-xl leading-relaxed">
+      <p data-animate className="text-base sm:text-lg text-zinc-700 max-w-xl leading-relaxed">
         Meet <strong className="text-zinc-900">Pitch99</strong> — AI that turns your product into a
         stunning 99-second pitch. Research, slides, talking points.
         Done in minutes.
@@ -44,7 +44,7 @@ function SlideHook() {
         className="mt-10 flex items-center gap-3"
       >
         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="font-mono text-xs text-zinc-500 tracking-wide">
+        <span className="font-mono text-xs text-zinc-600 tracking-wide">
           BUILT LIVE • FOUNDERS LIVE SEATTLE • 2026
         </span>
       </motion.div>
@@ -71,7 +71,7 @@ function SlideProblem() {
       <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-700 text-center mb-10 max-w-lg text-sm leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
@@ -92,10 +92,10 @@ function SlideProblem() {
                     {stat.value}
                   </span>
                   {stat.unit && (
-                    <span className="text-sm text-zinc-400 font-mono">{stat.unit}</span>
+                    <span className="text-sm text-zinc-500 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-sm text-zinc-500 leading-relaxed">{stat.label}</p>
+                <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ function SlideSolution() {
       <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-700 text-center mb-10 max-w-lg text-sm leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
@@ -138,7 +138,7 @@ function SlideSolution() {
               </div>
               <div>
                 <h3 className="font-bold text-lg mb-1.5 text-zinc-900">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
+                <p className="text-sm leading-relaxed text-zinc-600">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
@@ -175,7 +175,7 @@ function SlideMarket() {
         <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-2 leading-tight">
           <AnimatedCounter to={16.6} prefix="$" suffix="B" decimals={1} delay={0.3} duration={2.5} className="gradient-text font-black text-4xl sm:text-5xl" />
         </h2>
-        <p data-animate className="text-sm text-zinc-600 mb-8">
+        <p data-animate className="text-sm text-zinc-700 mb-8">
           presentation market by 2030, growing at <span className="text-orange-600 font-bold">25% CAGR</span> for AI tools
         </p>
 
@@ -188,7 +188,7 @@ function SlideMarket() {
           ].map((item) => (
             <div key={item.text} className="flex items-start gap-3 text-sm">
               <span className="font-mono text-orange-600 font-bold min-w-[4rem] text-right">{item.num}</span>
-              <span className="text-zinc-600">{item.text}</span>
+              <span className="text-zinc-700">{item.text}</span>
             </div>
           ))}
         </div>
@@ -228,7 +228,7 @@ function SlideCTA() {
       </h2>
 
       {/* Subtext */}
-      <p data-animate className="text-zinc-600 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-700 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
@@ -252,7 +252,7 @@ function SlideCTA() {
       </motion.div>
 
       {/* Tech stack — well-separated from buttons */}
-      <div data-animate className="flex items-center gap-6 text-xs text-zinc-400 font-mono uppercase tracking-[0.15em]">
+      <div data-animate className="flex items-center gap-6 text-xs text-zinc-500 font-mono uppercase tracking-[0.15em]">
         <span>Next.js</span>
         <span className="w-1 h-1 rounded-full bg-zinc-300" />
         <span>OpenRouter</span>
