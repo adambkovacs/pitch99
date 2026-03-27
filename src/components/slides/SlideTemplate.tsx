@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 /* ── Design tokens ──────────────────────── */
 
 const tokens = {
-  bg: "#0f0f14",
-  text: "#f5f5f4",
-  muted: "#71717a",
-  accent: "#fb923c",
-  card: { bg: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.06)" },
+  bg: "#fafaf9",
+  text: "#1c1917",
+  muted: "#78716c",
+  accent: "#f97316",
+  card: { bg: "#ffffff", border: "#e7e5e4" },
 } as const;
 
 /* ── Types ──────────────────────────────── */
@@ -119,7 +119,7 @@ export function SlideLayout({ variant, background, children, className }: SlideL
         className,
       )}
       style={{
-        background: background ?? "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.06) 0%, transparent 70%)",
+        background: background ?? "radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.06) 0%, transparent 70%)",
         backgroundColor: tokens.bg,
         color: tokens.text,
       }}
@@ -188,7 +188,7 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
           <div className="relative">
             <span className="text-xl mb-2 block">{stat.icon}</span>
             <div className="flex items-baseline gap-1.5 mb-1">
-              <span className="text-2xl sm:text-3xl font-black font-mono text-zinc-100">
+              <span className="text-2xl sm:text-3xl font-black font-mono text-zinc-900">
                 {stat.value}
               </span>
               {stat.unit && (
@@ -244,7 +244,7 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
             >
               <span className="text-sm font-bold text-white">{step.num}</span>
             </div>
-            <h3 className="font-semibold text-base mb-1 text-zinc-100">{step.title}</h3>
+            <h3 className="font-semibold text-base mb-1 text-zinc-900">{step.title}</h3>
             <p className="text-xs leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
           </div>
           {i < steps.length - 1 && (
@@ -289,12 +289,12 @@ export function SlideMetricBar({ metrics, className }: SlideMetricBarProps) {
         return (
           <div key={metric.label} data-animate className="space-y-1.5">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-zinc-300">{metric.label}</span>
+              <span className="text-zinc-700">{metric.label}</span>
               <span className="font-mono font-bold" style={{ color: metric.color }}>
                 {metric.value}
               </span>
             </div>
-            <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: tokens.card.bg }}>
+            <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: "#f4f4f5" }}>
               <div
                 data-metric-bar
                 className="h-full rounded-full origin-left"
@@ -350,8 +350,8 @@ export function SlideCTABlock({
             href={secondaryAction.href}
             className={cn(
               "px-7 py-3.5 rounded-full text-sm font-medium",
-              "border border-zinc-700/50 text-zinc-300",
-              "hover:border-orange-500/30 hover:text-zinc-100 transition-all",
+              "border border-zinc-300 text-zinc-600",
+              "hover:border-orange-500/50 hover:text-zinc-900 transition-all",
             )}
           >
             {secondaryAction.label}
@@ -367,7 +367,7 @@ export function SlideCTABlock({
           {techStack.map((tech, i) => (
             <span key={tech} className="flex items-center gap-5">
               {i > 0 && (
-                <span className="w-1 h-1 rounded-full -ml-2.5" style={{ backgroundColor: "rgba(255,255,255,0.12)" }} />
+                <span className="w-1 h-1 rounded-full -ml-2.5" style={{ backgroundColor: "rgba(0,0,0,0.12)" }} />
               )}
               {tech}
             </span>
