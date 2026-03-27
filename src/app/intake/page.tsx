@@ -4,6 +4,8 @@ import { useState, useCallback, useRef, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/navigation";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
@@ -1023,6 +1025,8 @@ function StepGenerate({
 
 export default function IntakePage() {
   const router = useRouter();
+  const createPitch = useMutation(api.pitches.create);
+  const updatePitch = useMutation(api.pitches.update);
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -1172,7 +1176,7 @@ export default function IntakePage() {
 
       const generateData = await generateRes.json();
 
-      // Store the generated pitch so the viewer page can render it
+      // Store in localStorage as fallback
       localStorage.setItem("pitch99_generated", JSON.stringify({
         productName: formData.productName,
         slides: (generateData as Record<string, unknown>).slides,
@@ -1181,14 +1185,40 @@ export default function IntakePage() {
         generatedAt: new Date().toISOString(),
       }));
 
-      router.push("/pitch/demo");
+      // Save to Convex for persistent storage
+      try {
+        const pitchId = await createPitch({
+          productName: formData.productName,
+          productDescription: formData.description,
+          githubUrl: formData.githubUrl.trim() || undefined,
+          websiteUrl: formData.websiteUrl.trim() || undefined,
+          linkedinUrl: formData.linkedinUrl.trim() || undefined,
+          presenterName: formData.bio ? "Presenter" : undefined,
+          presenterBio: formData.bio || undefined,
+          audienceType: formData.audience as "investors" | "customers" | "partners" | "general" | "competition",
+          desiredOutcome: formData.desiredOutcome || undefined,
+        });
+
+        await updatePitch({
+          id: pitchId,
+          generatedSlides: (generateData as Record<string, unknown>).slides,
+          researchData: research,
+          enrichedData: enrichment,
+          status: "ready",
+        });
+
+        router.push(`/pitch/${pitchId}`);
+      } catch {
+        // Convex save failed — fall back to localStorage demo route
+        router.push("/pitch/demo");
+      }
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong. Please try again.";
       setGenerating((prev) => ({ ...prev, active: false, error: message }));
       // Stay on step 5 so user sees the error with a retry option
     }
-  }, [formData, router]);
+  }, [formData, router, createPitch, updatePitch]);
 
   const handleRetry = useCallback(() => {
     setGenerating({ active: false, stage: "enrich", error: null });

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ConvexProvider from "@/components/ConvexProvider";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,7 +45,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ConvexProvider>{children}</ConvexProvider>
+        <SmoothScroll>
+          <ConvexProvider>{children}</ConvexProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

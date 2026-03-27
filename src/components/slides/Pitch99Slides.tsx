@@ -13,7 +13,7 @@ import AnimatedCounter from "./AnimatedCounter";
 function SlideHook() {
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto text-center">
-      <motion.div data-animate className="relative mb-4">
+      <div data-animate className="relative mb-4">
         <span className="text-[10rem] sm:text-[14rem] font-black leading-none gradient-text tracking-tighter select-none">
           99
         </span>
@@ -23,7 +23,7 @@ function SlideHook() {
           animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
-      </motion.div>
+      </div>
 
       <h1 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight text-zinc-900">
         As an entrepreneur, you have
@@ -39,7 +39,7 @@ function SlideHook() {
         Done in minutes.
       </p>
 
-      <motion.div
+      <div
         data-animate
         className="mt-10 flex items-center gap-3"
       >
@@ -47,7 +47,7 @@ function SlideHook() {
         <span className="font-mono text-xs text-zinc-600 tracking-wide">
           BUILT LIVE • FOUNDERS LIVE SEATTLE • 2026
         </span>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -137,8 +137,8 @@ function SlideSolution() {
                 <span className="text-lg font-bold text-white">{step.num}</span>
               </div>
               <div>
-                <h3 className="font-bold text-lg mb-1.5 text-zinc-900">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-zinc-600">{step.desc}</p>
+                <h3 className="font-bold text-xl mb-1.5 text-zinc-900">{step.title}</h3>
+                <p className="text-base leading-relaxed text-zinc-600">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
@@ -208,7 +208,7 @@ function SlideCTA() {
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-4xl mx-auto text-center gap-0">
       {/* Logo */}
-      <motion.div data-animate className="relative mb-10">
+      <div data-animate className="relative mb-10">
         <span className="text-7xl sm:text-9xl font-black gradient-text tracking-tight">
           pitch99
         </span>
@@ -218,7 +218,7 @@ function SlideCTA() {
           animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
-      </motion.div>
+      </div>
 
       {/* Headline */}
       <h2 data-animate className="text-2xl sm:text-4xl font-bold mb-6 leading-tight text-zinc-900">
@@ -234,7 +234,7 @@ function SlideCTA() {
       </p>
 
       {/* Buttons — generous spacing */}
-      <motion.div data-animate className="flex flex-col sm:flex-row gap-5 items-center mb-16">
+      <div data-animate className="flex flex-col sm:flex-row gap-5 items-center mb-16">
         <a
           href="/intake"
           className="px-10 py-4 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
@@ -249,7 +249,7 @@ function SlideCTA() {
         >
           View on GitHub
         </a>
-      </motion.div>
+      </div>
 
       {/* Tech stack — well-separated from buttons */}
       <div data-animate className="flex items-center gap-6 text-xs text-zinc-500 font-mono uppercase tracking-[0.15em]">

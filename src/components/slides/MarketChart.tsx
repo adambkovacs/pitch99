@@ -1,7 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  type ChartOptions,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+// Register Chart.js components (tree-shake)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
 interface BarData {
   label: string;
@@ -16,21 +28,77 @@ interface MarketChartProps {
   animate?: boolean;
 }
 
+/**
+ * Extract a solid color from a value that may be a CSS gradient string or a plain color.
+ * Falls back to orange-500 (#f97316) when nothing is supplied.
+ */
+function extractColor(color?: string): string {
+  if (!color) return "#f97316";
+  // Pull the first hex color from a gradient like "linear-gradient(90deg, #f97316, #fb923c)"
+  const match = color.match(/#[0-9a-fA-F]{6}/);
+  return match ? match[0] : color;
+}
+
 export default function MarketChart({
   data,
   title,
   suffix = "",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   animate = true,
 }: MarketChartProps) {
-  const [visible, setVisible] = useState(!animate);
   const ref = useRef<HTMLDivElement>(null);
-  const maxValue = Math.max(...data.map((d) => d.value));
 
-  useEffect(() => {
-    if (!animate) return;
-    const timer = setTimeout(() => setVisible(true), 400);
-    return () => clearTimeout(timer);
-  }, [animate]);
+  const labels = data.map((d) => `${d.label}  ${d.value}${suffix}`);
+  const values = data.map((d) => d.value);
+  const colors = data.map((d) => extractColor(d.color));
+
+  const chartData = {
+    labels,
+    datasets: [
+      {
+        data: values,
+        backgroundColor: colors,
+        borderRadius: 6,
+        borderSkipped: false as const,
+        barThickness: 28,
+      },
+    ],
+  };
+
+  const options: ChartOptions<"bar"> = {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: "#1c1917",
+        titleColor: "#fafaf9",
+        bodyColor: "#fafaf9",
+        padding: 12,
+        cornerRadius: 8,
+        callbacks: {
+          label: (ctx) => `${ctx.parsed.x ?? 0}${suffix}`,
+        },
+      },
+    },
+    scales: {
+      x: { display: false },
+      y: {
+        ticks: {
+          color: "#3f3f46",
+          font: { family: "Inter", size: 13 },
+        },
+        grid: { display: false },
+        border: { display: false },
+      },
+    },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+      delay: (context) => context.dataIndex * 200,
+    },
+  };
 
   return (
     <div ref={ref} className="w-full max-w-lg mx-auto">
@@ -42,44 +110,8 @@ export default function MarketChart({
           {title}
         </h3>
       )}
-      <div className="space-y-4">
-        {data.map((item, i) => (
-          <div key={item.label} className="space-y-1.5" data-animate>
-            <div className="flex justify-between items-baseline">
-              <span className="text-sm font-medium text-zinc-700">
-                {item.label}
-              </span>
-              <motion.span
-                className="font-mono text-sm text-orange-600 font-bold"
-                initial={{ opacity: 0 }}
-                animate={visible ? { opacity: 1 } : {}}
-                transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
-              >
-                {item.value}
-                {suffix}
-              </motion.span>
-            </div>
-            <div className="h-3 rounded-full bg-zinc-100 overflow-hidden backdrop-blur">
-              <motion.div
-                className="h-full rounded-full"
-                style={{
-                  background:
-                    item.color ??
-                    `linear-gradient(90deg, #f97316 ${0}%, #fb923c ${100}%)`,
-                }}
-                initial={{ width: 0 }}
-                animate={
-                  visible ? { width: `${(item.value / maxValue) * 100}%` } : {}
-                }
-                transition={{
-                  delay: i * 0.15,
-                  duration: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-              />
-            </div>
-          </div>
-        ))}
+      <div style={{ height: 280 }}>
+        <Bar data={chartData} options={options} />
       </div>
     </div>
   );
