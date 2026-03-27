@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDropzone } from "react-dropzone";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
@@ -19,6 +20,8 @@ import {
   Users,
   Target,
   Lightbulb,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------
@@ -37,6 +40,14 @@ interface FormData {
   desiredOutcome: string;
 }
 
+type GeneratingStage = "enrich" | "research" | "generate";
+
+interface GeneratingState {
+  active: boolean;
+  stage: GeneratingStage;
+  error: string | null;
+}
+
 const AUDIENCES = [
   { value: "", label: "Select your audience..." },
   { value: "investors", label: "Investors" },
@@ -52,6 +63,28 @@ const STEPS = [
   { label: "Pitcher", icon: Users },
   { label: "Audience", icon: Target },
   { label: "Generate", icon: Rocket },
+];
+
+const GENERATION_STAGES: {
+  key: GeneratingStage;
+  label: string;
+  description: string;
+}[] = [
+  {
+    key: "enrich",
+    label: "Analyzing your sources",
+    description: "Scraping GitHub, website, and LinkedIn for context...",
+  },
+  {
+    key: "research",
+    label: "Researching your market",
+    description: "Analyzing TAM, competitors, and ideal customer profiles...",
+  },
+  {
+    key: "generate",
+    label: "Generating your pitch",
+    description: "Crafting 5 compelling slides tailored to your audience...",
+  },
 ];
 
 /* ------------------------------------------------------------------
@@ -384,6 +417,195 @@ function FileDropZone({
 }
 
 /* ------------------------------------------------------------------
+   Generating Progress Screen
+   ------------------------------------------------------------------ */
+
+function PulsingOrb({ active, complete }: { active: boolean; complete: boolean }) {
+  return (
+    <div className="relative flex items-center justify-center w-10 h-10">
+      {active && !complete && (
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          style={{ background: "var(--accent)" }}
+          animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        />
+      )}
+      <motion.div
+        className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center"
+        style={{
+          background: complete
+            ? "var(--teal)"
+            : active
+              ? "var(--accent)"
+              : "var(--border)",
+        }}
+        animate={active && !complete ? { scale: [1, 1.05, 1] } : {}}
+        transition={
+          active && !complete
+            ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" }
+            : {}
+        }
+      >
+        {complete ? (
+          <Check className="w-5 h-5 text-white" />
+        ) : active ? (
+          <Loader2 className="w-5 h-5 text-white animate-spin" />
+        ) : (
+          <div
+            className="w-2.5 h-2.5 rounded-full"
+            style={{ background: "var(--muted-light)" }}
+          />
+        )}
+      </motion.div>
+    </div>
+  );
+}
+
+function GeneratingScreen({ state }: { state: GeneratingState }) {
+  const stageIndex = GENERATION_STAGES.findIndex((s) => s.key === state.stage);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="space-y-10"
+    >
+      {/* Header */}
+      <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Sparkles
+            className="w-12 h-12 mx-auto mb-4"
+            style={{ color: "var(--accent)" }}
+          />
+          <h1
+            className="text-3xl sm:text-4xl font-bold"
+            style={{ color: "var(--foreground)" }}
+          >
+            Crafting your{" "}
+            <span className="gradient-text">pitch</span>
+          </h1>
+          <p
+            className="mt-3 text-lg"
+            style={{ color: "var(--muted)" }}
+          >
+            Hang tight — this takes about 30-60 seconds.
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Progress stages */}
+      <div className="space-y-0">
+        {GENERATION_STAGES.map((stage, i) => {
+          const isComplete = i < stageIndex;
+          const isActive = i === stageIndex;
+          const isPending = i > stageIndex;
+
+          return (
+            <motion.div
+              key={stage.key}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 + i * 0.12 }}
+              className="flex items-start gap-4"
+            >
+              {/* Vertical connector + orb */}
+              <div className="flex flex-col items-center">
+                <PulsingOrb active={isActive} complete={isComplete} />
+                {i < GENERATION_STAGES.length - 1 && (
+                  <motion.div
+                    className="w-0.5 h-12"
+                    style={{
+                      background: isComplete ? "var(--teal)" : "var(--border)",
+                    }}
+                    animate={
+                      isComplete
+                        ? { background: "var(--teal)" }
+                        : {}
+                    }
+                    transition={{ duration: 0.4 }}
+                  />
+                )}
+              </div>
+
+              {/* Label + description */}
+              <div className="pt-2">
+                <motion.p
+                  className="text-base font-semibold"
+                  style={{
+                    color: isPending
+                      ? "var(--muted-light)"
+                      : "var(--foreground)",
+                  }}
+                  animate={
+                    isActive
+                      ? { opacity: [0.7, 1, 0.7] }
+                      : {}
+                  }
+                  transition={
+                    isActive
+                      ? { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                      : {}
+                  }
+                >
+                  {stage.label}
+                  {isActive && (
+                    <motion.span
+                      animate={{ opacity: [0, 1, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      ...
+                    </motion.span>
+                  )}
+                </motion.p>
+                <p
+                  className="text-sm mt-0.5"
+                  style={{
+                    color: isPending
+                      ? "var(--muted-light)"
+                      : "var(--muted)",
+                  }}
+                >
+                  {stage.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Animated gradient bar at bottom */}
+      <motion.div
+        className="h-1.5 rounded-full overflow-hidden"
+        style={{ background: "var(--border)" }}
+      >
+        <motion.div
+          className="h-full rounded-full"
+          style={{
+            background: "linear-gradient(90deg, var(--accent), var(--coral), var(--teal))",
+            backgroundSize: "200% 100%",
+          }}
+          animate={{
+            width: `${((stageIndex + 1) / GENERATION_STAGES.length) * 100}%`,
+            backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"],
+          }}
+          transition={{
+            width: { duration: 0.8, ease: "easeInOut" },
+            backgroundPosition: { duration: 3, repeat: Infinity, ease: "linear" },
+          }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------------
    Step Views
    ------------------------------------------------------------------ */
 
@@ -621,7 +843,15 @@ function StepAudience({
   );
 }
 
-function StepGenerate({ data }: { data: FormData }) {
+function StepGenerate({
+  data,
+  onGenerate,
+  isGenerating,
+}: {
+  data: FormData;
+  onGenerate: () => void;
+  isGenerating: boolean;
+}) {
   const summaryItems = [
     { label: "Product", value: data.productName, accent: false },
     { label: "Description", value: data.description, accent: false },
@@ -712,12 +942,17 @@ function StepGenerate({ data }: { data: FormData }) {
       {/* Generate button */}
       <motion.div variants={fadeUp}>
         <motion.button
-          className="w-full py-4 rounded-xl text-white text-lg font-semibold cursor-pointer relative overflow-hidden"
+          onClick={onGenerate}
+          disabled={isGenerating}
+          className={cn(
+            "w-full py-4 rounded-xl text-white text-lg font-semibold relative overflow-hidden",
+            isGenerating ? "cursor-not-allowed opacity-70" : "cursor-pointer"
+          )}
           style={{
             background: "linear-gradient(135deg, var(--accent), var(--coral))",
           }}
-          whileHover={{ scale: 1.01, boxShadow: "0 8px 30px rgba(124, 58, 237, 0.25)" }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={isGenerating ? {} : { scale: 1.01, boxShadow: "0 8px 30px rgba(124, 58, 237, 0.25)" }}
+          whileTap={isGenerating ? {} : { scale: 0.98 }}
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
             <Sparkles className="w-5 h-5" />
@@ -740,6 +975,7 @@ function StepGenerate({ data }: { data: FormData }) {
    ------------------------------------------------------------------ */
 
 export default function IntakePage() {
+  const router = useRouter();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -754,6 +990,12 @@ export default function IntakePage() {
     bio: "",
     audience: "",
     desiredOutcome: "",
+  });
+
+  const [generating, setGenerating] = useState<GeneratingState>({
+    active: false,
+    stage: "enrich",
+    error: null,
   });
 
   const update = useCallback((patch: Partial<FormData>) => {
@@ -785,11 +1027,120 @@ export default function IntakePage() {
   }, [step, canProceed]);
 
   const goBack = useCallback(() => {
-    if (step > 0) {
+    if (step > 0 && !generating.active) {
       setDirection(-1);
       setStep((s) => s - 1);
     }
-  }, [step]);
+  }, [step, generating.active]);
+
+  /* ----------------------------------------------------------------
+     Pitch generation pipeline
+     ---------------------------------------------------------------- */
+
+  const handleGenerate = useCallback(async () => {
+    setGenerating({ active: true, stage: "enrich", error: null });
+    setDirection(1);
+    setStep(5); // Move to generating screen
+
+    let enrichment: Record<string, unknown> | null = null;
+    let research: Record<string, unknown> | null = null;
+
+    try {
+      // --- Step 1: Enrich (only if user provided URLs) ---
+      const hasUrls =
+        formData.githubUrl.trim() ||
+        formData.websiteUrl.trim() ||
+        formData.linkedinUrl.trim();
+
+      if (hasUrls) {
+        const enrichRes = await fetch("/api/pitch/enrich", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            githubUrl: formData.githubUrl.trim() || undefined,
+            websiteUrl: formData.websiteUrl.trim() || undefined,
+            linkedinUrl: formData.linkedinUrl.trim() || undefined,
+          }),
+        });
+
+        if (!enrichRes.ok) {
+          const errBody = await enrichRes.json().catch(() => ({}));
+          throw new Error(
+            (errBody as Record<string, string>).error ||
+              `Enrichment failed (${enrichRes.status})`
+          );
+        }
+
+        const enrichData = await enrichRes.json();
+        enrichment = (enrichData as { enrichment: Record<string, unknown> }).enrichment;
+      }
+
+      // --- Step 2: Research ---
+      setGenerating((prev) => ({ ...prev, stage: "research" }));
+
+      const researchRes = await fetch("/api/pitch/research", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productName: formData.productName,
+          productDescription: formData.description,
+          audienceType: formData.audience,
+        }),
+      });
+
+      if (!researchRes.ok) {
+        const errBody = await researchRes.json().catch(() => ({}));
+        throw new Error(
+          (errBody as Record<string, string>).error ||
+            `Research failed (${researchRes.status})`
+        );
+      }
+
+      const researchData = await researchRes.json();
+      research = (researchData as { research: Record<string, unknown> }).research;
+
+      // --- Step 3: Generate slides ---
+      setGenerating((prev) => ({ ...prev, stage: "generate" }));
+
+      const generateRes = await fetch("/api/pitch/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productName: formData.productName,
+          productDescription: formData.description,
+          audienceType: formData.audience,
+          askAmount: formData.desiredOutcome,
+          research: research ?? undefined,
+          enrichment: enrichment ?? undefined,
+        }),
+      });
+
+      if (!generateRes.ok) {
+        const errBody = await generateRes.json().catch(() => ({}));
+        throw new Error(
+          (errBody as Record<string, string>).error ||
+            `Generation failed (${generateRes.status})`
+        );
+      }
+
+      // Success — redirect to the demo viewer
+      router.push("/pitch/demo");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setGenerating((prev) => ({ ...prev, active: false, error: message }));
+      // Stay on step 5 so user sees the error with a retry option
+    }
+  }, [formData, router]);
+
+  const handleRetry = useCallback(() => {
+    setGenerating({ active: false, stage: "enrich", error: null });
+    setStep(4); // Go back to the review step
+  }, []);
+
+  /* ----------------------------------------------------------------
+     Render
+     ---------------------------------------------------------------- */
 
   const renderStep = () => {
     switch (step) {
@@ -802,23 +1153,91 @@ export default function IntakePage() {
       case 3:
         return <StepAudience data={formData} update={update} />;
       case 4:
-        return <StepGenerate data={formData} />;
+        return (
+          <StepGenerate
+            data={formData}
+            onGenerate={handleGenerate}
+            isGenerating={generating.active}
+          />
+        );
+      case 5:
+        // Generating / error state
+        if (generating.error) {
+          return (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="space-y-8 text-center"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
+              >
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
+                  style={{ background: "var(--coral)", opacity: 0.15 }}
+                >
+                  <AlertCircle
+                    className="w-8 h-8"
+                    style={{ color: "var(--coral)" }}
+                  />
+                </div>
+              </motion.div>
+
+              <div>
+                <h2
+                  className="text-2xl font-bold"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Generation failed
+                </h2>
+                <p
+                  className="mt-2 text-base max-w-md mx-auto"
+                  style={{ color: "var(--muted)" }}
+                >
+                  {generating.error}
+                </p>
+              </div>
+
+              <motion.button
+                onClick={handleRetry}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold cursor-pointer"
+                style={{
+                  background: "var(--accent)",
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Go back and try again
+              </motion.button>
+            </motion.div>
+          );
+        }
+        return <GeneratingScreen state={generating} />;
       default:
         return null;
     }
   };
+
+  const showNav = step <= 4 && !generating.active;
 
   return (
     <div
       className="min-h-screen flex flex-col"
       style={{ background: "var(--background)" }}
     >
-      <StepIndicator current={step} total={STEPS.length} />
+      {step <= 4 && <StepIndicator current={Math.min(step, STEPS.length - 1)} total={STEPS.length} />}
 
       {/* Main content area */}
       <div
         ref={containerRef}
-        className="flex-1 flex items-center justify-center px-6 pt-24 pb-32"
+        className={cn(
+          "flex-1 flex items-center justify-center px-6 pb-32",
+          step <= 4 ? "pt-24" : "pt-12"
+        )}
       >
         <div className="w-full max-w-xl">
           <AnimatePresence mode="wait" custom={direction}>
@@ -838,63 +1257,65 @@ export default function IntakePage() {
       </div>
 
       {/* Bottom navigation */}
-      <div
-        className="fixed bottom-0 left-0 right-0 z-50"
-        style={{
-          background: "rgba(250, 250, 249, 0.85)",
-          backdropFilter: "blur(12px)",
-          borderTop: "1px solid var(--border)",
-        }}
-      >
-        <div className="max-w-xl mx-auto flex items-center justify-between px-6 py-4">
-          <motion.button
-            onClick={goBack}
-            className={cn(
-              "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer",
-              step === 0 && "opacity-0 pointer-events-none"
-            )}
-            style={{
-              color: "var(--muted)",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </motion.button>
-
-          {/* Step count */}
-          <span
-            className="text-xs font-mono"
-            style={{ color: "var(--muted-light)" }}
-          >
-            {step + 1}/{STEPS.length}
-          </span>
-
-          {step < STEPS.length - 1 ? (
+      {showNav && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-50"
+          style={{
+            background: "rgba(250, 250, 249, 0.85)",
+            backdropFilter: "blur(12px)",
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          <div className="max-w-xl mx-auto flex items-center justify-between px-6 py-4">
             <motion.button
-              onClick={goNext}
-              disabled={!canProceed()}
+              onClick={goBack}
               className={cn(
-                "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200",
-                !canProceed() && "opacity-40 cursor-not-allowed"
+                "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer",
+                step === 0 && "opacity-0 pointer-events-none"
               )}
               style={{
-                background: "var(--accent)",
+                color: "var(--muted)",
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
               }}
-              whileHover={canProceed() ? { scale: 1.02 } : {}}
-              whileTap={canProceed() ? { scale: 0.98 } : {}}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Next
-              <ArrowRight className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4" />
+              Back
             </motion.button>
-          ) : (
-            <div className="w-[88px]" /> // Spacer to keep layout balanced on last step
-          )}
+
+            {/* Step count */}
+            <span
+              className="text-xs font-mono"
+              style={{ color: "var(--muted-light)" }}
+            >
+              {step + 1}/{STEPS.length}
+            </span>
+
+            {step < STEPS.length - 1 ? (
+              <motion.button
+                onClick={goNext}
+                disabled={!canProceed()}
+                className={cn(
+                  "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200",
+                  !canProceed() && "opacity-40 cursor-not-allowed"
+                )}
+                style={{
+                  background: "var(--accent)",
+                }}
+                whileHover={canProceed() ? { scale: 1.02 } : {}}
+                whileTap={canProceed() ? { scale: 0.98 } : {}}
+              >
+                Next
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+            ) : (
+              <div className="w-[88px]" /> // Spacer to keep layout balanced on last step
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
