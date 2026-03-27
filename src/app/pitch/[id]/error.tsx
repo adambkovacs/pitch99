@@ -1,5 +1,7 @@
 "use client";
 
+import { AlertCircle } from "lucide-react";
+
 export default function PitchError({
   error,
   reset,
@@ -11,7 +13,7 @@ export default function PitchError({
     <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
       <div className="flex flex-col items-center gap-6 text-center px-6">
         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center">
-          <span className="text-2xl">!</span>
+          <AlertCircle className="w-8 h-8 text-red-500" aria-hidden="true" />
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-2" style={{ color: "var(--foreground)" }}>Failed to load pitch</h2>

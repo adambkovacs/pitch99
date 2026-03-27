@@ -331,7 +331,7 @@ export default function IntakePage() {
         ref={containerRef}
         className={cn(
           "flex-1 flex justify-center px-6 pb-32",
-          step <= 4 ? "pt-28" : "pt-12"
+          step <= 4 ? "pt-36" : "pt-12"
         )}
       >
         <div className="w-full max-w-2xl">
