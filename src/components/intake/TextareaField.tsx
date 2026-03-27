@@ -38,9 +38,10 @@ export function TextareaField({
         rows={rows}
         className={cn(
           "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 resize-none",
+          "bg-zinc-50/50",
           "placeholder:text-zinc-400",
           "hover:border-zinc-400",
-          "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+          "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:bg-white"
         )}
         style={{
           background: "var(--surface)",

@@ -330,8 +330,8 @@ export default function IntakePage() {
       <main
         ref={containerRef}
         className={cn(
-          "flex-1 flex items-center justify-center px-6 pb-32",
-          step <= 4 ? "pt-24" : "pt-12"
+          "flex-1 flex justify-center px-6 pb-32",
+          step <= 4 ? "pt-28" : "pt-12"
         )}
       >
         <div className="w-full max-w-2xl">
@@ -361,31 +361,32 @@ export default function IntakePage() {
           }}
           aria-label="Step navigation"
         >
-          <div className="max-w-2xl mx-auto flex items-center justify-between px-6 py-4">
-            <motion.button
-              onClick={goBack}
-              className={cn(
-                "flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer min-h-[44px]",
-                "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
-                step === 0 && "opacity-0 pointer-events-none"
+          <div className="max-w-2xl mx-auto flex items-center px-6 py-4">
+            {/* Left: Back button (fixed width so layout stays stable) */}
+            <div className="w-24">
+              {step > 0 && (
+                <motion.button
+                  onClick={goBack}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer",
+                    "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
+                  )}
+                  style={{
+                    color: "var(--foreground)",
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  aria-label="Go to previous step"
+                >
+                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                  Back
+                </motion.button>
               )}
-              style={{
-                color: "var(--foreground)",
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-              }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              aria-label="Go to previous step"
-              aria-disabled={step === 0}
-              tabIndex={step === 0 ? -1 : 0}
-            >
-              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              Back
-            </motion.button>
+            </div>
 
+            {/* Center: counter */}
             <span
-              className="text-xs font-mono"
+              className="flex-1 text-center text-xs font-mono"
               style={{ color: "var(--muted)" }}
               aria-live="polite"
               aria-atomic="true"
@@ -393,28 +394,29 @@ export default function IntakePage() {
               {step + 1}/{STEPS.length}
             </span>
 
-            {step < STEPS.length - 1 ? (
-              <motion.button
-                onClick={goNext}
-                disabled={!canProceed()}
-                className={cn(
-                  "flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200 min-h-[44px]",
-                  "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
-                  !canProceed() && "opacity-50 cursor-not-allowed"
-                )}
-                style={{
-                  background: "linear-gradient(90deg, #f97316, #ef4444)",
-                }}
-                whileHover={canProceed() ? { scale: 1.02 } : {}}
-                whileTap={canProceed() ? { scale: 0.98 } : {}}
-                aria-label="Go to next step"
-              >
-                Next
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </motion.button>
-            ) : (
-              <div className="w-[88px]" />
-            )}
+            {/* Right: Next button (fixed width) */}
+            <div className="w-24 flex justify-end">
+              {step < STEPS.length - 1 && (
+                <motion.button
+                  onClick={goNext}
+                  disabled={!canProceed()}
+                  className={cn(
+                    "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200",
+                    "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
+                    !canProceed() && "opacity-50 cursor-not-allowed"
+                  )}
+                  style={{
+                    background: "linear-gradient(90deg, #f97316, #ef4444)",
+                  }}
+                  whileHover={canProceed() ? { scale: 1.02 } : {}}
+                  whileTap={canProceed() ? { scale: 0.98 } : {}}
+                  aria-label="Go to next step"
+                >
+                  Next
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </motion.button>
+              )}
+            </div>
           </div>
         </nav>
       )}

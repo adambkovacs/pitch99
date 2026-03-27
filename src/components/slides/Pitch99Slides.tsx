@@ -82,7 +82,7 @@ function SlideProblem() {
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-8 shadow-sm relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="rounded-2xl bg-zinc-50/80 p-6 sm:p-8 relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-15`} />
             <div className="relative flex flex-col gap-5">
@@ -91,14 +91,14 @@ function SlideProblem() {
               </div>
               <div className="space-y-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl sm:text-4xl font-black text-zinc-900 font-mono tracking-tight leading-none">
+                  <span className="text-4xl sm:text-5xl font-black text-zinc-900 font-mono tracking-tight leading-none">
                     {stat.value}
                   </span>
                   {stat.unit && (
                     <span className="text-xs sm:text-sm text-zinc-400 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-sm text-zinc-500 leading-relaxed">{stat.label}</p>
+                <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -135,13 +135,13 @@ function SlideSolution() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="relative" data-animate>
-            <div className="rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-7 shadow-sm text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-5">
+            <div className="rounded-2xl bg-zinc-50/80 p-6 sm:p-7 text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-5">
               <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} shadow-md`}>
                 <span className="text-base font-bold text-white">{step.num}</span>
               </div>
               <div className="space-y-2">
                 <h3 className="font-bold text-lg text-zinc-900">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
+                <p className="text-sm leading-relaxed text-zinc-600">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
@@ -231,7 +231,7 @@ function SlideCTA() {
       </h2>
 
       {/* Subtext */}
-      <p data-animate className="text-zinc-600 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
@@ -240,7 +240,7 @@ function SlideCTA() {
       <div data-animate className="flex flex-col sm:flex-row gap-4 items-center">
         <a
           href="/intake"
-          className="px-10 py-4 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
+          className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
         >
           Create Your Pitch
         </a>
@@ -248,14 +248,14 @@ function SlideCTA() {
           href="https://github.com/adambkovacs/pitch99"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-10 py-4 rounded-full border-2 border-zinc-300 text-zinc-700 text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all"
+          className="px-8 py-3.5 rounded-xl border-2 border-zinc-300 text-zinc-700 text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all"
         >
           View on GitHub
         </a>
       </div>
 
       {/* Tech stack */}
-      <div data-animate className="mt-16 flex items-center gap-6 text-[11px] text-zinc-400 font-mono uppercase tracking-[0.2em]">
+      <div data-animate className="mt-16 flex items-center gap-8 text-[11px] text-zinc-400 font-mono uppercase tracking-[0.25em]">
         <span>Next.js</span>
         <span className="w-1 h-1 rounded-full bg-zinc-300" />
         <span>OpenRouter</span>

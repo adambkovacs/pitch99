@@ -44,11 +44,11 @@ function PulsingOrb({
           className="absolute inset-0 rounded-full"
           style={{ background: "var(--accent)" }}
           animate={{
-            scale: [1, 1.6, 1],
+            scale: [1, 1.4, 1],
             opacity: [0.4, 0, 0.4],
           }}
           transition={{
-            duration: 1.8,
+            duration: 2.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -204,7 +204,7 @@ export function GeneratingScreen({
                       : "var(--foreground)",
                   }}
                   animate={
-                    isActive ? { opacity: [0.7, 1, 0.7] } : {}
+                    isActive ? { opacity: [0.8, 1, 0.8] } : {}
                   }
                   transition={
                     isActive
@@ -271,7 +271,7 @@ export function GeneratingScreen({
           transition={{
             width: { duration: 0.8, ease: "easeInOut" },
             backgroundPosition: {
-              duration: 3,
+              duration: 4,
               repeat: Infinity,
               ease: "linear",
             },

@@ -17,7 +17,7 @@ interface AnimatedCounterProps {
 export default function AnimatedCounter({
   from = 0,
   to,
-  duration = 2,
+  duration = 2.5,
   delay = 0,
   suffix = "",
   prefix = "",
@@ -32,7 +32,7 @@ export default function AnimatedCounter({
     const timeout = setTimeout(() => {
       controls = animate(count, to, {
         duration,
-        ease: "easeOut",
+        ease: [0.16, 1, 0.3, 1],
         onUpdate: (v) => setDisplay(v.toFixed(decimals)),
       });
     }, delay * 1000);

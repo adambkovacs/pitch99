@@ -157,7 +157,7 @@ export function SlideTitle({ eyebrow, title, subtitle, className }: SlideTitlePr
         {title}
       </h2>
       {subtitle && (
-        <p data-animate className="text-sm max-w-lg leading-relaxed" style={{ color: tokens.muted }}>
+        <p data-animate className="text-base max-w-lg leading-relaxed" style={{ color: tokens.muted }}>
           {subtitle}
         </p>
       )}
@@ -179,7 +179,7 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
         >
           <div
             className="absolute inset-0 opacity-15 pointer-events-none"
@@ -243,7 +243,7 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
       {steps.map((step, i) => (
         <div key={step.num} className="relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center gap-5"
+            className="text-center h-full rounded-2xl bg-zinc-50/80 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center gap-5"
           >
             <div
               className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br shadow-md", step.gradient)}
@@ -298,7 +298,7 @@ export function SlideMetricBar({ metrics, className }: SlideMetricBarProps) {
         return (
           <div key={metric.label} data-animate className="space-y-1.5">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-medium text-zinc-700">{metric.label}</span>
+              <span className="font-medium text-zinc-600">{metric.label}</span>
               <span className="font-mono font-bold" style={{ color: metric.color }}>
                 {metric.value}
               </span>
@@ -345,7 +345,7 @@ export function SlideCTABlock({
         <a
           href={primaryAction.href}
           className={cn(
-            "px-10 py-4 rounded-full text-white font-bold text-base",
+            "px-8 py-3.5 rounded-xl text-white font-bold text-base",
             "bg-gradient-to-r from-orange-500 to-red-500",
             "hover:from-orange-400 hover:to-red-400 transition-all",
             "shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40",
@@ -358,7 +358,7 @@ export function SlideCTABlock({
           <a
             href={secondaryAction.href}
             className={cn(
-              "px-10 py-4 rounded-full text-base font-semibold",
+              "px-8 py-3.5 rounded-xl text-base font-semibold",
               "border-2 border-zinc-300 text-zinc-700",
               "hover:border-orange-500/50 hover:text-zinc-900 transition-all",
             )}

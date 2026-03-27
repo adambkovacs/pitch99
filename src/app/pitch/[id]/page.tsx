@@ -42,7 +42,7 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
           </div>
           <a
             href="/intake"
-            className="px-6 py-2.5 rounded-full bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
+            className="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
           >
             Create a new pitch
           </a>
@@ -66,7 +66,7 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
           </div>
           <a
             href="/intake"
-            className="px-6 py-2.5 rounded-full bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
+            className="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
           >
             Try again
           </a>
@@ -101,7 +101,7 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
           </div>
           <a
             href="/intake"
-            className="px-6 py-2.5 rounded-full bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
+            className="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
           >
             Create a new pitch
           </a>
@@ -137,7 +137,7 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
 
   return (
     <div className="relative">
-      <div className="fixed top-4 left-4 z-50 px-3 py-1.5 rounded-full bg-teal-500 text-white text-xs font-semibold shadow-md">
+      <div className="fixed top-4 left-4 z-50 px-3 py-1.5 rounded-xl bg-teal-500 text-white text-xs font-semibold shadow-md">
         Generated pitch
       </div>
       <SlidePresentation slides={slides} />

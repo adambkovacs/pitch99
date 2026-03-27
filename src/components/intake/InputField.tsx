@@ -50,9 +50,10 @@ export function InputField({
           placeholder={placeholder}
           className={cn(
             "w-full rounded-xl border py-3.5 text-base outline-none transition-all duration-200",
+            "bg-zinc-50/50",
             "placeholder:text-zinc-400",
             "hover:border-zinc-400",
-            "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500",
+            "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:bg-white",
             Icon ? "pl-11 pr-4" : "px-4"
           )}
           style={{

@@ -54,7 +54,7 @@ export function FileDropZone({
             : "#d4d4d8",
           background: isDragActive
             ? "var(--accent-soft)"
-            : "var(--surface)",
+            : "rgba(250, 250, 249, 0.5)",
         }}
         aria-labelledby="file-upload-label"
         aria-describedby={dropzoneDescId}
@@ -70,7 +70,7 @@ export function FileDropZone({
           transition={{ duration: 0.2 }}
         >
           <Upload
-            className="w-8 h-8 mx-auto mb-3"
+            className="w-10 h-10 mx-auto mb-3"
             style={{
               color: isDragActive ? "var(--accent)" : "var(--muted)",
             }}

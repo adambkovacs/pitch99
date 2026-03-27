@@ -78,15 +78,14 @@ export function StepGenerate({
         variants={fadeUp}
         className="rounded-2xl overflow-hidden shadow-sm"
         style={{
-          background: "var(--surface)",
-          border: "2px solid var(--border)",
+          background: "rgb(244 244 245)",
         }}
       >
         <div
           className="px-6 py-3 border-b font-semibold text-sm tracking-wide uppercase"
           style={{
             borderColor: "var(--border)",
-            background: "var(--accent-soft)",
+            background: "rgb(228 228 231)",
             color: "var(--foreground)",
           }}
         >

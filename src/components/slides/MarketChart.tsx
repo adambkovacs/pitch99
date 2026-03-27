@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useCallback } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,6 +8,8 @@ import {
   BarElement,
   Tooltip,
   type ChartOptions,
+  type ScriptableContext,
+  type Color,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
@@ -31,9 +34,22 @@ interface MarketChartProps {
  */
 function extractColor(color?: string): string {
   if (!color) return "#f97316";
-  // Pull the first hex color from a gradient like "linear-gradient(90deg, #f97316, #fb923c)"
   const match = color.match(/#[0-9a-fA-F]{6}/);
   return match ? match[0] : color;
+}
+
+/**
+ * Lighten a hex color by mixing it toward white.
+ * `amount` is 0..1 where 1 = fully white.
+ */
+function lightenColor(hex: string, amount: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const lr = Math.round(r + (255 - r) * amount);
+  const lg = Math.round(g + (255 - g) * amount);
+  const lb = Math.round(b + (255 - b) * amount);
+  return `#${lr.toString(16).padStart(2, "0")}${lg.toString(16).padStart(2, "0")}${lb.toString(16).padStart(2, "0")}`;
 }
 
 export default function MarketChart({
@@ -41,20 +57,45 @@ export default function MarketChart({
   title,
   suffix = "",
 }: MarketChartProps) {
+  const chartRef = useRef<ChartJS<"bar"> | null>(null);
 
-  const labels = data.map((d) => `${d.label}  ${d.value}${suffix}`);
+  const labels = data.map((d) => d.label);
   const values = data.map((d) => d.value);
-  const colors = data.map((d) => extractColor(d.color));
+  const baseColors = data.map((d) => extractColor(d.color));
+
+  /**
+   * Build horizontal gradients for each bar.
+   * We need the chart's canvas context and scales to be ready,
+   * so this runs as a scriptable backgroundColor callback.
+   */
+  const getGradientBg = useCallback(
+    (ctx: ScriptableContext<"bar">): Color | undefined => {
+      const { chart, dataIndex } = ctx;
+      const { ctx: canvasCtx, chartArea } = chart;
+      if (!chartArea) return baseColors[dataIndex];
+      const gradient = canvasCtx.createLinearGradient(
+        chartArea.left,
+        0,
+        chartArea.right,
+        0,
+      );
+      const base = baseColors[dataIndex];
+      gradient.addColorStop(0, base);
+      gradient.addColorStop(1, lightenColor(base, 0.35));
+      return gradient;
+    },
+    [baseColors],
+  );
 
   const chartData = {
     labels,
     datasets: [
       {
         data: values,
-        backgroundColor: colors,
-        borderRadius: 6,
+        backgroundColor: getGradientBg,
+        borderRadius: 8,
         borderSkipped: false as const,
-        barThickness: 28,
+        barThickness: 32,
       },
     ],
   };
@@ -69,6 +110,7 @@ export default function MarketChart({
         backgroundColor: "#1c1917",
         titleColor: "#fafaf9",
         bodyColor: "#fafaf9",
+        bodyFont: { family: "monospace", size: 13 },
         padding: 12,
         cornerRadius: 8,
         callbacks: {
@@ -77,20 +119,30 @@ export default function MarketChart({
       },
     },
     scales: {
-      x: { display: false },
+      x: {
+        display: true,
+        grid: { color: "rgba(0,0,0,0.04)", lineWidth: 1 },
+        border: { display: false },
+        ticks: {
+          color: "#a1a1aa",
+          font: { family: "monospace", size: 11 },
+          callback: (value) => `${value}${suffix}`,
+        },
+      },
       y: {
         ticks: {
           color: "#3f3f46",
-          font: { family: "Inter", size: 13 },
+          font: { family: "Inter", size: 13, weight: "bold" },
+          padding: 8,
         },
         grid: { display: false },
         border: { display: false },
       },
     },
     animation: {
-      duration: 1200,
+      duration: 1400,
       easing: "easeOutQuart",
-      delay: (context) => context.dataIndex * 200,
+      delay: (context) => context.dataIndex * 220,
     },
   };
 
@@ -98,7 +150,7 @@ export default function MarketChart({
     <div className="w-full max-w-lg mx-auto">
       {title && (
         <h3
-          className="text-sm font-mono uppercase tracking-widest text-zinc-600 font-semibold mb-6"
+          className="text-[11px] font-semibold font-mono uppercase tracking-widest text-zinc-500 mb-6"
           data-animate
         >
           {title}
@@ -106,6 +158,7 @@ export default function MarketChart({
       )}
       <div style={{ height: 280 }}>
         <Bar
+          ref={chartRef}
           data={chartData}
           options={options}
           aria-label={title ? `${title} bar chart` : "Market data bar chart"}
