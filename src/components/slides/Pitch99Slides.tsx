@@ -25,7 +25,7 @@ function SlideHook() {
         />
       </motion.div>
 
-      <h1 data-animate className="text-3xl sm:text-5xl font-bold mb-6 tracking-tight leading-tight text-zinc-900">
+      <h1 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight text-zinc-900">
         As an entrepreneur, you have
         <br />
         <span className="text-red-600">99 problems.</span>
@@ -65,18 +65,18 @@ function SlideProblem() {
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-base font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
         The Problem
       </div>
-      <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
+      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-700 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-700 text-center mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
 
-      <div className="grid grid-cols-2 gap-6 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-8 w-full max-w-2xl">
         {stats.map((stat) => (
           <div
             key={stat.label}
@@ -95,7 +95,7 @@ function SlideProblem() {
                     <span className="text-sm text-zinc-500 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
+                <p className="text-base text-zinc-600 leading-relaxed">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -118,18 +118,18 @@ function SlideSolution() {
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-base font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
         The Solution
       </div>
-      <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
+      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-700 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-700 text-center mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-5 w-full max-w-4xl">
+      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="flex-1 relative" data-animate>
             <div className="rounded-2xl border border-zinc-200/80 bg-white px-6 py-8 shadow-sm text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4">

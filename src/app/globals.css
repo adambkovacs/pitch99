@@ -174,7 +174,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
@@ -195,7 +195,7 @@ body {
   bottom: 2rem;
   right: 2rem;
   z-index: 50;
-  opacity: 0.3;
+  opacity: 0.5;
   font-size: 0.7rem;
   color: var(--muted);
   font-family: 'JetBrains Mono', monospace;

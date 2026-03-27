@@ -21,8 +21,23 @@ export default function SlidePresentation({
 }: SlidePresentationProps) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [scale, setScale] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
   const total = slides.length;
+
+  // Viewport-aware scaling for projector presentations
+  useEffect(() => {
+    const updateScale = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const baseWidth = 1280;
+      const s = Math.min(vw / baseWidth, vh / 720);
+      setScale(Math.max(0.6, Math.min(s, 1.4)));
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   const goTo = useCallback(
     (index: number) => {
@@ -108,7 +123,7 @@ export default function SlidePresentation({
       onTouchEnd={handleTouchEnd}
     >
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-200">
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-100">
         <motion.div
           className="h-full bg-gradient-to-r from-orange-500 to-red-500"
           initial={false}
@@ -118,7 +133,7 @@ export default function SlidePresentation({
       </div>
 
       {/* Slide counter */}
-      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-400">
+      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-500">
         <span className="text-orange-600 font-bold">{String(current + 1).padStart(2, "0")}</span>
         <span className="mx-1">/</span>
         <span>{String(total).padStart(2, "0")}</span>
@@ -144,7 +159,9 @@ export default function SlidePresentation({
             background: slides[current]?.background ?? "transparent",
           }}
         >
-          {slides[current]?.content}
+          <div style={{ transform: `scale(${scale})`, transformOrigin: 'center center' }}>
+            {slides[current]?.content}
+          </div>
         </motion.div>
       </AnimatePresence>
 

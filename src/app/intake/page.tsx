@@ -1370,7 +1370,7 @@ export default function IntakePage() {
                   !canProceed() && "opacity-40 cursor-not-allowed"
                 )}
                 style={{
-                  background: "var(--accent)",
+                  background: "linear-gradient(90deg, #ea580c, #dc2626)",
                 }}
                 whileHover={canProceed() ? { scale: 1.02 } : {}}
                 whileTap={canProceed() ? { scale: 0.98 } : {}}
