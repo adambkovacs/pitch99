@@ -150,6 +150,7 @@ body {
 .animate-shimmer {
   background-size: 200% 100%;
   animation: shimmer 2s linear infinite;
+  will-change: background-position;
 }
 
 /* =========================================

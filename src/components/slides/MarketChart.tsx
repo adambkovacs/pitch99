@@ -1,19 +1,17 @@
 "use client";
 
-import { useRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
   Tooltip,
   type ChartOptions,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 // Register Chart.js components (tree-shake)
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 interface BarData {
   label: string;
@@ -25,7 +23,6 @@ interface MarketChartProps {
   data: BarData[];
   title?: string;
   suffix?: string;
-  animate?: boolean;
 }
 
 /**
@@ -43,10 +40,7 @@ export default function MarketChart({
   data,
   title,
   suffix = "",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  animate = true,
 }: MarketChartProps) {
-  const ref = useRef<HTMLDivElement>(null);
 
   const labels = data.map((d) => `${d.label}  ${d.value}${suffix}`);
   const values = data.map((d) => d.value);
@@ -101,7 +95,7 @@ export default function MarketChart({
   };
 
   return (
-    <div ref={ref} className="w-full max-w-lg mx-auto">
+    <div className="w-full max-w-lg mx-auto">
       {title && (
         <h3
           className="text-sm font-mono uppercase tracking-widest text-zinc-600 font-semibold mb-6"
@@ -111,7 +105,12 @@ export default function MarketChart({
         </h3>
       )}
       <div style={{ height: 280 }}>
-        <Bar data={chartData} options={options} />
+        <Bar
+          data={chartData}
+          options={options}
+          aria-label={title ? `${title} bar chart` : "Market data bar chart"}
+          role="img"
+        />
       </div>
     </div>
   );

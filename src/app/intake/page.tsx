@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
@@ -17,6 +17,7 @@ import { StepPitcher } from "@/components/intake/steps/StepPitcher";
 import { StepAudience } from "@/components/intake/steps/StepAudience";
 import { StepGenerate } from "@/components/intake/steps/StepGenerate";
 import type { PitchFormData, GeneratingState } from "@/components/intake/types";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export default function IntakePage() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function IntakePage() {
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const [formData, setFormData] = useState<PitchFormData>({
     productName: "",
@@ -84,7 +86,17 @@ export default function IntakePage() {
      Pitch generation pipeline
      ---------------------------------------------------------------- */
 
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort();
+    };
+  }, []);
+
   const handleGenerate = useCallback(async () => {
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
+    const { signal } = abortRef.current;
+
     setGenerating({ active: true, stage: "enrich", error: null });
     setDirection(1);
     setStep(5);
@@ -107,6 +119,7 @@ export default function IntakePage() {
             websiteUrl: formData.websiteUrl.trim() || undefined,
             linkedinUrl: formData.linkedinUrl.trim() || undefined,
           }),
+          signal,
         });
 
         if (!enrichRes.ok) {
@@ -131,6 +144,7 @@ export default function IntakePage() {
           productDescription: formData.description,
           audienceType: formData.audience,
         }),
+        signal,
       });
 
       if (!researchRes.ok) {
@@ -157,6 +171,7 @@ export default function IntakePage() {
           research: research ?? undefined,
           enrichment: enrichment ?? undefined,
         }),
+        signal,
       });
 
       if (!generateRes.ok) {
@@ -308,6 +323,7 @@ export default function IntakePage() {
   const showNav = step <= 4 && !generating.active;
 
   return (
+    <SmoothScroll>
     <div className="min-h-screen flex flex-col" style={{ background: "var(--background)" }}>
       {step <= 4 && <StepIndicator current={Math.min(step, STEPS.length - 1)} total={STEPS.length} />}
 
@@ -403,5 +419,6 @@ export default function IntakePage() {
         </nav>
       )}
     </div>
+    </SmoothScroll>
   );
 }

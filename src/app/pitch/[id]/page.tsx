@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";
@@ -130,7 +130,10 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
     generatedAt: new Date(pitch.createdAt).toISOString(),
   };
 
-  const slides: SlideData[] = buildSlidesFromGenerated(generatedPitch);
+  const slides: SlideData[] = useMemo(
+    () => buildSlidesFromGenerated(generatedPitch),
+    [pitch._id],
+  );
 
   return (
     <div className="relative">

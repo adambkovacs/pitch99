@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Clock, RefreshCw, Hourglass, TrendingDown } from "lucide-react";
 import SlidePresentation, { type SlideData } from "./SlidePresentation";
@@ -270,34 +271,33 @@ function SlideCTA() {
 /* ─────────────────────────────────────────
    SLIDE ASSEMBLY
    ───────────────────────────────────────── */
-const slides: SlideData[] = [
-  {
-    id: 0,
-    content: <SlideHook />,
-    background: "radial-gradient(ellipse at 50% 20%, rgba(251,146,60,0.10) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
-  },
-  {
-    id: 1,
-    content: <SlideProblem />,
-    background: "radial-gradient(ellipse at 30% 70%, rgba(239,68,68,0.08) 0%, transparent 60%)",
-  },
-  {
-    id: 2,
-    content: <SlideSolution />,
-    background: "radial-gradient(ellipse at 70% 30%, rgba(251,146,60,0.09) 0%, rgba(239,68,68,0.06) 40%, transparent 70%)",
-  },
-  {
-    id: 3,
-    content: <SlideMarket />,
-    background: "radial-gradient(ellipse at 40% 50%, rgba(251,146,60,0.09) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
-  },
-  {
-    id: 4,
-    content: <SlideCTA />,
-    background: "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.12) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
-  },
-];
-
 export default function Pitch99Slides() {
+  const slides = useMemo<SlideData[]>(() => [
+    {
+      id: 0,
+      content: <SlideHook />,
+      background: "radial-gradient(ellipse at 50% 20%, rgba(251,146,60,0.10) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+    },
+    {
+      id: 1,
+      content: <SlideProblem />,
+      background: "radial-gradient(ellipse at 30% 70%, rgba(239,68,68,0.08) 0%, transparent 60%)",
+    },
+    {
+      id: 2,
+      content: <SlideSolution />,
+      background: "radial-gradient(ellipse at 70% 30%, rgba(251,146,60,0.09) 0%, rgba(239,68,68,0.06) 40%, transparent 70%)",
+    },
+    {
+      id: 3,
+      content: <SlideMarket />,
+      background: "radial-gradient(ellipse at 40% 50%, rgba(251,146,60,0.09) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+    },
+    {
+      id: 4,
+      content: <SlideCTA />,
+      background: "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.12) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+    },
+  ], []);
   return <SlidePresentation slides={slides} />;
 }

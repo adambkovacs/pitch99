@@ -116,11 +116,16 @@ export default function SlidePresentation({
         />
       </div>
 
-      {/* Slide counter */}
-      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-500">
-        <span className="text-orange-600 font-bold">{String(current + 1).padStart(2, "0")}</span>
+      {/* Slide counter (decorative — live region below announces for SR) */}
+      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-500" aria-hidden="true">
+        <span className="text-orange-600 font-bold" data-testid="slide-current">{String(current + 1).padStart(2, "0")}</span>
         <span className="mx-1">/</span>
         <span>{String(total).padStart(2, "0")}</span>
+      </div>
+
+      {/* Live region for screen reader slide announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {`Slide ${current + 1} of ${total}`}
       </div>
 
       {/* Slides */}
@@ -157,12 +162,13 @@ export default function SlidePresentation({
             onClick={() => goTo(i)}
             className={`slide-dot ${i === current ? "active" : ""}`}
             aria-label={`Go to slide ${i + 1}`}
+            aria-current={i === current ? "true" : undefined}
           />
         ))}
       </div>
 
       {/* Keyboard hint */}
-      <div className="keyboard-hint">
+      <div className="keyboard-hint" aria-hidden="true">
         <span className="inline-flex items-center gap-2">
           <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">←</kbd>
           <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">→</kbd>

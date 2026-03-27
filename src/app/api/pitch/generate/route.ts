@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { chatCompletion, MODELS } from "@/lib/openrouter";
 import { rateLimit } from "@/lib/rateLimit";
+import { validatePitchRequest, parseAIResponse } from "@/lib/validation";
 
 interface GenerateRequest {
   productName: string;
@@ -14,14 +15,6 @@ interface GenerateRequest {
   research?: Record<string, unknown>;
   enrichment?: Record<string, unknown>;
 }
-
-const VALID_AUDIENCE_TYPES = [
-  "investors",
-  "customers",
-  "partners",
-  "general",
-  "competition",
-];
 
 export async function POST(request: Request) {
   try {
@@ -39,33 +32,8 @@ export async function POST(request: Request) {
     const body = (await request.json()) as GenerateRequest;
     const { productName, productDescription, audienceType } = body;
 
-    if (!productName || !productDescription || !audienceType) {
-      return NextResponse.json(
-        { error: "Missing required fields: productName, productDescription, audienceType" },
-        { status: 400 }
-      );
-    }
-
-    if (productName.length > 200) {
-      return NextResponse.json(
-        { error: "productName must be 200 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    if (productDescription.length > 5000) {
-      return NextResponse.json(
-        { error: "productDescription must be 5000 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    if (!VALID_AUDIENCE_TYPES.includes(audienceType.toLowerCase())) {
-      return NextResponse.json(
-        { error: `Invalid audienceType. Must be one of: ${VALID_AUDIENCE_TYPES.join(", ")}` },
-        { status: 400 }
-      );
-    }
+    const validationError = validatePitchRequest(body);
+    if (validationError) return validationError;
 
     // Prompt injection mitigation: length caps on optional fields
     if (body.askAmount && body.askAmount.length > 200) {
@@ -162,7 +130,7 @@ Generate exactly 5 slides in this order:
 
 Return a JSON object: { "slides": [...] }`;
 
-    const result = await chatCompletion({
+    const rawResult = await chatCompletion({
       model: MODELS.AGENTIC,
       messages: [
         { role: "system", content: systemPrompt },
@@ -172,23 +140,13 @@ Return a JSON object: { "slides": [...] }`;
       max_tokens: 4096,
     });
 
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(result);
-    } catch {
-      const jsonMatch = result.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (jsonMatch?.[1]) {
-        try {
-          parsed = JSON.parse(jsonMatch[1].trim());
-        } catch {
-          throw new Error("Failed to parse AI response as JSON");
-        }
-      } else {
-        throw new Error("Failed to parse AI response as JSON");
-      }
+    const result = parseAIResponse(rawResult);
+    const slides = (result as { slides?: unknown[] }).slides;
+    if (!Array.isArray(slides)) {
+      throw new Error("AI response missing slides array");
     }
 
-    return NextResponse.json(parsed);
+    return NextResponse.json({ slides });
   } catch (error) {
     console.error("[generate] error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

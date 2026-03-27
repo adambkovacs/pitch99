@@ -11,7 +11,9 @@ export default function ConvexProvider({ children }: { children: ReactNode }) {
   }, []);
 
   if (!client) {
-    // Render without Convex when URL not available (SSG/build time)
+    if (process.env.NODE_ENV === "development") {
+      console.warn("NEXT_PUBLIC_CONVEX_URL is not set — Convex features will not work");
+    }
     return <>{children}</>;
   }
 

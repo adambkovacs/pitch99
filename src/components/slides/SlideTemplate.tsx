@@ -336,7 +336,7 @@ export function SlideCTABlock({
           {subtext}
         </p>
       )}
-      <motion.div data-animate className="flex flex-col sm:flex-row gap-3 items-center">
+      <motion.div className="flex flex-col sm:flex-row gap-3 items-center">
         <a
           href={primaryAction.href}
           className={cn(

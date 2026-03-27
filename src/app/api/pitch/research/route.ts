@@ -1,20 +1,13 @@
 import { NextResponse } from "next/server";
 import { chatCompletion, MODELS } from "@/lib/openrouter";
 import { rateLimit } from "@/lib/rateLimit";
+import { validatePitchRequest, parseAIResponse } from "@/lib/validation";
 
 interface ResearchRequest {
   productName: string;
   productDescription: string;
   audienceType: string;
 }
-
-const VALID_AUDIENCE_TYPES = [
-  "investors",
-  "customers",
-  "partners",
-  "general",
-  "competition",
-];
 
 export async function POST(request: Request) {
   try {
@@ -32,33 +25,8 @@ export async function POST(request: Request) {
     const body = (await request.json()) as ResearchRequest;
     const { productName, productDescription, audienceType } = body;
 
-    if (!productName || !productDescription || !audienceType) {
-      return NextResponse.json(
-        { error: "Missing required fields: productName, productDescription, audienceType" },
-        { status: 400 }
-      );
-    }
-
-    if (productName.length > 200) {
-      return NextResponse.json(
-        { error: "productName must be 200 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    if (productDescription.length > 5000) {
-      return NextResponse.json(
-        { error: "productDescription must be 5000 characters or fewer." },
-        { status: 400 }
-      );
-    }
-
-    if (!VALID_AUDIENCE_TYPES.includes(audienceType.toLowerCase())) {
-      return NextResponse.json(
-        { error: `Invalid audienceType. Must be one of: ${VALID_AUDIENCE_TYPES.join(", ")}` },
-        { status: 400 }
-      );
-    }
+    const validationError = validatePitchRequest(body);
+    if (validationError) return validationError;
 
     const systemPrompt = `You are a startup pitch research analyst. You conduct deep market research and return structured JSON data. Always respond with valid JSON only — no markdown, no code fences, no explanation outside the JSON.`;
 
@@ -127,22 +95,7 @@ Provide comprehensive research in this exact JSON structure:
       max_tokens: 4096,
     });
 
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(result);
-    } catch {
-      // If the model wraps in code fences, try to extract JSON
-      const jsonMatch = result.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (jsonMatch?.[1]) {
-        try {
-          parsed = JSON.parse(jsonMatch[1].trim());
-        } catch {
-          throw new Error("Failed to parse AI response as JSON");
-        }
-      } else {
-        throw new Error("Failed to parse AI response as JSON");
-      }
-    }
+    const parsed = parseAIResponse(result);
 
     return NextResponse.json({ research: parsed });
   } catch (error) {

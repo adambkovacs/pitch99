@@ -57,6 +57,7 @@ export function StepIndicator({
           backdropFilter: "blur(12px)",
         }}
         aria-label="Form progress"
+        role="list"
       >
         {STEPS.map((step, i) => {
           const Icon = step.icon;

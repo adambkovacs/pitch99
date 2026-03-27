@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import ConvexProvider from "@/components/ConvexProvider";
-import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const inter = Inter({
@@ -56,9 +55,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className="antialiased">
-        <SmoothScroll>
-          <ConvexProvider>{children}</ConvexProvider>
-        </SmoothScroll>
+        <ConvexProvider>{children}</ConvexProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import SlidePresentation, { type SlideData } from '@/components/slides/SlidePresentation'
 
@@ -42,52 +43,56 @@ describe('SlidePresentation', () => {
     expect(dots).toHaveLength(5)
   })
 
-  it('advances to next slide on ArrowRight keydown', () => {
+  it('advances to next slide on ArrowRight keydown', async () => {
+    const user = userEvent.setup()
     render(<SlidePresentation slides={mockSlides} />)
 
     // Initially shows slide 01
     expect(screen.getByText('01')).toBeInTheDocument()
     expect(screen.getByText('Slide 1 Content')).toBeInTheDocument()
 
-    fireEvent.keyDown(window, { key: 'ArrowRight' })
+    await user.keyboard('{ArrowRight}')
 
     expect(screen.getByText('02')).toBeInTheDocument()
     expect(screen.getByText('Slide 2 Content')).toBeInTheDocument()
   })
 
-  it('goes back on ArrowLeft keydown', () => {
+  it('goes back on ArrowLeft keydown', async () => {
+    const user = userEvent.setup()
     render(<SlidePresentation slides={mockSlides} />)
 
     // Go forward first
-    fireEvent.keyDown(window, { key: 'ArrowRight' })
+    await user.keyboard('{ArrowRight}')
     expect(screen.getByText('02')).toBeInTheDocument()
 
     // Then go back
-    fireEvent.keyDown(window, { key: 'ArrowLeft' })
+    await user.keyboard('{ArrowLeft}')
     expect(screen.getByText('01')).toBeInTheDocument()
     expect(screen.getByText('Slide 1 Content')).toBeInTheDocument()
   })
 
-  it('does not go past the last slide', () => {
+  it('does not go past the last slide', async () => {
+    const user = userEvent.setup()
     render(<SlidePresentation slides={mockSlides} />)
 
     // Navigate to the last slide
     for (let i = 0; i < 10; i++) {
-      fireEvent.keyDown(window, { key: 'ArrowRight' })
+      await user.keyboard('{ArrowRight}')
     }
 
     // Should be clamped at slide 5 — both current and total show "05",
-    // so check the current counter specifically via its class
-    const currentCounter = document.querySelector('.text-orange-600.font-bold')
+    // so check the current counter specifically via data-testid
+    const currentCounter = screen.getByTestId('slide-current')
     expect(currentCounter).toHaveTextContent('05')
     expect(screen.getByText('Slide 5 Content')).toBeInTheDocument()
   })
 
-  it('does not go before the first slide', () => {
+  it('does not go before the first slide', async () => {
+    const user = userEvent.setup()
     render(<SlidePresentation slides={mockSlides} />)
 
     // Try to go back from the first slide
-    fireEvent.keyDown(window, { key: 'ArrowLeft' })
+    await user.keyboard('{ArrowLeft}')
 
     // Should still be at slide 1
     expect(screen.getByText('01')).toBeInTheDocument()

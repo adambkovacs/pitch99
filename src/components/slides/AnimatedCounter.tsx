@@ -45,6 +45,7 @@ export default function AnimatedCounter({
   return (
     <motion.span
       className={className}
+      aria-label={`${prefix}${to.toFixed(decimals)}${suffix}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
