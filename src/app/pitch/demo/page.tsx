@@ -129,7 +129,7 @@ export default function PitchDemoPage() {
   return (
     <div className="relative">
       {source === "generated" && (
-        <div className="fixed top-4 left-4 z-50 px-3 py-1.5 rounded-full bg-teal-500 text-white text-xs font-semibold shadow-md">
+        <div className="fixed top-4 left-4 z-50 px-3 py-1.5 rounded-xl bg-teal-500 text-white text-xs font-semibold shadow-md">
           Generated pitch
         </div>
       )}

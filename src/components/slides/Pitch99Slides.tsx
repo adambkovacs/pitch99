@@ -240,7 +240,7 @@ function SlideCTA() {
       <div data-animate className="flex flex-col sm:flex-row gap-4 items-center">
         <a
           href="/intake"
-          className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
+          className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:ring-offset-2"
         >
           Create Your Pitch
         </a>
@@ -248,7 +248,7 @@ function SlideCTA() {
           href="https://github.com/adambkovacs/pitch99"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-8 py-3.5 rounded-xl border-2 border-zinc-300 text-zinc-700 text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all"
+          className="px-8 py-3.5 rounded-xl border-2 border-zinc-300 text-zinc-700 text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           View on GitHub
         </a>

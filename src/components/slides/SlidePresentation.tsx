@@ -179,7 +179,7 @@ export default function SlidePresentation({
       {/* Click zones for navigation */}
       <button
         onClick={prev}
-        className="absolute left-0 top-0 w-1/5 h-full z-40 cursor-w-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-white transition-opacity"
+        className="absolute left-0 top-0 w-1/5 h-full z-40 cursor-w-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-orange-500 transition-opacity"
         aria-label="Previous slide"
       >
         <div className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">
@@ -190,7 +190,7 @@ export default function SlidePresentation({
       </button>
       <button
         onClick={next}
-        className="absolute right-0 top-0 w-1/5 h-full z-40 cursor-e-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-white transition-opacity"
+        className="absolute right-0 top-0 w-1/5 h-full z-40 cursor-e-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-orange-500 transition-opacity"
         aria-label="Next slide"
       >
         <div className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">

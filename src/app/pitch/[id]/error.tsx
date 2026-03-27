@@ -22,13 +22,13 @@ export default function PitchError({
         <div className="flex gap-3">
           <button
             onClick={reset}
-            className="px-6 py-2.5 rounded-full bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
+            className="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
           >
             Try again
           </button>
           <a
             href="/intake"
-            className="px-6 py-2.5 rounded-full border border-zinc-300 font-semibold text-sm hover:bg-zinc-100 transition-colors"
+            className="px-6 py-2.5 rounded-xl border border-zinc-300 font-semibold text-sm hover:bg-zinc-100 transition-colors"
             style={{ color: "var(--foreground)" }}
           >
             Create new pitch
