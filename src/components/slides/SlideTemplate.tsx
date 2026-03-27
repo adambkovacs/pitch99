@@ -174,26 +174,31 @@ interface SlideStatGridProps {
 
 export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-6 w-full max-w-2xl", className)}>
+    <div className={cn("grid grid-cols-2 gap-5 sm:gap-6 w-full max-w-2xl", className)}>
       {stats.map((stat) => (
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white px-8 py-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+          className="relative overflow-hidden rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
         >
           <div
-            className="absolute inset-0 opacity-20 pointer-events-none"
+            className="absolute inset-0 opacity-15 pointer-events-none"
             style={{ background: `linear-gradient(135deg, ${stat.gradientFrom}33 0%, transparent 60%)` }}
           />
-          <div className="relative flex flex-col gap-4">
-            <span className="block">{stat.icon}</span>
-            <div>
-              <div className="flex items-baseline gap-2 mb-2">
-                <span className="text-4xl sm:text-5xl font-black font-mono text-zinc-900 tracking-tight">
+          <div className="relative flex flex-col gap-5">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: `${stat.gradientFrom}15` }}
+            >
+              {stat.icon}
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl sm:text-4xl font-black font-mono text-zinc-900 tracking-tight leading-none">
                   {stat.value}
                 </span>
                 {stat.unit && (
-                  <span className="text-sm font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
+                  <span className="text-xs sm:text-sm font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
                 )}
               </div>
               <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{stat.label}</p>
@@ -234,19 +239,19 @@ function StepArrowV() {
 
 export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
   return (
-    <div className={cn("flex flex-col sm:flex-row gap-4 w-full max-w-4xl", className)}>
+    <div className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl", className)}>
       {steps.map((step, i) => (
-        <div key={step.num} className="flex-1 relative" data-animate>
+        <div key={step.num} className="relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl border border-zinc-200/80 bg-white px-6 py-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center gap-4"
+            className="text-center h-full rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center gap-5"
           >
             <div
-              className={cn("inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br shadow-md", step.gradient)}
+              className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br shadow-md", step.gradient)}
             >
-              <span className="text-lg font-bold text-white">{step.num}</span>
+              <span className="text-base font-bold text-white">{step.num}</span>
             </div>
-            <div>
-              <h3 className="font-bold text-lg mb-1.5 text-zinc-900">{step.title}</h3>
+            <div className="space-y-2">
+              <h3 className="font-bold text-lg text-zinc-900">{step.title}</h3>
               <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
             </div>
           </div>
@@ -327,7 +332,7 @@ export function SlideCTABlock({
   headline, subtext, primaryAction, secondaryAction, techStack, className,
 }: SlideCTABlockProps) {
   return (
-    <div className={cn("flex flex-col items-center gap-6 max-w-xl mx-auto", className)}>
+    <div className={cn("flex flex-col items-center gap-8 max-w-xl mx-auto", className)}>
       <h2 data-animate className="text-2xl sm:text-3xl font-bold leading-tight text-center">
         {headline}
       </h2>
@@ -336,14 +341,14 @@ export function SlideCTABlock({
           {subtext}
         </p>
       )}
-      <motion.div className="flex flex-col sm:flex-row gap-3 items-center">
+      <motion.div className="flex flex-col sm:flex-row gap-4 items-center">
         <a
           href={primaryAction.href}
           className={cn(
             "px-10 py-4 rounded-full text-white font-bold text-base",
-            "bg-gradient-to-r from-orange-600 to-red-600",
-            "hover:from-orange-500 hover:to-red-500 transition-all",
-            "shadow-xl shadow-orange-500/25 hover:shadow-orange-500/30",
+            "bg-gradient-to-r from-orange-500 to-red-500",
+            "hover:from-orange-400 hover:to-red-400 transition-all",
+            "shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40",
             "hover:scale-[1.03] active:scale-[0.98]",
           )}
         >
@@ -365,13 +370,13 @@ export function SlideCTABlock({
       {techStack && techStack.length > 0 && (
         <div
           data-animate
-          className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] font-mono uppercase tracking-widest"
-          style={{ color: tokens.muted }}
+          className="mt-8 flex flex-wrap items-center justify-center gap-6 text-[11px] font-mono uppercase tracking-[0.2em]"
+          style={{ color: "rgba(120,113,108,0.7)" }}
         >
           {techStack.map((tech, i) => (
-            <span key={tech} className="flex items-center gap-5">
+            <span key={tech} className="flex items-center gap-6">
               {i > 0 && (
-                <span className="w-1 h-1 rounded-full -ml-2.5" style={{ backgroundColor: "rgba(0,0,0,0.12)" }} />
+                <span className="w-1 h-1 rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.12)" }} />
               )}
               {tech}
             </span>

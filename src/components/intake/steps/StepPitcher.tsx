@@ -19,7 +19,7 @@ export function StepPitcher({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-10"
+      className="space-y-8"
     >
       <motion.div variants={fadeUp}>
         <p
@@ -36,8 +36,7 @@ export function StepPitcher({
           <span style={{ color: "var(--accent)" }}>pitching?</span>
         </h1>
         <p
-          className="mt-3 text-lg"
-          style={{ color: "var(--foreground)", opacity: 0.7 }}
+          className="mt-2 text-lg text-zinc-500"
         >
           A great pitch needs a great pitcher. Tell us a bit about
           yourself.

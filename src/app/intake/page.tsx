@@ -400,10 +400,10 @@ export default function IntakePage() {
                 className={cn(
                   "flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200 min-h-[44px]",
                   "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
-                  !canProceed() && "opacity-40 cursor-not-allowed"
+                  !canProceed() && "opacity-50 cursor-not-allowed"
                 )}
                 style={{
-                  background: "linear-gradient(90deg, #ea580c, #dc2626)",
+                  background: "linear-gradient(90deg, #f97316, #ef4444)",
                 }}
                 whileHover={canProceed() ? { scale: 1.02 } : {}}
                 whileTap={canProceed() ? { scale: 0.98 } : {}}

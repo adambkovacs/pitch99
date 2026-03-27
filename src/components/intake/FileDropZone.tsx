@@ -45,13 +45,13 @@ export function FileDropZone({
       <div
         {...getRootProps()}
         className={cn(
-          "relative rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200",
+          "relative rounded-xl border border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200",
           "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
         )}
         style={{
           borderColor: isDragActive
             ? "var(--accent)"
-            : "var(--border-hover)",
+            : "#d4d4d8",
           background: isDragActive
             ? "var(--accent-soft)"
             : "var(--surface)",

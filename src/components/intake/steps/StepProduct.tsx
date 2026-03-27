@@ -18,7 +18,7 @@ export function StepProduct({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-10"
+      className="space-y-8"
     >
       <motion.div variants={fadeUp}>
         <p
@@ -35,8 +35,7 @@ export function StepProduct({
           <span style={{ color: "var(--accent)" }}>pitching?</span>
         </h1>
         <p
-          className="mt-3 text-lg"
-          style={{ color: "var(--foreground)", opacity: 0.7 }}
+          className="mt-2 text-lg text-zinc-500"
         >
           Tell us about your product or idea. The more detail, the
           better your pitch.

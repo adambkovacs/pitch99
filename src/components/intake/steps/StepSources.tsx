@@ -34,7 +34,7 @@ export function StepSources({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-10"
+      className="space-y-8"
     >
       <motion.div variants={fadeUp}>
         <p
@@ -51,8 +51,7 @@ export function StepSources({
           <span style={{ color: "var(--accent)" }}>sources</span>
         </h1>
         <p
-          className="mt-3 text-lg"
-          style={{ color: "var(--foreground)", opacity: 0.7 }}
+          className="mt-2 text-lg text-zinc-500"
         >
           Help us understand your product better with links and
           documents.

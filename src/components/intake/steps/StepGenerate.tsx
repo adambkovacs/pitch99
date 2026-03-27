@@ -50,7 +50,7 @@ export function StepGenerate({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-10"
+      className="space-y-8"
     >
       <motion.div variants={fadeUp}>
         <p
@@ -67,8 +67,7 @@ export function StepGenerate({
           <span style={{ color: "var(--accent)" }}>generate</span>
         </h1>
         <p
-          className="mt-3 text-lg"
-          style={{ color: "var(--foreground)", opacity: 0.7 }}
+          className="mt-2 text-lg text-zinc-500"
         >
           Review your inputs below, then let the magic happen.
         </p>

@@ -58,45 +58,47 @@ function SlideHook() {
    ───────────────────────────────────────── */
 function SlideProblem() {
   const stats = [
-    { icon: <Clock className="w-6 h-6 text-red-500" />, value: "40+", unit: "hours", label: "spent building pitch decks", color: "from-red-500/20 to-transparent" },
-    { icon: <RefreshCw className="w-6 h-6 text-amber-600" />, value: "40", unit: "pitches", label: "needed to close a round", color: "from-amber-500/20 to-transparent" },
-    { icon: <Hourglass className="w-6 h-6 text-orange-600" />, value: "2:24", unit: "min", label: "investors spend reviewing", color: "from-orange-500/20 to-transparent" },
-    { icon: <TrendingDown className="w-6 h-6 text-rose-500" />, value: "97%", unit: "", label: "of pitches fail to get funded", color: "from-rose-500/20 to-transparent" },
+    { icon: <Clock className="w-5 h-5 text-red-500" />, value: "40+", unit: "hours", label: "spent building pitch decks", color: "from-red-500/20 to-transparent", iconBg: "bg-red-50" },
+    { icon: <RefreshCw className="w-5 h-5 text-amber-600" />, value: "40", unit: "pitches", label: "needed to close a round", color: "from-amber-500/20 to-transparent", iconBg: "bg-amber-50" },
+    { icon: <Hourglass className="w-5 h-5 text-orange-600" />, value: "2:24", unit: "min", label: "investors spend reviewing", color: "from-orange-500/20 to-transparent", iconBg: "bg-orange-50" },
+    { icon: <TrendingDown className="w-5 h-5 text-rose-500" />, value: "97%", unit: "", label: "of pitches fail to get funded", color: "from-rose-500/20 to-transparent", iconBg: "bg-rose-50" },
   ];
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-base font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.25em] mb-4">
         The Problem
       </div>
-      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-center leading-tight">
+      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-700 text-center mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-16 max-w-lg text-base sm:text-lg leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
 
-      <div className="grid grid-cols-2 gap-8 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-5 sm:gap-6 w-full max-w-2xl">
         {stats.map((stat) => (
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl border border-zinc-200/80 bg-white px-8 py-8 shadow-sm relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-8 shadow-sm relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-20`} />
-            <div className="relative flex flex-col gap-4">
-              <span className="block">{stat.icon}</span>
-              <div>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-4xl sm:text-5xl font-black text-zinc-900 font-mono tracking-tight">
+            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-15`} />
+            <div className="relative flex flex-col gap-5">
+              <div className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center`}>
+                {stat.icon}
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl sm:text-4xl font-black text-zinc-900 font-mono tracking-tight leading-none">
                     {stat.value}
                   </span>
                   {stat.unit && (
-                    <span className="text-sm text-zinc-500 font-mono">{stat.unit}</span>
+                    <span className="text-xs sm:text-sm text-zinc-400 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-base text-zinc-600 leading-relaxed">{stat.label}</p>
+                <p className="text-sm text-zinc-500 leading-relaxed">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -119,33 +121,33 @@ function SlideSolution() {
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-base font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.25em] mb-4">
         The Solution
       </div>
-      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 text-center leading-tight">
+      <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-700 text-center mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-16 max-w-lg text-base sm:text-lg leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl">
         {steps.map((step, i) => (
-          <div key={step.num} className="flex-1 relative" data-animate>
-            <div className="rounded-2xl border border-zinc-200/80 bg-white px-6 py-8 shadow-sm text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4">
-              <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${step.gradient} shadow-md`}>
-                <span className="text-lg font-bold text-white">{step.num}</span>
+          <div key={step.num} className="relative" data-animate>
+            <div className="rounded-2xl border border-zinc-200/60 bg-white p-6 sm:p-7 shadow-sm text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-5">
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} shadow-md`}>
+                <span className="text-base font-bold text-white">{step.num}</span>
               </div>
-              <div>
-                <h3 className="font-bold text-xl mb-1.5 text-zinc-900">{step.title}</h3>
-                <p className="text-base leading-relaxed text-zinc-600">{step.desc}</p>
+              <div className="space-y-2">
+                <h3 className="font-bold text-lg text-zinc-900">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
-              <div className="hidden sm:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 items-center justify-center">
+              <div className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M5 3L9 7L5 11" stroke="rgba(251,146,60,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M5 3L9 7L5 11" stroke="rgba(251,146,60,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
             )}
@@ -207,9 +209,9 @@ function SlideMarket() {
    ───────────────────────────────────────── */
 function SlideCTA() {
   return (
-    <div className="flex flex-col items-center justify-center px-8 max-w-4xl mx-auto text-center gap-0">
+    <div className="flex flex-col items-center justify-center px-8 max-w-4xl mx-auto text-center">
       {/* Logo */}
-      <div data-animate className="relative mb-10">
+      <div data-animate className="relative mb-12">
         <span className="text-7xl sm:text-9xl font-black gradient-text tracking-tight">
           pitch99
         </span>
@@ -229,13 +231,13 @@ function SlideCTA() {
       </h2>
 
       {/* Subtext */}
-      <p data-animate className="text-zinc-700 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-zinc-600 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
 
-      {/* Buttons — generous spacing */}
-      <div data-animate className="flex flex-col sm:flex-row gap-5 items-center mb-16">
+      {/* Buttons */}
+      <div data-animate className="flex flex-col sm:flex-row gap-4 items-center">
         <a
           href="/intake"
           className="px-10 py-4 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
@@ -252,8 +254,8 @@ function SlideCTA() {
         </a>
       </div>
 
-      {/* Tech stack — well-separated from buttons */}
-      <div data-animate className="flex items-center gap-6 text-xs text-zinc-500 font-mono uppercase tracking-[0.15em]">
+      {/* Tech stack */}
+      <div data-animate className="mt-16 flex items-center gap-6 text-[11px] text-zinc-400 font-mono uppercase tracking-[0.2em]">
         <span>Next.js</span>
         <span className="w-1 h-1 rounded-full bg-zinc-300" />
         <span>OpenRouter</span>

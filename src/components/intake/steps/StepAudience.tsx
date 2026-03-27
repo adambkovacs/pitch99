@@ -22,7 +22,7 @@ export function StepAudience({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-10"
+      className="space-y-8"
     >
       <motion.div variants={fadeUp}>
         <p
@@ -39,18 +39,17 @@ export function StepAudience({
           <span style={{ color: "var(--accent)" }}>audience</span>
         </h1>
         <p
-          className="mt-3 text-lg"
-          style={{ color: "var(--foreground)", opacity: 0.7 }}
+          className="mt-2 text-lg text-zinc-500"
         >
           Knowing who you&apos;re pitching to changes everything.
         </p>
       </motion.div>
 
       <motion.div variants={fadeUp}>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label
             htmlFor={selectId}
-            className="block text-sm font-medium mb-1.5"
+            className="block text-sm font-semibold mb-1.5"
             style={{ color: "var(--foreground)" }}
           >
             Who are you pitching to?
@@ -60,13 +59,14 @@ export function StepAudience({
             value={data.audience}
             onChange={(e) => update({ audience: e.target.value })}
             className={cn(
-              "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none shadow-sm",
-              "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
+              "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none",
+              "hover:border-zinc-400",
+              "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500",
               !data.audience && "text-[var(--muted)]"
             )}
             style={{
               background: "var(--surface)",
-              borderColor: "var(--border-hover)",
+              borderColor: "#d4d4d8",
               color: data.audience
                 ? "var(--foreground)"
                 : "var(--muted)",
