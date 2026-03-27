@@ -92,7 +92,7 @@ const slides: SlideData[] = [
           eyebrow="Introducing"
           title={
             <span>
-              Pitch<span style={{ color: "#fb923c" }}>99</span>
+              Pitch<span style={{ color: "#f97316" }}>99</span>
             </span>
           }
           subtitle="Your AI pitch co-pilot. Describe your startup, get a cinematic investor deck in 99 seconds."
@@ -146,13 +146,13 @@ const slides: SlideData[] = [
         <SlideCTABlock
           headline={
             <span>
-              Ready to pitch like a <span style={{ color: "#fb923c" }}>pro</span>?
+              Ready to pitch like a <span style={{ color: "#f97316" }}>pro</span>?
             </span>
           }
           subtext="Join the waitlist and be among the first founders to generate investor-ready decks with AI."
           primaryAction={{ label: "Get Early Access", href: "/intake" }}
           secondaryAction={{ label: "View Source", href: "https://github.com/pitch99" }}
-          techStack={["Next.js 16", "Grok", "GSAP", "Framer Motion"]}
+          techStack={["Next.js 16", "OpenRouter", "GSAP", "Framer Motion"]}
         />
       </SlideLayout>
     ),

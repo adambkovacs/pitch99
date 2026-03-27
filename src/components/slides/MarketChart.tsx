@@ -36,7 +36,7 @@ export default function MarketChart({
     <div ref={ref} className="w-full max-w-lg mx-auto">
       {title && (
         <h3
-          className="text-sm font-mono uppercase tracking-widest text-zinc-500 mb-6"
+          className="text-sm font-mono uppercase tracking-widest text-zinc-600 font-semibold mb-6"
           data-animate
         >
           {title}
@@ -46,11 +46,11 @@ export default function MarketChart({
         {data.map((item, i) => (
           <div key={item.label} className="space-y-1.5" data-animate>
             <div className="flex justify-between items-baseline">
-              <span className="text-sm font-medium text-zinc-300">
+              <span className="text-sm font-medium text-zinc-700">
                 {item.label}
               </span>
               <motion.span
-                className="font-mono text-sm font-bold text-orange-400"
+                className="font-mono text-sm text-orange-600 font-bold"
                 initial={{ opacity: 0 }}
                 animate={visible ? { opacity: 1 } : {}}
                 transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
@@ -59,7 +59,7 @@ export default function MarketChart({
                 {suffix}
               </motion.span>
             </div>
-            <div className="h-3 rounded-full bg-zinc-800/80 overflow-hidden backdrop-blur">
+            <div className="h-3 rounded-full bg-zinc-100 overflow-hidden backdrop-blur">
               <motion.div
                 className="h-full rounded-full"
                 style={{

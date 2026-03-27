@@ -30,7 +30,7 @@ function SlideHook() {
         <br />
         <span className="text-red-600">99 problems.</span>
         <br />
-        <span className="gradient-text">But this pitch ain&apos;t one.</span>
+        <span className="gradient-text">But this p*tch ain&apos;t one.</span>
       </h1>
 
       <p data-animate className="text-base sm:text-lg text-zinc-600 max-w-xl leading-relaxed">
@@ -65,13 +65,13 @@ function SlideProblem() {
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-xs font-mono text-orange-600 uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
         The Problem
       </div>
       <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-500 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-sm leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
@@ -81,20 +81,20 @@ function SlideProblem() {
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-sm relative overflow-hidden"
+            className="rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-30`} />
             <div className="relative">
               <span className="mb-2 block">{stat.icon}</span>
               <div className="flex items-baseline gap-1.5 mb-1">
-                <span className="text-2xl sm:text-3xl font-black text-zinc-900 font-mono">
+                <span className="text-3xl sm:text-4xl font-black text-zinc-900 font-mono">
                   {stat.value}
                 </span>
                 {stat.unit && (
-                  <span className="text-xs text-zinc-500 font-mono">{stat.unit}</span>
+                  <span className="text-xs text-zinc-400 font-mono">{stat.unit}</span>
                 )}
               </div>
-              <p className="text-sm text-zinc-500 leading-relaxed">{stat.label}</p>
+              <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
             </div>
           </div>
         ))}
@@ -116,13 +116,13 @@ function SlideSolution() {
 
   return (
     <div className="flex flex-col items-center justify-center px-8 max-w-5xl mx-auto">
-      <div data-animate className="text-xs font-mono text-orange-600 uppercase tracking-[0.2em] mb-3">
+      <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
         The Solution
       </div>
       <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-3 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-500 text-center mb-10 max-w-lg text-sm leading-relaxed">
+      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-sm leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
@@ -130,12 +130,12 @@ function SlideSolution() {
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="flex-1 relative" data-animate>
-            <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-sm text-center h-full">
-              <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${step.gradient} mb-3`}>
-                <span className="text-sm font-bold text-white">{step.num}</span>
+            <div className="rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm text-center h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} mb-4`}>
+                <span className="text-base font-bold text-white">{step.num}</span>
               </div>
-              <h3 className="font-semibold text-base mb-1 text-zinc-900">{step.title}</h3>
-              <p className="text-sm text-zinc-600 leading-relaxed">{step.desc}</p>
+              <h3 className="font-semibold text-lg mb-2 text-zinc-900">{step.title}</h3>
+              <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
             </div>
             {i < steps.length - 1 && (
               <div className="hidden sm:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 items-center justify-center">
@@ -165,14 +165,14 @@ function SlideMarket() {
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center px-8 max-w-6xl mx-auto gap-12 lg:gap-16">
       <div className="flex-1 max-w-md">
-        <div data-animate className="text-xs font-mono text-orange-600 uppercase tracking-[0.2em] mb-3">
+        <div data-animate className="text-sm font-mono text-orange-500 font-semibold uppercase tracking-[0.2em] mb-3">
           Market Opportunity
         </div>
         <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-2 leading-tight">
           <AnimatedCounter to={16.6} prefix="$" suffix="B" decimals={1} delay={0.3} duration={2.5} className="gradient-text font-black text-4xl sm:text-5xl" />
         </h2>
-        <p data-animate className="text-sm text-zinc-500 mb-8">
-          presentation market by 2030, growing at <span className="text-orange-600 font-semibold">25% CAGR</span> for AI tools
+        <p data-animate className="text-sm text-zinc-600 mb-8">
+          presentation market by 2030, growing at <span className="text-orange-600 font-bold">25% CAGR</span> for AI tools
         </p>
 
         <div data-animate className="space-y-3">
@@ -183,8 +183,8 @@ function SlideMarket() {
             { num: "<3%", text: "of pitches succeed — preparation is everything" },
           ].map((item) => (
             <div key={item.text} className="flex items-start gap-3 text-sm">
-              <span className="font-mono font-bold text-orange-600 min-w-[4rem] text-right">{item.num}</span>
-              <span className="text-zinc-500">{item.text}</span>
+              <span className="font-mono text-orange-600 font-bold min-w-[4rem] text-right">{item.num}</span>
+              <span className="text-zinc-600">{item.text}</span>
             </div>
           ))}
         </div>
@@ -220,7 +220,7 @@ function SlideCTA() {
       <h2 data-animate className="text-2xl sm:text-4xl font-bold mb-6 leading-tight text-zinc-900">
         You have <span className="text-red-600">99 problems</span>.
         <br />
-        <span className="gradient-text">Your pitch isn&apos;t one anymore.</span>
+        <span className="gradient-text">Your p*tch isn&apos;t one anymore.</span>
       </h2>
 
       {/* Subtext */}

@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 const tokens = {
   bg: "#fafaf9",
   text: "#1c1917",
-  muted: "#78716c",
+  muted: "#57534e",
   accent: "#f97316",
-  card: { bg: "#ffffff", border: "#e7e5e4" },
+  card: { bg: "#ffffff", border: "#d6d3d1" },
 } as const;
 
 /* ── Types ──────────────────────────────── */
@@ -350,7 +350,7 @@ export function SlideCTABlock({
             href={secondaryAction.href}
             className={cn(
               "px-7 py-3.5 rounded-full text-sm font-medium",
-              "border border-zinc-300 text-zinc-600",
+              "border border-zinc-300 text-zinc-700",
               "hover:border-orange-500/50 hover:text-zinc-900 transition-all",
             )}
           >

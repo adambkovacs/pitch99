@@ -246,35 +246,23 @@ function InputField({
       >
         {label}
       </label>
-      <div className="relative">
-        {Icon && (
-          <div
-            className="absolute left-4 top-1/2 -translate-y-1/2"
-            style={{ color: "var(--muted)" }}
-            aria-hidden="true"
-          >
-            <Icon className="w-4.5 h-4.5" />
-          </div>
+      <input
+        id={inputId}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className={cn(
+          "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 shadow-sm",
+          "placeholder:text-[var(--muted)]",
+          "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
         )}
-        <input
-          id={inputId}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={cn(
-            "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 shadow-sm",
-            "placeholder:text-[var(--muted)]",
-            "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
-            Icon && "pl-11"
-          )}
-          style={{
-            background: "var(--surface)",
-            borderColor: "var(--border-hover)",
-            color: "var(--foreground)",
-          }}
-        />
-      </div>
+        style={{
+          background: "var(--surface)",
+          borderColor: "var(--border-hover)",
+          color: "var(--foreground)",
+        }}
+      />
     </div>
   );
 }
