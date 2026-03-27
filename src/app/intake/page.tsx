@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/navigation";
@@ -140,6 +140,11 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
       <div
         className="h-1 w-full"
         style={{ background: "var(--border)" }}
+        role="progressbar"
+        aria-valuenow={current + 1}
+        aria-valuemin={1}
+        aria-valuemax={total}
+        aria-label={`Step ${current + 1} of ${total}`}
       >
         <motion.div
           className="h-full"
@@ -153,9 +158,10 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
       </div>
 
       {/* Step pills */}
-      <div
+      <nav
         className="flex items-center justify-center gap-2 py-4 px-6"
         style={{ background: "rgba(250, 250, 249, 0.85)", backdropFilter: "blur(12px)" }}
+        aria-label="Form progress"
       >
         {STEPS.map((step, i) => {
           const Icon = step.icon;
@@ -166,10 +172,10 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
             <div key={step.label} className="flex items-center gap-2">
               <motion.div
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-300",
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-300 min-h-[44px] min-w-[44px] justify-center",
                   isActive && "text-white",
                   isComplete && "text-white",
-                  !isActive && !isComplete && "text-[var(--muted-light)]"
+                  !isActive && !isComplete && "text-[var(--muted)]"
                 )}
                 style={{
                   background: isActive
@@ -182,11 +188,14 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
                   scale: isActive ? 1 : 0.95,
                 }}
                 transition={{ duration: 0.2 }}
+                role="listitem"
+                aria-label={`Step ${i + 1}: ${step.label}${isComplete ? " (completed)" : isActive ? " (current)" : " (upcoming)"}`}
+                aria-current={isActive ? "step" : undefined}
               >
                 {isComplete ? (
-                  <Check className="w-3.5 h-3.5" />
+                  <Check className="w-3.5 h-3.5" aria-hidden="true" />
                 ) : (
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                 )}
                 <span className="hidden sm:inline">{step.label}</span>
               </motion.div>
@@ -197,12 +206,13 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
                   style={{
                     background: i < current ? "var(--teal)" : "var(--border)",
                   }}
+                  aria-hidden="true"
                 />
               )}
             </div>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 }
@@ -214,6 +224,7 @@ function InputField({
   onChange,
   icon: Icon,
   type = "text",
+  id,
 }: {
   label: string;
   placeholder: string;
@@ -221,10 +232,15 @@ function InputField({
   onChange: (v: string) => void;
   icon?: React.ComponentType<{ className?: string }>;
   type?: string;
+  id?: string;
 }) {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+
   return (
     <div className="space-y-2">
       <label
+        htmlFor={inputId}
         className="block text-sm font-medium"
         style={{ color: "var(--foreground)" }}
       >
@@ -234,20 +250,22 @@ function InputField({
         {Icon && (
           <div
             className="absolute left-4 top-1/2 -translate-y-1/2"
-            style={{ color: "var(--muted-light)" }}
+            style={{ color: "var(--muted)" }}
+            aria-hidden="true"
           >
             <Icon className="w-4.5 h-4.5" />
           </div>
         )}
         <input
+          id={inputId}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn(
             "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200",
-            "placeholder:text-[var(--muted-light)]",
-            "focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]",
+            "placeholder:text-[var(--muted)]",
+            "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
             Icon && "pl-11"
           )}
           style={{
@@ -267,30 +285,37 @@ function TextareaField({
   value,
   onChange,
   rows = 4,
+  id,
 }: {
   label: string;
   placeholder: string;
   value: string;
   onChange: (v: string) => void;
   rows?: number;
+  id?: string;
 }) {
+  const generatedId = useId();
+  const textareaId = id ?? generatedId;
+
   return (
     <div className="space-y-2">
       <label
+        htmlFor={textareaId}
         className="block text-sm font-medium"
         style={{ color: "var(--foreground)" }}
       >
         {label}
       </label>
       <textarea
+        id={textareaId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
         className={cn(
           "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 resize-none",
-          "placeholder:text-[var(--muted-light)]",
-          "focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]"
+          "placeholder:text-[var(--muted)]",
+          "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
         )}
         style={{
           background: "var(--surface)",
@@ -324,34 +349,43 @@ function FileDropZone({
     maxSize: 10 * 1024 * 1024,
   });
 
+  const dropzoneDescId = "dropzone-description";
+
   return (
     <div className="space-y-2">
       <label
         className="block text-sm font-medium"
         style={{ color: "var(--foreground)" }}
+        id="file-upload-label"
       >
         Supporting files{" "}
-        <span style={{ color: "var(--muted-light)" }}>(optional)</span>
+        <span style={{ color: "var(--muted)" }}>(optional)</span>
       </label>
 
       <div
           {...getRootProps()}
           className={cn(
-            "relative rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200"
+            "relative rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200",
+            "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
           )}
           style={{
             borderColor: isDragActive ? "var(--accent)" : "var(--border)",
             background: isDragActive ? "var(--accent-soft)" : "var(--surface)",
           }}
+          aria-labelledby="file-upload-label"
+          aria-describedby={dropzoneDescId}
+          role="button"
+          tabIndex={0}
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} aria-label="Upload supporting files" />
         <motion.div
           animate={{ y: isDragActive ? -4 : 0 }}
           transition={{ duration: 0.2 }}
         >
           <Upload
             className="w-8 h-8 mx-auto mb-3"
-            style={{ color: isDragActive ? "var(--accent)" : "var(--muted-light)" }}
+            style={{ color: isDragActive ? "var(--accent)" : "var(--muted)" }}
+            aria-hidden="true"
           />
           <p
             className="text-sm font-medium"
@@ -361,9 +395,10 @@ function FileDropZone({
           </p>
           <p
             className="text-xs mt-1"
-            style={{ color: "var(--muted-light)" }}
+            style={{ color: "var(--muted)" }}
+            id={dropzoneDescId}
           >
-            PDF, TXT, MD, DOCX, PPTX up to 10 MB
+            PDF, TXT, MD, DOCX, PPTX up to 10 MB (max 5 files)
           </p>
         </motion.div>
       </div>
@@ -386,6 +421,7 @@ function FileDropZone({
               <FileText
                 className="w-4 h-4 shrink-0"
                 style={{ color: "var(--accent)" }}
+                aria-hidden="true"
               />
               <span
                 className="text-sm truncate"
@@ -395,7 +431,7 @@ function FileDropZone({
               </span>
               <span
                 className="text-xs shrink-0"
-                style={{ color: "var(--muted-light)" }}
+                style={{ color: "var(--muted)" }}
               >
                 {(file.size / 1024).toFixed(0)} KB
               </span>
@@ -405,9 +441,10 @@ function FileDropZone({
                 e.stopPropagation();
                 onRemove(i);
               }}
-              className="p-1 rounded-md hover:bg-[var(--border)] transition-colors"
+              className="p-2 rounded-md hover:bg-[var(--border)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label={`Remove file ${file.name}`}
             >
-              <X className="w-3.5 h-3.5" style={{ color: "var(--muted)" }} />
+              <X className="w-3.5 h-3.5" style={{ color: "var(--foreground)" }} aria-hidden="true" />
             </button>
           </motion.div>
         ))}
@@ -429,6 +466,7 @@ function PulsingOrb({ active, complete }: { active: boolean; complete: boolean }
           style={{ background: "var(--accent)" }}
           animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          aria-hidden="true"
         />
       )}
       <motion.div
@@ -448,13 +486,14 @@ function PulsingOrb({ active, complete }: { active: boolean; complete: boolean }
         }
       >
         {complete ? (
-          <Check className="w-5 h-5 text-white" />
+          <Check className="w-5 h-5 text-white" aria-hidden="true" />
         ) : active ? (
-          <Loader2 className="w-5 h-5 text-white animate-spin" />
+          <Loader2 className="w-5 h-5 text-white animate-spin" aria-hidden="true" />
         ) : (
           <div
             className="w-2.5 h-2.5 rounded-full"
-            style={{ background: "var(--muted-light)" }}
+            style={{ background: "var(--muted)" }}
+            aria-hidden="true"
           />
         )}
       </motion.div>
@@ -472,6 +511,8 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="space-y-10"
+      aria-live="polite"
+      aria-atomic="true"
     >
       {/* Header */}
       <div className="text-center">
@@ -483,6 +524,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
           <Sparkles
             className="w-12 h-12 mx-auto mb-4"
             style={{ color: "var(--accent)" }}
+            aria-hidden="true"
           />
           <h1
             className="text-3xl sm:text-4xl font-bold"
@@ -493,7 +535,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
           </h1>
           <p
             className="mt-3 text-lg"
-            style={{ color: "var(--muted)" }}
+            style={{ color: "var(--foreground)", opacity: 0.7 }}
           >
             Hang tight — this takes about 30-60 seconds.
           </p>
@@ -501,7 +543,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
       </div>
 
       {/* Progress stages */}
-      <div className="space-y-0">
+      <div className="space-y-0" role="list" aria-label="Generation progress">
         {GENERATION_STAGES.map((stage, i) => {
           const isComplete = i < stageIndex;
           const isActive = i === stageIndex;
@@ -514,9 +556,11 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 + i * 0.12 }}
               className="flex items-start gap-4"
+              role="listitem"
+              aria-label={`${stage.label}: ${isComplete ? "completed" : isActive ? "in progress" : "pending"}`}
             >
               {/* Vertical connector + orb */}
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center" aria-hidden="true">
                 <PulsingOrb active={isActive} complete={isComplete} />
                 {i < GENERATION_STAGES.length - 1 && (
                   <motion.div
@@ -540,7 +584,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
                   className="text-base font-semibold"
                   style={{
                     color: isPending
-                      ? "var(--muted-light)"
+                      ? "var(--muted)"
                       : "var(--foreground)",
                   }}
                   animate={
@@ -559,6 +603,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
                     <motion.span
                       animate={{ opacity: [0, 1, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
+                      aria-hidden="true"
                     >
                       ...
                     </motion.span>
@@ -568,8 +613,9 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
                   className="text-sm mt-0.5"
                   style={{
                     color: isPending
-                      ? "var(--muted-light)"
-                      : "var(--muted)",
+                      ? "var(--muted)"
+                      : "var(--foreground)",
+                    opacity: isPending ? 0.6 : 0.7,
                   }}
                 >
                   {stage.description}
@@ -584,6 +630,11 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
       <motion.div
         className="h-1.5 rounded-full overflow-hidden"
         style={{ background: "var(--border)" }}
+        role="progressbar"
+        aria-valuenow={stageIndex + 1}
+        aria-valuemin={1}
+        aria-valuemax={GENERATION_STAGES.length}
+        aria-label={`Generation progress: stage ${stageIndex + 1} of ${GENERATION_STAGES.length}`}
       >
         <motion.div
           className="h-full rounded-full"
@@ -629,7 +680,7 @@ function StepProduct({
           What are you{" "}
           <span className="gradient-text">pitching?</span>
         </h1>
-        <p className="mt-3 text-lg" style={{ color: "var(--muted)" }}>
+        <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Tell us about your product or idea. The more detail, the better your pitch.
         </p>
       </motion.div>
@@ -690,7 +741,7 @@ function StepSources({
           Your{" "}
           <span className="gradient-text">sources</span>
         </h1>
-        <p className="mt-3 text-lg" style={{ color: "var(--muted)" }}>
+        <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Help us understand your product better with links and documents.
         </p>
       </motion.div>
@@ -746,7 +797,7 @@ function StepPitcher({
           Who&apos;s{" "}
           <span className="gradient-text">pitching?</span>
         </h1>
-        <p className="mt-3 text-lg" style={{ color: "var(--muted)" }}>
+        <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           A great pitch needs a great pitcher. Tell us a bit about yourself.
         </p>
       </motion.div>
@@ -781,6 +832,8 @@ function StepAudience({
   data: FormData;
   update: (patch: Partial<FormData>) => void;
 }) {
+  const selectId = useId();
+
   return (
     <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
       <motion.div variants={fadeUp}>
@@ -794,7 +847,7 @@ function StepAudience({
           Your{" "}
           <span className="gradient-text">audience</span>
         </h1>
-        <p className="mt-3 text-lg" style={{ color: "var(--muted)" }}>
+        <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Knowing who you&apos;re pitching to changes everything.
         </p>
       </motion.div>
@@ -802,23 +855,25 @@ function StepAudience({
       <motion.div variants={fadeUp}>
         <div className="space-y-2">
           <label
+            htmlFor={selectId}
             className="block text-sm font-medium"
             style={{ color: "var(--foreground)" }}
           >
             Who are you pitching to?
           </label>
           <select
+            id={selectId}
             value={data.audience}
             onChange={(e) => update({ audience: e.target.value })}
             className={cn(
               "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none",
-              "focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]",
-              !data.audience && "text-[var(--muted-light)]"
+              "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
+              !data.audience && "text-[var(--muted)]"
             )}
             style={{
               background: "var(--surface)",
               borderColor: "var(--border)",
-              color: data.audience ? "var(--foreground)" : "var(--muted-light)",
+              color: data.audience ? "var(--foreground)" : "var(--muted)",
             }}
           >
             {AUDIENCES.map((a) => (
@@ -885,7 +940,7 @@ function StepGenerate({
           Ready to{" "}
           <span className="gradient-text">generate</span>
         </h1>
-        <p className="mt-3 text-lg" style={{ color: "var(--muted)" }}>
+        <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Review your inputs below, then let the magic happen.
         </p>
       </motion.div>
@@ -910,20 +965,20 @@ function StepGenerate({
             Pitch Summary
           </h3>
         </div>
-        <div className="divide-y" style={{ borderColor: "var(--border)" }}>
+        <dl className="divide-y" style={{ borderColor: "var(--border)" }}>
           {summaryItems.map((item) => (
             <div
               key={item.label}
               className="px-6 py-3.5 flex gap-4"
               style={{ borderColor: "var(--border)" }}
             >
-              <span
+              <dt
                 className="text-sm font-medium w-28 shrink-0"
-                style={{ color: "var(--muted)" }}
+                style={{ color: "var(--foreground)", opacity: 0.7 }}
               >
                 {item.label}
-              </span>
-              <span
+              </dt>
+              <dd
                 className={cn(
                   "text-sm break-all",
                   item.accent && "font-mono text-xs"
@@ -933,10 +988,10 @@ function StepGenerate({
                 }}
               >
                 {item.value}
-              </span>
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </motion.div>
 
       {/* Generate button */}
@@ -946,22 +1001,24 @@ function StepGenerate({
           disabled={isGenerating}
           className={cn(
             "w-full py-4 rounded-xl text-white text-lg font-semibold relative overflow-hidden",
+            "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
             isGenerating ? "cursor-not-allowed opacity-70" : "cursor-pointer"
           )}
           style={{
             background: "linear-gradient(135deg, var(--accent), var(--coral))",
           }}
-          whileHover={isGenerating ? {} : { scale: 1.01, boxShadow: "0 8px 30px rgba(124, 58, 237, 0.25)" }}
+          whileHover={isGenerating ? {} : { scale: 1.01, boxShadow: "0 8px 30px rgba(249, 115, 22, 0.25)" }}
           whileTap={isGenerating ? {} : { scale: 0.98 }}
+          aria-label="Generate my pitch deck"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-5 h-5" aria-hidden="true" />
             Generate My Pitch
           </span>
         </motion.button>
         <p
           className="text-center text-xs mt-3"
-          style={{ color: "var(--muted-light)" }}
+          style={{ color: "var(--muted)" }}
         >
           Your 99-second pitch deck will be ready in about 60 seconds.
         </p>
@@ -1169,6 +1226,8 @@ export default function IntakePage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               className="space-y-8 text-center"
+              role="alert"
+              aria-live="assertive"
             >
               <motion.div
                 initial={{ scale: 0 }}
@@ -1182,6 +1241,7 @@ export default function IntakePage() {
                   <AlertCircle
                     className="w-8 h-8"
                     style={{ color: "var(--coral)" }}
+                    aria-hidden="true"
                   />
                 </div>
               </motion.div>
@@ -1195,7 +1255,7 @@ export default function IntakePage() {
                 </h2>
                 <p
                   className="mt-2 text-base max-w-md mx-auto"
-                  style={{ color: "var(--muted)" }}
+                  style={{ color: "var(--foreground)", opacity: 0.7 }}
                 >
                   {generating.error}
                 </p>
@@ -1203,14 +1263,14 @@ export default function IntakePage() {
 
               <motion.button
                 onClick={handleRetry}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold cursor-pointer min-h-[44px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
                 style={{
                   background: "var(--accent)",
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                 Go back and try again
               </motion.button>
             </motion.div>
@@ -1232,7 +1292,7 @@ export default function IntakePage() {
       {step <= 4 && <StepIndicator current={Math.min(step, STEPS.length - 1)} total={STEPS.length} />}
 
       {/* Main content area */}
-      <div
+      <main
         ref={containerRef}
         className={cn(
           "flex-1 flex items-center justify-center px-6 pb-32",
@@ -1254,41 +1314,48 @@ export default function IntakePage() {
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+      </main>
 
       {/* Bottom navigation */}
       {showNav && (
-        <div
+        <nav
           className="fixed bottom-0 left-0 right-0 z-50"
           style={{
             background: "rgba(250, 250, 249, 0.85)",
             backdropFilter: "blur(12px)",
             borderTop: "1px solid var(--border)",
           }}
+          aria-label="Step navigation"
         >
           <div className="max-w-xl mx-auto flex items-center justify-between px-6 py-4">
             <motion.button
               onClick={goBack}
               className={cn(
-                "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer",
+                "flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer min-h-[44px]",
+                "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
                 step === 0 && "opacity-0 pointer-events-none"
               )}
               style={{
-                color: "var(--muted)",
+                color: "var(--foreground)",
                 background: "var(--surface)",
                 border: "1px solid var(--border)",
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              aria-label="Go to previous step"
+              aria-disabled={step === 0}
+              tabIndex={step === 0 ? -1 : 0}
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
               Back
             </motion.button>
 
             {/* Step count */}
             <span
               className="text-xs font-mono"
-              style={{ color: "var(--muted-light)" }}
+              style={{ color: "var(--muted)" }}
+              aria-live="polite"
+              aria-atomic="true"
             >
               {step + 1}/{STEPS.length}
             </span>
@@ -1298,7 +1365,8 @@ export default function IntakePage() {
                 onClick={goNext}
                 disabled={!canProceed()}
                 className={cn(
-                  "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200",
+                  "flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200 min-h-[44px]",
+                  "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
                   !canProceed() && "opacity-40 cursor-not-allowed"
                 )}
                 style={{
@@ -1306,15 +1374,16 @@ export default function IntakePage() {
                 }}
                 whileHover={canProceed() ? { scale: 1.02 } : {}}
                 whileTap={canProceed() ? { scale: 0.98 } : {}}
+                aria-label="Go to next step"
               >
                 Next
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </motion.button>
             ) : (
               <div className="w-[88px]" /> // Spacer to keep layout balanced on last step
             )}
           </div>
-        </div>
+        </nav>
       )}
     </div>
   );
