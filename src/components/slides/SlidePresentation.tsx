@@ -103,7 +103,7 @@ export default function SlidePresentation({
 
   return (
     <div
-      className={`relative w-screen h-screen overflow-hidden bg-[#0a0a0f] ${className ?? ""}`}
+      className={`relative w-screen h-screen overflow-hidden bg-[#0a0a0f] text-zinc-50 ${className ?? ""}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

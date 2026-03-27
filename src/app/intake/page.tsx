@@ -14,7 +14,7 @@ import {
   Github,
   Globe,
   Linkedin,
-  Sparkles,
+  Zap,
   Check,
   Rocket,
   Users,
@@ -263,14 +263,14 @@ function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200",
+            "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 shadow-sm",
             "placeholder:text-[var(--muted)]",
             "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
             Icon && "pl-11"
           )}
           style={{
             background: "var(--surface)",
-            borderColor: "var(--border)",
+            borderColor: "var(--border-hover)",
             color: "var(--foreground)",
           }}
         />
@@ -313,13 +313,13 @@ function TextareaField({
         placeholder={placeholder}
         rows={rows}
         className={cn(
-          "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 resize-none",
+          "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 resize-none shadow-sm",
           "placeholder:text-[var(--muted)]",
           "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
         )}
         style={{
           background: "var(--surface)",
-          borderColor: "var(--border)",
+          borderColor: "var(--border-hover)",
           color: "var(--foreground)",
         }}
       />
@@ -369,7 +369,7 @@ function FileDropZone({
             "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
           )}
           style={{
-            borderColor: isDragActive ? "var(--accent)" : "var(--border)",
+            borderColor: isDragActive ? "var(--accent)" : "var(--border-hover)",
             background: isDragActive ? "var(--accent-soft)" : "var(--surface)",
           }}
           aria-labelledby="file-upload-label"
@@ -521,7 +521,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Sparkles
+          <Zap
             className="w-12 h-12 mx-auto mb-4"
             style={{ color: "var(--accent)" }}
             aria-hidden="true"
@@ -531,7 +531,7 @@ function GeneratingScreen({ state }: { state: GeneratingState }) {
             style={{ color: "var(--foreground)" }}
           >
             Crafting your{" "}
-            <span className="gradient-text">pitch</span>
+            <span style={{ color: "var(--accent)" }}>pitch</span>
           </h1>
           <p
             className="mt-3 text-lg"
@@ -678,7 +678,7 @@ function StepProduct({
         </p>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: "var(--foreground)" }}>
           What are you{" "}
-          <span className="gradient-text">pitching?</span>
+          <span style={{ color: "var(--accent)" }}>pitching?</span>
         </h1>
         <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Tell us about your product or idea. The more detail, the better your pitch.
@@ -739,7 +739,7 @@ function StepSources({
         </p>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: "var(--foreground)" }}>
           Your{" "}
-          <span className="gradient-text">sources</span>
+          <span style={{ color: "var(--accent)" }}>sources</span>
         </h1>
         <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Help us understand your product better with links and documents.
@@ -795,7 +795,7 @@ function StepPitcher({
         </p>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: "var(--foreground)" }}>
           Who&apos;s{" "}
-          <span className="gradient-text">pitching?</span>
+          <span style={{ color: "var(--accent)" }}>pitching?</span>
         </h1>
         <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           A great pitch needs a great pitcher. Tell us a bit about yourself.
@@ -845,7 +845,7 @@ function StepAudience({
         </p>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: "var(--foreground)" }}>
           Your{" "}
-          <span className="gradient-text">audience</span>
+          <span style={{ color: "var(--accent)" }}>audience</span>
         </h1>
         <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Knowing who you&apos;re pitching to changes everything.
@@ -866,13 +866,13 @@ function StepAudience({
             value={data.audience}
             onChange={(e) => update({ audience: e.target.value })}
             className={cn(
-              "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none",
+              "w-full rounded-xl border-2 px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none shadow-sm",
               "focus:ring-2 focus:ring-[var(--accent)] focus:border-[var(--accent)]",
               !data.audience && "text-[var(--muted)]"
             )}
             style={{
               background: "var(--surface)",
-              borderColor: "var(--border)",
+              borderColor: "var(--border-hover)",
               color: data.audience ? "var(--foreground)" : "var(--muted)",
             }}
           >
@@ -938,7 +938,7 @@ function StepGenerate({
         </p>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight" style={{ color: "var(--foreground)" }}>
           Ready to{" "}
-          <span className="gradient-text">generate</span>
+          <span style={{ color: "var(--accent)" }}>generate</span>
         </h1>
         <p className="mt-3 text-lg" style={{ color: "var(--foreground)", opacity: 0.7 }}>
           Review your inputs below, then let the magic happen.
@@ -948,43 +948,45 @@ function StepGenerate({
       {/* Summary card */}
       <motion.div
         variants={fadeUp}
-        className="rounded-2xl border overflow-hidden"
+        className="rounded-2xl overflow-hidden shadow-sm"
         style={{
           background: "var(--surface)",
-          borderColor: "var(--border)",
+          border: "2px solid var(--border)",
         }}
       >
         <div
-          className="px-6 py-4 border-b"
+          className="px-6 py-3 border-b font-semibold text-sm tracking-wide uppercase"
           style={{
             borderColor: "var(--border)",
             background: "var(--accent-soft)",
+            color: "var(--foreground)",
           }}
         >
-          <h3 className="text-sm font-semibold" style={{ color: "var(--accent)" }}>
-            Pitch Summary
-          </h3>
+          Pitch Summary
         </div>
-        <dl className="divide-y" style={{ borderColor: "var(--border)" }}>
-          {summaryItems.map((item) => (
+        <dl>
+          {summaryItems.map((item, i) => (
             <div
               key={item.label}
-              className="px-6 py-3.5 flex gap-4"
-              style={{ borderColor: "var(--border)" }}
+              className="px-6 py-4 grid grid-cols-[120px_1fr] gap-x-6 items-baseline"
+              style={{
+                borderBottom: i < summaryItems.length - 1 ? "1px solid var(--border)" : "none",
+              }}
             >
               <dt
-                className="text-sm font-medium w-28 shrink-0"
-                style={{ color: "var(--foreground)", opacity: 0.7 }}
+                className="text-sm font-semibold"
+                style={{ color: "var(--foreground)" }}
               >
                 {item.label}
               </dt>
               <dd
                 className={cn(
-                  "text-sm break-all",
-                  item.accent && "font-mono text-xs"
+                  "text-sm leading-relaxed",
+                  item.accent && "font-mono text-xs break-all"
                 )}
                 style={{
-                  color: item.accent ? "var(--accent)" : "var(--foreground)",
+                  color: item.accent ? "var(--teal)" : "var(--foreground)",
+                  opacity: item.accent ? 1 : 0.8,
                 }}
               >
                 {item.value}
@@ -1012,7 +1014,7 @@ function StepGenerate({
           aria-label="Generate my pitch deck"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
-            <Sparkles className="w-5 h-5" aria-hidden="true" />
+            <Zap className="w-5 h-5" aria-hidden="true" />
             Generate My Pitch
           </span>
         </motion.button>

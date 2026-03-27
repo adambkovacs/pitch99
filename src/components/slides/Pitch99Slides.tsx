@@ -25,16 +25,16 @@ function SlideHook() {
         />
       </motion.div>
 
-      <h1 data-animate className="text-3xl sm:text-5xl font-bold mb-5 tracking-tight leading-tight">
+      <h1 data-animate className="text-3xl sm:text-5xl font-bold mb-6 tracking-tight leading-tight text-white">
         As an entrepreneur, you have
         <br />
-        <span className="text-red-400/90">99 problems.</span>
+        <span className="text-red-400">99 problems.</span>
         <br />
         <span className="gradient-text-slide">But this pitch ain&apos;t one.</span>
       </h1>
 
-      <p data-animate className="text-base sm:text-lg text-zinc-400 max-w-xl leading-relaxed">
-        Meet <strong className="text-zinc-200">Pitch99</strong> — AI that turns your product into a
+      <p data-animate className="text-base sm:text-lg text-zinc-300 max-w-xl leading-relaxed">
+        Meet <strong className="text-white">Pitch99</strong> — AI that turns your product into a
         stunning 99-second pitch. Research, slides, talking points.
         Done in minutes.
       </p>
@@ -202,48 +202,53 @@ function SlideMarket() {
    ───────────────────────────────────────── */
 function SlideCTA() {
   return (
-    <div className="flex flex-col items-center justify-center px-8 max-w-4xl mx-auto text-center">
-      <motion.div data-animate className="relative mb-6">
-        <span className="text-7xl sm:text-8xl font-black gradient-text-slide tracking-tight">
+    <div className="flex flex-col items-center justify-center px-8 max-w-4xl mx-auto text-center gap-0">
+      {/* Logo */}
+      <motion.div data-animate className="relative mb-10">
+        <span className="text-7xl sm:text-9xl font-black gradient-text-slide tracking-tight">
           pitch99
         </span>
         <motion.div
-          className="absolute -inset-8 rounded-full blur-[60px]"
-          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.12) 0%, rgba(249,115,22,0.06) 50%, transparent 70%)" }}
+          className="absolute -inset-12 rounded-full blur-[80px]"
+          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.15) 0%, rgba(249,115,22,0.06) 50%, transparent 70%)" }}
           animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
 
-      <h2 data-animate className="text-2xl sm:text-3xl font-bold mb-4 leading-tight">
-        You have <span className="text-red-400/80">99 problems</span>.
+      {/* Headline */}
+      <h2 data-animate className="text-2xl sm:text-4xl font-bold mb-6 leading-tight text-white">
+        You have <span className="text-red-400">99 problems</span>.
         <br />
         <span className="gradient-text-slide">Your pitch isn&apos;t one anymore.</span>
       </h2>
 
-      <p data-animate className="text-zinc-400 mb-8 max-w-md text-sm leading-relaxed">
+      {/* Subtext */}
+      <p data-animate className="text-zinc-300 mb-12 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
 
-      <motion.div data-animate className="flex flex-col sm:flex-row gap-3 items-center mb-10">
+      {/* Buttons — generous spacing */}
+      <motion.div data-animate className="flex flex-col sm:flex-row gap-5 items-center mb-16">
         <a
           href="/intake"
-          className="px-7 py-3.5 rounded-full bg-gradient-to-r from-orange-600 to-red-600 text-white font-semibold text-sm hover:from-orange-500 hover:to-red-500 transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 hover:scale-[1.03] active:scale-[0.98]"
+          className="px-10 py-4 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-base hover:from-orange-400 hover:to-red-400 transition-all shadow-xl shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-[1.04] active:scale-[0.97]"
         >
-          Create Your Pitch →
+          Create Your Pitch
         </a>
         <a
           href="https://github.com/adambkovacs/pitch99"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-7 py-3.5 rounded-full border border-zinc-700/50 text-zinc-300 text-sm font-medium hover:border-orange-500/30 hover:text-zinc-100 transition-all"
+          className="px-10 py-4 rounded-full border-2 border-zinc-600 text-white text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all"
         >
           View on GitHub
         </a>
       </motion.div>
 
-      <div data-animate className="flex items-center gap-5 text-xs text-zinc-400 font-mono uppercase tracking-widest">
+      {/* Tech stack — well-separated from buttons */}
+      <div data-animate className="flex items-center gap-6 text-xs text-zinc-500 font-mono uppercase tracking-[0.15em]">
         <span>Next.js</span>
         <span className="w-1 h-1 rounded-full bg-zinc-700" />
         <span>OpenRouter</span>
