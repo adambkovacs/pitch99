@@ -78,7 +78,7 @@ describe('SlidePresentation', () => {
 
     // Should be clamped at slide 5 — both current and total show "05",
     // so check the current counter specifically via its class
-    const currentCounter = document.querySelector('.text-violet-400.font-bold')
+    const currentCounter = document.querySelector('.text-orange-400.font-bold')
     expect(currentCounter).toHaveTextContent('05')
     expect(screen.getByText('Slide 5 Content')).toBeInTheDocument()
   })
@@ -109,7 +109,7 @@ describe('SlidePresentation', () => {
   it('displays slide counter in 01/05 format', () => {
     render(<SlidePresentation slides={mockSlides} />)
 
-    // Current slide number (bold violet)
+    // Current slide number (bold orange)
     expect(screen.getByText('01')).toBeInTheDocument()
     // Separator
     expect(screen.getByText('/')).toBeInTheDocument()

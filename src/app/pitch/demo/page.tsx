@@ -1,5 +1,6 @@
 "use client";
 
+import { Clock, XCircle, DollarSign, Brain } from "lucide-react";
 import SlidePresentation from "@/components/slides/SlidePresentation";
 import type { SlideData } from "@/components/slides/SlidePresentation";
 import {
@@ -20,29 +21,29 @@ import type {
 
 const problemStats: StatItem[] = [
   {
-    icon: "\u23F3",
+    icon: <Clock className="w-5 h-5 text-red-400" />,
     value: "38",
     unit: "hrs",
     label: "Average time founders spend building a pitch deck",
     gradientFrom: "#ef4444",
   },
   {
-    icon: "\u274C",
+    icon: <XCircle className="w-5 h-5 text-orange-400" />,
     value: "72%",
     label: "Of pitch decks fail to secure a second meeting",
     gradientFrom: "#f97316",
   },
   {
-    icon: "\uD83D\uDCB8",
+    icon: <DollarSign className="w-5 h-5 text-amber-400" />,
     value: "$5K",
     label: "Typical cost of a professional deck designer",
     gradientFrom: "#eab308",
   },
   {
-    icon: "\uD83E\uDDE0",
+    icon: <Brain className="w-5 h-5 text-rose-400" />,
     value: "1 in 10",
     label: "Startups feel confident in their pitch narrative",
-    gradientFrom: "#8b5cf6",
+    gradientFrom: "#f97316",
   },
 ];
 
@@ -51,33 +52,33 @@ const solutionSteps: StepItem[] = [
     num: "01",
     title: "Describe",
     desc: "Answer a few questions about your company, market, and goals.",
-    gradient: "from-violet-600 to-purple-600",
+    gradient: "from-orange-600 to-red-600",
   },
   {
     num: "02",
     title: "Generate",
     desc: "AI crafts a narrative arc with data-backed slides in seconds.",
-    gradient: "from-purple-600 to-fuchsia-600",
+    gradient: "from-red-600 to-rose-600",
   },
   {
     num: "03",
     title: "Refine",
     desc: "Tweak copy, swap layouts, and adjust the tone to match your brand.",
-    gradient: "from-fuchsia-600 to-pink-600",
+    gradient: "from-rose-600 to-pink-600",
   },
   {
     num: "04",
     title: "Present",
     desc: "Launch a cinematic full-screen deck or export to PDF.",
-    gradient: "from-pink-600 to-rose-600",
+    gradient: "from-pink-600 to-red-600",
   },
 ];
 
 const marketMetrics: MetricItem[] = [
-  { label: "Global Presentation Software Market", value: 12.4, maxValue: 15, color: "#a78bfa" },
-  { label: "AI Content Generation TAM", value: 8.7, maxValue: 15, color: "#c084fc" },
-  { label: "Startup Pitch Services Spend", value: 4.2, maxValue: 15, color: "#e879f9" },
-  { label: "Pitch99 Addressable Segment", value: 2.8, maxValue: 15, color: "#f472b6" },
+  { label: "Global Presentation Software Market", value: 12.4, maxValue: 15, color: "#f97316" },
+  { label: "AI Content Generation TAM", value: 8.7, maxValue: 15, color: "#fb923c" },
+  { label: "Startup Pitch Services Spend", value: 4.2, maxValue: 15, color: "#ef4444" },
+  { label: "Pitch99 Addressable Segment", value: 2.8, maxValue: 15, color: "#dc2626" },
 ];
 
 /* ── Compose slides from template building blocks ── */
@@ -91,7 +92,7 @@ const slides: SlideData[] = [
           eyebrow="Introducing"
           title={
             <span>
-              Pitch<span style={{ color: "#a78bfa" }}>99</span>
+              Pitch<span style={{ color: "#fb923c" }}>99</span>
             </span>
           }
           subtitle="Your AI pitch co-pilot. Describe your startup, get a cinematic investor deck in 99 seconds."
@@ -145,13 +146,13 @@ const slides: SlideData[] = [
         <SlideCTABlock
           headline={
             <span>
-              Ready to pitch like a <span style={{ color: "#a78bfa" }}>pro</span>?
+              Ready to pitch like a <span style={{ color: "#fb923c" }}>pro</span>?
             </span>
           }
           subtext="Join the waitlist and be among the first founders to generate investor-ready decks with AI."
           primaryAction={{ label: "Get Early Access", href: "/intake" }}
           secondaryAction={{ label: "View Source", href: "https://github.com/pitch99" }}
-          techStack={["Next.js 16", "GPT-4o", "GSAP", "Framer Motion"]}
+          techStack={["Next.js 16", "Grok", "GSAP", "Framer Motion"]}
         />
       </SlideLayout>
     ),

@@ -50,7 +50,7 @@ export default function MarketChart({
                 {item.label}
               </span>
               <motion.span
-                className="font-mono text-sm font-bold text-violet-400"
+                className="font-mono text-sm font-bold text-orange-400"
                 initial={{ opacity: 0 }}
                 animate={visible ? { opacity: 1 } : {}}
                 transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
@@ -65,7 +65,7 @@ export default function MarketChart({
                 style={{
                   background:
                     item.color ??
-                    `linear-gradient(90deg, #7c3aed ${0}%, #c084fc ${100}%)`,
+                    `linear-gradient(90deg, #f97316 ${0}%, #fb923c ${100}%)`,
                 }}
                 initial={{ width: 0 }}
                 animate={

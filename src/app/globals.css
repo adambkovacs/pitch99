@@ -8,14 +8,14 @@
   --surface-elevated: #ffffff;
   --border: #e7e5e4;
   --border-hover: #d6d3d1;
-  --muted: #78716c;
-  --muted-light: #a8a29e;
+  --muted: #57534e;
+  --muted-light: #78716c;
 
-  /* Brand accent — warm violet to coral gradient */
-  --accent: #7c3aed;
-  --accent-hover: #6d28d9;
-  --accent-light: #ddd6fe;
-  --accent-soft: #f5f3ff;
+  /* Brand accent — warm orange */
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --accent-light: #fed7aa;
+  --accent-soft: #fff7ed;
 
   /* Secondary — warm coral */
   --coral: #f97316;
@@ -31,8 +31,8 @@
   --slide-bg: #0f0f14;
   --slide-fg: #f5f5f4;
   --slide-muted: #71717a;
-  --slide-accent: #a78bfa;
-  --slide-accent-glow: rgba(167, 139, 250, 0.3);
+  --slide-accent: #fb923c;
+  --slide-accent-glow: rgba(251, 146, 60, 0.3);
 }
 
 * {
@@ -88,14 +88,14 @@ body {
 
 /* Gradient text — works on both light and dark */
 .gradient-text {
-  background: linear-gradient(135deg, #7c3aed 0%, #f97316 50%, #0d9488 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #0d9488 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-slide {
-  background: linear-gradient(135deg, #a78bfa 0%, #f0abfc 40%, #fb923c 100%);
+  background: linear-gradient(135deg, #fb923c 0%, #f87171 40%, #2dd4bf 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -103,7 +103,7 @@ body {
 
 /* Glow effects (slide mode only) */
 .glow {
-  box-shadow: 0 0 30px var(--slide-accent-glow), 0 0 60px rgba(167, 139, 250, 0.1);
+  box-shadow: 0 0 30px var(--slide-accent-glow), 0 0 60px rgba(251, 146, 60, 0.1);
 }
 
 .text-glow {
@@ -137,7 +137,7 @@ body {
 }
 
 .card-slide:hover {
-  border-color: rgba(167, 139, 250, 0.2);
+  border-color: rgba(251, 146, 60, 0.2);
   background: rgba(255, 255, 255, 0.05);
 }
 

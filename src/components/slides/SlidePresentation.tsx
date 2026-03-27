@@ -103,14 +103,14 @@ export default function SlidePresentation({
 
   return (
     <div
-      className={`relative w-screen h-screen overflow-hidden bg-[var(--background)] ${className ?? ""}`}
+      className={`relative w-screen h-screen overflow-hidden bg-[#0a0a0f] ${className ?? ""}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-900">
         <motion.div
-          className="h-full bg-gradient-to-r from-violet-600 to-fuchsia-500"
+          className="h-full bg-gradient-to-r from-orange-500 to-red-500"
           initial={false}
           animate={{ width: `${((current + 1) / total) * 100}%` }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -119,7 +119,7 @@ export default function SlidePresentation({
 
       {/* Slide counter */}
       <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-500">
-        <span className="text-violet-400 font-bold">{String(current + 1).padStart(2, "0")}</span>
+        <span className="text-orange-400 font-bold">{String(current + 1).padStart(2, "0")}</span>
         <span className="mx-1">/</span>
         <span>{String(total).padStart(2, "0")}</span>
       </div>

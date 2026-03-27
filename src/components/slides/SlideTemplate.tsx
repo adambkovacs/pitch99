@@ -11,7 +11,7 @@ const tokens = {
   bg: "#0f0f14",
   text: "#f5f5f4",
   muted: "#71717a",
-  accent: "#a78bfa",
+  accent: "#fb923c",
   card: { bg: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.06)" },
 } as const;
 
@@ -20,7 +20,7 @@ const tokens = {
 export type SlideVariant = "title" | "content" | "stats" | "chart" | "cta";
 
 export interface StatItem {
-  icon: string;
+  icon: ReactNode;
   value: string;
   unit?: string;
   label: string;
@@ -119,7 +119,7 @@ export function SlideLayout({ variant, background, children, className }: SlideL
         className,
       )}
       style={{
-        background: background ?? "radial-gradient(ellipse at 50% 30%, rgba(167,139,250,0.06) 0%, transparent 70%)",
+        background: background ?? "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.06) 0%, transparent 70%)",
         backgroundColor: tokens.bg,
         color: tokens.text,
       }}
@@ -214,7 +214,7 @@ function StepArrowH() {
   return (
     <div className="hidden sm:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 items-center justify-center">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M5 3L9 7L5 11" stroke="rgba(167,139,250,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 3L9 7L5 11" stroke="rgba(251,146,60,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   );
@@ -224,7 +224,7 @@ function StepArrowV() {
   return (
     <div className="flex sm:hidden justify-center py-1">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M3 5L7 9L11 5" stroke="rgba(167,139,250,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 5L7 9L11 5" stroke="rgba(251,146,60,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   );
@@ -337,9 +337,9 @@ export function SlideCTABlock({
           href={primaryAction.href}
           className={cn(
             "px-7 py-3.5 rounded-full text-white font-semibold text-sm",
-            "bg-gradient-to-r from-violet-600 to-purple-600",
-            "hover:from-violet-500 hover:to-purple-500 transition-all",
-            "shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30",
+            "bg-gradient-to-r from-orange-600 to-red-600",
+            "hover:from-orange-500 hover:to-red-500 transition-all",
+            "shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30",
             "hover:scale-[1.03] active:scale-[0.98]",
           )}
         >
@@ -351,7 +351,7 @@ export function SlideCTABlock({
             className={cn(
               "px-7 py-3.5 rounded-full text-sm font-medium",
               "border border-zinc-700/50 text-zinc-300",
-              "hover:border-violet-500/30 hover:text-zinc-100 transition-all",
+              "hover:border-orange-500/30 hover:text-zinc-100 transition-all",
             )}
           >
             {secondaryAction.label}
