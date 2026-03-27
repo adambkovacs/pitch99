@@ -45,16 +45,16 @@ export function FileDropZone({
       <div
         {...getRootProps()}
         className={cn(
-          "relative rounded-xl border border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200",
+          "relative rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200 bg-zinc-50/30",
           "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
         )}
         style={{
           borderColor: isDragActive
             ? "var(--accent)"
-            : "#d4d4d8",
+            : "#e4e4e7",
           background: isDragActive
             ? "var(--accent-soft)"
-            : "rgba(250, 250, 249, 0.5)",
+            : undefined,
         }}
         aria-labelledby="file-upload-label"
         aria-describedby={dropzoneDescId}
@@ -69,15 +69,17 @@ export function FileDropZone({
           animate={{ y: isDragActive ? -4 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <Upload
-            className="w-10 h-10 mx-auto mb-3"
-            style={{
-              color: isDragActive ? "var(--accent)" : "var(--muted)",
-            }}
-            aria-hidden="true"
-          />
+          <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center mb-1 mx-auto">
+            <Upload
+              className="w-5 h-5"
+              style={{
+                color: isDragActive ? "var(--accent)" : "var(--muted)",
+              }}
+              aria-hidden="true"
+            />
+          </div>
           <p
-            className="text-sm font-medium"
+            className="text-sm font-semibold"
             style={{ color: "var(--foreground)" }}
           >
             {isDragActive

@@ -74,13 +74,13 @@ export function StepIndicator({
                 {isActive && (
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shrink-0" aria-hidden="true" />
                 )}
-                <span>{step.label}</span>
+                <span className={cn("hidden sm:inline", isActive && "inline")}>{step.label}</span>
               </div>
 
               {i < STEPS.length - 1 && (
                 <div
                   className={cn(
-                    "w-8 h-px mx-1 transition-colors duration-300",
+                    "w-4 sm:w-8 h-px mx-0.5 sm:mx-1 transition-colors duration-300",
                     i < current ? "bg-teal-400" : "bg-zinc-200"
                   )}
                   aria-hidden="true"

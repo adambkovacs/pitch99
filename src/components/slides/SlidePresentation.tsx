@@ -168,7 +168,7 @@ export default function SlidePresentation({
       </div>
 
       {/* Keyboard hint */}
-      <div className="keyboard-hint" aria-hidden="true">
+      <div className="keyboard-hint hidden sm:block" aria-hidden="true">
         <span className="inline-flex items-center gap-2">
           <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">←</kbd>
           <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">→</kbd>

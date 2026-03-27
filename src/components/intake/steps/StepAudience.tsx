@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 import { TextareaField } from "../TextareaField";
 import { staggerChildren, fadeUp } from "../animations";
 import { AUDIENCES } from "../types";
@@ -48,31 +49,36 @@ export function StepAudience({
           >
             Who are you pitching to?
           </label>
-          <select
-            id={selectId}
-            value={data.audience}
-            onChange={(e) => update({ audience: e.target.value })}
-            className={cn(
-              "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 appearance-none",
-              "bg-zinc-50/50",
-              "hover:border-zinc-400",
-              "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:bg-white",
-              !data.audience && "text-[var(--muted)]"
-            )}
-            style={{
-              background: "var(--surface)",
-              borderColor: "#d4d4d8",
-              color: data.audience
-                ? "var(--foreground)"
-                : "var(--muted)",
-            }}
-          >
-            {AUDIENCES.map((a) => (
-              <option key={a.value} value={a.value}>
-                {a.label}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              id={selectId}
+              value={data.audience}
+              onChange={(e) => update({ audience: e.target.value })}
+              className={cn(
+                "w-full rounded-xl border px-4 py-3.5 pr-10 text-base outline-none transition-all duration-200 appearance-none",
+                "bg-white shadow-sm",
+                "hover:border-zinc-400",
+                "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)]",
+                !data.audience && "text-[var(--muted)]"
+              )}
+              style={{
+                borderColor: "#d4d4d8",
+                color: data.audience
+                  ? "var(--foreground)"
+                  : "var(--muted)",
+              }}
+            >
+              {AUDIENCES.map((a) => (
+                <option key={a.value} value={a.value}>
+                  {a.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400"
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </motion.div>
 
