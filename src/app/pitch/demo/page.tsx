@@ -21,26 +21,26 @@ import type {
 
 const problemStats: StatItem[] = [
   {
-    icon: <Clock className="w-5 h-5 text-red-400" />,
+    icon: <Clock className="w-6 h-6 text-red-500" />,
     value: "38",
     unit: "hrs",
     label: "Average time founders spend building a pitch deck",
     gradientFrom: "#ef4444",
   },
   {
-    icon: <XCircle className="w-5 h-5 text-orange-400" />,
+    icon: <XCircle className="w-6 h-6 text-orange-600" />,
     value: "72%",
     label: "Of pitch decks fail to secure a second meeting",
     gradientFrom: "#f97316",
   },
   {
-    icon: <DollarSign className="w-5 h-5 text-amber-400" />,
+    icon: <DollarSign className="w-6 h-6 text-amber-600" />,
     value: "$5K",
     label: "Typical cost of a professional deck designer",
     gradientFrom: "#eab308",
   },
   {
-    icon: <Brain className="w-5 h-5 text-rose-400" />,
+    icon: <Brain className="w-6 h-6 text-rose-500" />,
     value: "1 in 10",
     label: "Startups feel confident in their pitch narrative",
     gradientFrom: "#f97316",
@@ -52,25 +52,25 @@ const solutionSteps: StepItem[] = [
     num: "01",
     title: "Describe",
     desc: "Answer a few questions about your company, market, and goals.",
-    gradient: "from-orange-600 to-red-600",
+    gradient: "from-orange-500 to-orange-600",
   },
   {
     num: "02",
     title: "Generate",
     desc: "AI crafts a narrative arc with data-backed slides in seconds.",
-    gradient: "from-red-600 to-rose-600",
+    gradient: "from-red-500 to-red-600",
   },
   {
     num: "03",
     title: "Refine",
     desc: "Tweak copy, swap layouts, and adjust the tone to match your brand.",
-    gradient: "from-rose-600 to-pink-600",
+    gradient: "from-rose-500 to-rose-600",
   },
   {
     num: "04",
     title: "Present",
     desc: "Launch a cinematic full-screen deck or export to PDF.",
-    gradient: "from-pink-600 to-red-600",
+    gradient: "from-teal-500 to-teal-600",
   },
 ];
 
@@ -92,10 +92,11 @@ const slides: SlideData[] = [
           eyebrow="Introducing"
           title={
             <span>
-              Pitch<span style={{ color: "#f97316" }}>99</span>
+              <span className="text-5xl sm:text-7xl font-black">Pitch</span>
+              <span className="text-5xl sm:text-7xl font-black gradient-text">99</span>
             </span>
           }
-          subtitle="Your AI pitch co-pilot. Describe your startup, get a cinematic investor deck in 99 seconds."
+          subtitle="From repo to investor deck in 99 seconds. AI-generated narrative. Cinematic slides. Zero design skills required."
         />
       </SlideLayout>
     ),
@@ -151,7 +152,7 @@ const slides: SlideData[] = [
           }
           subtext="Join the waitlist and be among the first founders to generate investor-ready decks with AI."
           primaryAction={{ label: "Get Early Access", href: "/intake" }}
-          secondaryAction={{ label: "View Source", href: "https://github.com/pitch99" }}
+          secondaryAction={{ label: "View Source", href: "https://github.com/adambkovacs/pitch99" }}
           techStack={["Next.js 16", "OpenRouter", "GSAP", "Framer Motion"]}
         />
       </SlideLayout>

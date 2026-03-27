@@ -146,7 +146,7 @@ export function SlideTitle({ eyebrow, title, subtitle, className }: SlideTitlePr
       {eyebrow && (
         <span
           data-animate
-          className="text-[10px] font-mono uppercase tracking-[0.2em]"
+          className="text-sm font-semibold font-mono uppercase tracking-[0.2em]"
           style={{ color: tokens.accent }}
         >
           {eyebrow}
@@ -178,17 +178,16 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl p-5 transition-transform duration-200 hover:scale-[1.02]"
-          style={{ backgroundColor: tokens.card.bg, border: `1px solid ${tokens.card.border}` }}
+          className="relative overflow-hidden rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
         >
           <div
             className="absolute inset-0 opacity-40 pointer-events-none"
             style={{ background: `linear-gradient(135deg, ${stat.gradientFrom}33 0%, transparent 60%)` }}
           />
           <div className="relative">
-            <span className="text-xl mb-2 block">{stat.icon}</span>
+            <span className="text-xl mb-3 block">{stat.icon}</span>
             <div className="flex items-baseline gap-1.5 mb-1">
-              <span className="text-2xl sm:text-3xl font-black font-mono text-zinc-900">
+              <span className="text-3xl sm:text-4xl font-black font-mono text-zinc-900">
                 {stat.value}
               </span>
               {stat.unit && (
@@ -236,15 +235,14 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
       {steps.map((step, i) => (
         <div key={step.num} className="flex-1 relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl p-5"
-            style={{ backgroundColor: tokens.card.bg, border: `1px solid ${tokens.card.border}` }}
+            className="text-center h-full rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
           >
             <div
-              className={cn("inline-flex items-center justify-center w-10 h-10 rounded-xl mb-3 bg-gradient-to-br", step.gradient)}
+              className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 bg-gradient-to-br", step.gradient)}
             >
-              <span className="text-sm font-bold text-white">{step.num}</span>
+              <span className="text-base font-bold text-white">{step.num}</span>
             </div>
-            <h3 className="font-semibold text-base mb-1 text-zinc-900">{step.title}</h3>
+            <h3 className="font-semibold text-lg mb-2 text-zinc-900">{step.title}</h3>
             <p className="text-xs leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
           </div>
           {i < steps.length - 1 && (
@@ -289,12 +287,12 @@ export function SlideMetricBar({ metrics, className }: SlideMetricBarProps) {
         return (
           <div key={metric.label} data-animate className="space-y-1.5">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-zinc-700">{metric.label}</span>
+              <span className="font-medium text-zinc-700">{metric.label}</span>
               <span className="font-mono font-bold" style={{ color: metric.color }}>
                 {metric.value}
               </span>
             </div>
-            <div className="h-2.5 rounded-full overflow-hidden" style={{ backgroundColor: "#f4f4f5" }}>
+            <div className="h-3 rounded-full overflow-hidden" style={{ backgroundColor: "#f4f4f5" }}>
               <div
                 data-metric-bar
                 className="h-full rounded-full origin-left"
@@ -336,10 +334,10 @@ export function SlideCTABlock({
         <a
           href={primaryAction.href}
           className={cn(
-            "px-7 py-3.5 rounded-full text-white font-semibold text-sm",
+            "px-10 py-4 rounded-full text-white font-bold text-base",
             "bg-gradient-to-r from-orange-600 to-red-600",
             "hover:from-orange-500 hover:to-red-500 transition-all",
-            "shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30",
+            "shadow-xl shadow-orange-500/25 hover:shadow-orange-500/30",
             "hover:scale-[1.03] active:scale-[0.98]",
           )}
         >
@@ -349,8 +347,8 @@ export function SlideCTABlock({
           <a
             href={secondaryAction.href}
             className={cn(
-              "px-7 py-3.5 rounded-full text-sm font-medium",
-              "border border-zinc-300 text-zinc-700",
+              "px-10 py-4 rounded-full text-base font-semibold",
+              "border-2 border-zinc-300 text-zinc-700",
               "hover:border-orange-500/50 hover:text-zinc-900 transition-all",
             )}
           >
