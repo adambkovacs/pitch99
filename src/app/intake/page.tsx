@@ -238,10 +238,10 @@ function InputField({
   const inputId = id ?? generatedId;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <label
         htmlFor={inputId}
-        className="block text-sm font-medium"
+        className="block text-sm font-medium mb-1.5"
         style={{ color: "var(--foreground)" }}
       >
         {label}
@@ -286,10 +286,10 @@ function TextareaField({
   const textareaId = id ?? generatedId;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <label
         htmlFor={textareaId}
-        className="block text-sm font-medium"
+        className="block text-sm font-medium mb-1.5"
         style={{ color: "var(--foreground)" }}
       >
         {label}
@@ -340,9 +340,9 @@ function FileDropZone({
   const dropzoneDescId = "dropzone-description";
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <label
-        className="block text-sm font-medium"
+        className="block text-sm font-medium mb-1.5"
         style={{ color: "var(--foreground)" }}
         id="file-upload-label"
       >
@@ -656,7 +656,7 @@ function StepProduct({
   update: (patch: Partial<FormData>) => void;
 }) {
   return (
-    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
+    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-10">
       <motion.div variants={fadeUp}>
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
@@ -717,7 +717,7 @@ function StepSources({
   );
 
   return (
-    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
+    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-10">
       <motion.div variants={fadeUp}>
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
@@ -773,7 +773,7 @@ function StepPitcher({
   update: (patch: Partial<FormData>) => void;
 }) {
   return (
-    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
+    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-10">
       <motion.div variants={fadeUp}>
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
@@ -823,7 +823,7 @@ function StepAudience({
   const selectId = useId();
 
   return (
-    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-8">
+    <motion.div variants={staggerChildren} initial="enter" animate="center" className="space-y-10">
       <motion.div variants={fadeUp}>
         <p
           className="text-sm font-medium uppercase tracking-wider mb-2"
@@ -841,10 +841,10 @@ function StepAudience({
       </motion.div>
 
       <motion.div variants={fadeUp}>
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <label
             htmlFor={selectId}
-            className="block text-sm font-medium"
+            className="block text-sm font-medium mb-1.5"
             style={{ color: "var(--foreground)" }}
           >
             Who are you pitching to?

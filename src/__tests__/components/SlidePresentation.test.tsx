@@ -78,7 +78,7 @@ describe('SlidePresentation', () => {
 
     // Should be clamped at slide 5 — both current and total show "05",
     // so check the current counter specifically via its class
-    const currentCounter = document.querySelector('.text-orange-400.font-bold')
+    const currentCounter = document.querySelector('.text-orange-600.font-bold')
     expect(currentCounter).toHaveTextContent('05')
     expect(screen.getByText('Slide 5 Content')).toBeInTheDocument()
   })
@@ -97,8 +97,8 @@ describe('SlidePresentation', () => {
   it('shows progress bar', () => {
     const { container } = render(<SlidePresentation slides={mockSlides} />)
 
-    // The progress bar container has class h-1 bg-zinc-900
-    const progressContainer = container.querySelector('.h-1.bg-zinc-900')
+    // The progress bar container has class h-1 bg-zinc-200
+    const progressContainer = container.querySelector('.h-1.bg-zinc-200')
     expect(progressContainer).toBeInTheDocument()
 
     // The inner gradient bar exists
