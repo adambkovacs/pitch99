@@ -329,10 +329,11 @@ export default function IntakePage() {
 
       <main
         ref={containerRef}
-        className={cn(
-          "flex-1 flex justify-center px-6 pb-32",
-          step <= 4 ? "pt-36" : "pt-12"
-        )}
+        className="flex-1 flex justify-center px-6"
+        style={{
+          paddingTop: step <= 4 ? "6rem" : "3rem",
+          paddingBottom: "8rem",
+        }}
       >
         <div className="w-full max-w-2xl">
           <AnimatePresence mode="wait" custom={direction}>
