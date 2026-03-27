@@ -1,5 +1,38 @@
 import { NextResponse } from "next/server";
+import { URL } from "url";
 import { lookupLinkedInProfile } from "@/lib/apify";
+import { rateLimit } from "@/lib/rateLimit";
+
+const BLOCKED_PATTERNS = [
+  /^127\./,
+  /^10\./,
+  /^192\.168\./,
+  /^172\.(1[6-9]|2\d|3[01])\./,
+  /^169\.254\./,
+  /^0\./,
+  /^::1$/,
+  /^fc00:/,
+  /^fe80:/,
+  /^localhost$/i,
+  /^metadata\./i,
+];
+
+function isAllowedUrl(input: string): boolean {
+  try {
+    const raw = input.startsWith("http") ? input : `https://${input}`;
+    const url = new URL(raw);
+    if (!["http:", "https:"].includes(url.protocol)) return false;
+    const hostname = url.hostname.toLowerCase();
+    if (BLOCKED_PATTERNS.some(p => p.test(hostname))) return false;
+    // Block IP addresses that resolve to private ranges
+    if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname)) {
+      if (BLOCKED_PATTERNS.some(p => p.test(hostname))) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 interface EnrichRequest {
   githubUrl?: string;
@@ -144,8 +177,32 @@ async function fetchWebsiteContent(
 
 export async function POST(request: Request) {
   try {
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
+    const { allowed, remaining } = rateLimit(ip, 10, 60000);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again in a minute." },
+        { status: 429, headers: { "Retry-After": "60" } }
+      );
+    }
+
     const body = (await request.json()) as EnrichRequest;
-    const { githubUrl, websiteUrl, linkedinUrl } = body;
+    let { githubUrl, websiteUrl, linkedinUrl } = body;
+
+    // Input length limits
+    if (githubUrl && githubUrl.length > 500) githubUrl = undefined;
+    if (websiteUrl && websiteUrl.length > 500) websiteUrl = undefined;
+    if (linkedinUrl && linkedinUrl.length > 500) linkedinUrl = undefined;
+
+    // SSRF protection: block private/internal URLs
+    if (websiteUrl && !isAllowedUrl(websiteUrl)) {
+      websiteUrl = undefined;
+    }
+    if (linkedinUrl && !isAllowedUrl(linkedinUrl)) {
+      linkedinUrl = undefined;
+    }
 
     if (!githubUrl && !websiteUrl && !linkedinUrl) {
       return NextResponse.json(

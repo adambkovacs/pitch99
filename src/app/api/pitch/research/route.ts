@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { chatCompletion, MODELS } from "@/lib/openrouter";
+import { rateLimit } from "@/lib/rateLimit";
 
 interface ResearchRequest {
   productName: string;
@@ -7,14 +8,63 @@ interface ResearchRequest {
   audienceType: string;
 }
 
+const VALID_AUDIENCE_TYPES = [
+  "b2b",
+  "b2c",
+  "enterprise",
+  "smb",
+  "developer",
+  "consumer",
+  "marketplace",
+  "saas",
+  "hardware",
+  "biotech",
+  "fintech",
+  "edtech",
+  "healthtech",
+  "other",
+];
+
 export async function POST(request: Request) {
   try {
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() ?? "unknown";
+    const { allowed, remaining } = rateLimit(ip, 10, 60000);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again in a minute." },
+        { status: 429, headers: { "Retry-After": "60" } }
+      );
+    }
+
     const body = (await request.json()) as ResearchRequest;
     const { productName, productDescription, audienceType } = body;
 
     if (!productName || !productDescription || !audienceType) {
       return NextResponse.json(
         { error: "Missing required fields: productName, productDescription, audienceType" },
+        { status: 400 }
+      );
+    }
+
+    if (productName.length > 200) {
+      return NextResponse.json(
+        { error: "productName must be 200 characters or fewer." },
+        { status: 400 }
+      );
+    }
+
+    if (productDescription.length > 5000) {
+      return NextResponse.json(
+        { error: "productDescription must be 5000 characters or fewer." },
+        { status: 400 }
+      );
+    }
+
+    if (!VALID_AUDIENCE_TYPES.includes(audienceType.toLowerCase())) {
+      return NextResponse.json(
+        { error: `Invalid audienceType. Must be one of: ${VALID_AUDIENCE_TYPES.join(", ")}` },
         { status: 400 }
       );
     }
