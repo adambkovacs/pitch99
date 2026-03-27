@@ -1170,7 +1170,17 @@ export default function IntakePage() {
         );
       }
 
-      // Success — redirect to the demo viewer
+      const generateData = await generateRes.json();
+
+      // Store the generated pitch so the viewer page can render it
+      localStorage.setItem("pitch99_generated", JSON.stringify({
+        productName: formData.productName,
+        slides: (generateData as Record<string, unknown>).slides,
+        research: research,
+        enrichment: enrichment,
+        generatedAt: new Date().toISOString(),
+      }));
+
       router.push("/pitch/demo");
     } catch (err) {
       const message =

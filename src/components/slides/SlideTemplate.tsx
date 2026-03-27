@@ -173,28 +173,30 @@ interface SlideStatGridProps {
 
 export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-4 sm:gap-5 w-full max-w-2xl", className)}>
+    <div className={cn("grid grid-cols-2 gap-6 w-full max-w-2xl", className)}>
       {stats.map((stat) => (
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+          className="relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white px-8 py-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
         >
           <div
-            className="absolute inset-0 opacity-40 pointer-events-none"
+            className="absolute inset-0 opacity-20 pointer-events-none"
             style={{ background: `linear-gradient(135deg, ${stat.gradientFrom}33 0%, transparent 60%)` }}
           />
-          <div className="relative">
-            <span className="text-xl mb-3 block">{stat.icon}</span>
-            <div className="flex items-baseline gap-1.5 mb-1">
-              <span className="text-3xl sm:text-4xl font-black font-mono text-zinc-900">
-                {stat.value}
-              </span>
-              {stat.unit && (
-                <span className="text-xs font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
-              )}
+          <div className="relative flex flex-col gap-4">
+            <span className="block">{stat.icon}</span>
+            <div>
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="text-4xl sm:text-5xl font-black font-mono text-zinc-900 tracking-tight">
+                  {stat.value}
+                </span>
+                {stat.unit && (
+                  <span className="text-sm font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
+                )}
+              </div>
+              <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{stat.label}</p>
             </div>
-            <p className="text-xs leading-relaxed" style={{ color: tokens.muted }}>{stat.label}</p>
           </div>
         </div>
       ))}
@@ -235,15 +237,17 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
       {steps.map((step, i) => (
         <div key={step.num} className="flex-1 relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+            className="text-center h-full rounded-2xl border border-zinc-200/80 bg-white px-6 py-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center gap-4"
           >
             <div
-              className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 bg-gradient-to-br", step.gradient)}
+              className={cn("inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br shadow-md", step.gradient)}
             >
-              <span className="text-base font-bold text-white">{step.num}</span>
+              <span className="text-lg font-bold text-white">{step.num}</span>
             </div>
-            <h3 className="font-semibold text-lg mb-2 text-zinc-900">{step.title}</h3>
-            <p className="text-xs leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
+            <div>
+              <h3 className="font-bold text-lg mb-1.5 text-zinc-900">{step.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
+            </div>
           </div>
           {i < steps.length - 1 && (
             <>

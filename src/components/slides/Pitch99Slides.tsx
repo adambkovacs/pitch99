@@ -76,25 +76,27 @@ function SlideProblem() {
         Every audience needs a different pitch. Every time.
       </p>
 
-      <div className="grid grid-cols-2 gap-5 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-6 w-full max-w-2xl">
         {stats.map((stat) => (
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+            className="rounded-2xl border border-zinc-200/80 bg-white px-8 py-8 shadow-sm relative overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-30`} />
-            <div className="relative">
-              <span className="mb-2 block">{stat.icon}</span>
-              <div className="flex items-baseline gap-1.5 mb-1">
-                <span className="text-3xl sm:text-4xl font-black text-zinc-900 font-mono">
-                  {stat.value}
-                </span>
-                {stat.unit && (
-                  <span className="text-xs text-zinc-400 font-mono">{stat.unit}</span>
-                )}
+            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-20`} />
+            <div className="relative flex flex-col gap-4">
+              <span className="block">{stat.icon}</span>
+              <div>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <span className="text-4xl sm:text-5xl font-black text-zinc-900 font-mono tracking-tight">
+                    {stat.value}
+                  </span>
+                  {stat.unit && (
+                    <span className="text-sm text-zinc-400 font-mono">{stat.unit}</span>
+                  )}
+                </div>
+                <p className="text-sm text-zinc-500 leading-relaxed">{stat.label}</p>
               </div>
-              <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
             </div>
           </div>
         ))}
@@ -127,15 +129,17 @@ function SlideSolution() {
         and crafts a presentation you&apos;re proud to deliver.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-4xl">
+      <div className="flex flex-col sm:flex-row gap-5 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="flex-1 relative" data-animate>
-            <div className="rounded-2xl border-2 border-zinc-200 bg-white p-7 shadow-sm text-center h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} mb-4`}>
-                <span className="text-base font-bold text-white">{step.num}</span>
+            <div className="rounded-2xl border border-zinc-200/80 bg-white px-6 py-8 shadow-sm text-center h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center gap-4">
+              <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${step.gradient} shadow-md`}>
+                <span className="text-lg font-bold text-white">{step.num}</span>
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-zinc-900">{step.title}</h3>
-              <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
+              <div>
+                <h3 className="font-bold text-lg mb-1.5 text-zinc-900">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-500">{step.desc}</p>
+              </div>
             </div>
             {i < steps.length - 1 && (
               <div className="hidden sm:flex absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 w-5 h-5 items-center justify-center">
