@@ -138,7 +138,7 @@ export default function MarketChart({
       y: {
         ticks: {
           color: "#3f3f46",
-          font: { family: "system-ui", size: 12, weight: "600" },
+          font: { family: "system-ui", size: 12, weight: "bold" },
           padding: 12,
         },
         grid: { display: false },
