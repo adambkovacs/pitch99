@@ -102,12 +102,12 @@ export default function SlidePresentation({
 
   return (
     <div
-      className={`relative w-screen h-screen overflow-hidden bg-[#fafaf9] text-zinc-900 ${className ?? ""}`}
+      className={`relative w-screen h-screen overflow-hidden bg-[#1c1917] text-zinc-100 ${className ?? ""}`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-zinc-100">
+      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-white/10">
         <motion.div
           className="h-full bg-gradient-to-r from-orange-500 to-red-500"
           initial={false}
@@ -117,7 +117,7 @@ export default function SlidePresentation({
       </div>
 
       {/* Slide counter (decorative — live region below announces for SR) */}
-      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-zinc-500" aria-hidden="true">
+      <div className="fixed top-6 right-8 z-50 font-mono text-sm text-white/50" aria-hidden="true">
         <span className="text-orange-600 font-bold" data-testid="slide-current">{String(current + 1).padStart(2, "0")}</span>
         <span className="mx-1">/</span>
         <span>{String(total).padStart(2, "0")}</span>
@@ -170,9 +170,9 @@ export default function SlidePresentation({
       {/* Keyboard hint */}
       <div className="keyboard-hint hidden sm:block" aria-hidden="true">
         <span className="inline-flex items-center gap-2">
-          <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">←</kbd>
-          <kbd className="px-2 py-0.5 rounded bg-zinc-100 border border-zinc-300 text-zinc-600 text-xs">→</kbd>
-          <span className="ml-1">to navigate</span>
+          <kbd className="px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white/50 text-xs">←</kbd>
+          <kbd className="px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white/50 text-xs">→</kbd>
+          <span className="ml-1 text-white/30">to navigate</span>
         </span>
       </div>
 
@@ -182,7 +182,7 @@ export default function SlidePresentation({
         className="absolute left-0 top-0 w-1/5 h-full z-40 cursor-w-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-orange-500 transition-opacity"
         aria-label="Previous slide"
       >
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center border border-white/10">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M12 5L7 10L12 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -193,7 +193,7 @@ export default function SlidePresentation({
         className="absolute right-0 top-0 w-1/5 h-full z-40 cursor-e-resize opacity-0 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-orange-500 transition-opacity"
         aria-label="Next slide"
       >
-        <div className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/5 backdrop-blur flex items-center justify-center border border-black/10">
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center border border-white/10">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M8 5L13 10L8 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>

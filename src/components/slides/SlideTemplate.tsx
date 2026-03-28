@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 /* ── Design tokens ──────────────────────── */
 
 const tokens = {
-  bg: "#fafaf9",
-  text: "#1c1917",
-  muted: "#57534e",
+  bg: "#1c1917",
+  text: "#fafaf9",
+  muted: "#a8a29e",
   accent: "#f97316",
-  card: { bg: "#ffffff", border: "#d6d3d1" },
+  card: { bg: "rgba(255,255,255,0.05)", border: "rgba(255,255,255,0.10)" },
 } as const;
 
 /* ── Types ──────────────────────────────── */
@@ -120,7 +120,7 @@ export function SlideLayout({ variant, background, children, className }: SlideL
         className,
       )}
       style={{
-        background: background ?? "radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.06) 0%, transparent 70%)",
+        background: background ?? `radial-gradient(ellipse at 50% 30%, rgba(249,115,22,0.10) 0%, transparent 70%)`,
         backgroundColor: tokens.bg,
         color: tokens.text,
       }}
@@ -179,7 +179,7 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-5 py-4 sm:px-6 sm:py-5 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+          className="relative overflow-hidden rounded-2xl bg-white/5 border border-white/10 px-5 py-4 sm:px-6 sm:py-5 transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
         >
           <div
             className="absolute inset-0 opacity-10 pointer-events-none"
@@ -188,13 +188,13 @@ export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
           <div className="relative flex items-start gap-4">
             <div
               className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-              style={{ backgroundColor: `${stat.gradientFrom}15` }}
+              style={{ backgroundColor: `${stat.gradientFrom}30` }}
             >
               {stat.icon}
             </div>
             <div className="min-w-0">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl sm:text-3xl font-black font-mono text-zinc-900 tracking-tight leading-none">
+                <span className="text-2xl sm:text-3xl font-black font-mono text-white tracking-tight leading-none">
                   {stat.value}
                 </span>
                 {stat.unit && (
@@ -243,7 +243,7 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
       {steps.map((step, i) => (
         <div key={step.num} className="relative" data-animate>
           <div
-            className="h-full rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-4 py-4 sm:px-5 sm:py-4 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex items-start gap-3"
+            className="h-full rounded-2xl bg-white/5 border border-white/10 px-4 py-4 sm:px-5 sm:py-4 transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5 flex items-start gap-3"
           >
             <div
               className={cn("inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br shadow-sm shrink-0", step.gradient)}
@@ -251,7 +251,7 @@ export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
               <span className="text-sm font-bold text-white">{step.num}</span>
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-zinc-900 leading-snug">{step.title}</h3>
+              <h3 className="font-bold text-sm sm:text-base text-white leading-snug">{step.title}</h3>
               <p className="text-xs leading-snug mt-0.5" style={{ color: tokens.muted }}>{step.desc}</p>
             </div>
           </div>
@@ -298,12 +298,12 @@ export function SlideMetricBar({ metrics, className }: SlideMetricBarProps) {
         return (
           <div key={metric.label} data-animate className="space-y-1.5">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-medium text-zinc-600">{metric.label}</span>
-              <span className="font-mono font-bold" style={{ color: metric.color }}>
+              <span className="font-medium" style={{ color: "#d6d3d1" }}>{metric.label}</span>
+              <span className="font-mono font-bold text-white">
                 {metric.value}
               </span>
             </div>
-            <div className="h-3 rounded-full overflow-hidden" style={{ backgroundColor: "#f4f4f5" }}>
+            <div className="h-3 rounded-full overflow-hidden bg-white/10">
               <div
                 data-metric-bar
                 className="h-full rounded-full origin-left"
@@ -359,8 +359,8 @@ export function SlideCTABlock({
             href={secondaryAction.href}
             className={cn(
               "px-8 py-3.5 rounded-xl text-base font-semibold",
-              "border-2 border-zinc-400 bg-white text-zinc-700",
-              "hover:border-orange-500/50 hover:text-zinc-900 transition-all",
+              "border-2 border-white/20 bg-white/5 text-white/80",
+              "hover:border-orange-500/50 hover:text-white hover:bg-white/10 transition-all",
             )}
           >
             {secondaryAction.label}
@@ -371,12 +371,12 @@ export function SlideCTABlock({
         <div
           data-animate
           className="mt-12 flex flex-wrap items-center justify-center gap-6 text-[11px] font-mono uppercase tracking-[0.2em]"
-          style={{ color: "#78716c" }}
+          style={{ color: "rgba(255,255,255,0.40)" }}
         >
           {techStack.map((tech, i) => (
             <span key={tech} className="flex items-center gap-6">
               {i > 0 && (
-                <span className="w-1 h-1 rounded-full" style={{ backgroundColor: "rgba(0,0,0,0.12)" }} />
+                <span className="w-1 h-1 rounded-full" style={{ backgroundColor: "rgba(255,255,255,0.20)" }} />
               )}
               {tech}
             </span>
@@ -399,10 +399,10 @@ export function SlideBrandedFooter({ companyLogo, className }: SlideBrandedFoote
     <div
       data-animate
       className={cn("flex items-center justify-between w-full max-w-5xl pt-6 mt-auto border-t", className)}
-      style={{ borderColor: tokens.card.border }}
+      style={{ borderColor: "rgba(255,255,255,0.10)" }}
     >
       <div className="flex items-center gap-2">
-        <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: tokens.muted }}>
+        <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
           Made with
         </span>
         <span className="text-[10px] font-mono font-bold uppercase tracking-widest" style={{ color: tokens.accent }}>
