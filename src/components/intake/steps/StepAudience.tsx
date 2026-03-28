@@ -55,17 +55,17 @@ export function StepAudience({
               value={data.audience}
               onChange={(e) => update({ audience: e.target.value })}
               className={cn(
-                "w-full rounded-xl border px-4 py-3.5 pr-10 text-base outline-none transition-all duration-200 appearance-none",
+                "w-full rounded-xl border text-base outline-none transition-all duration-200 appearance-none",
                 "bg-white shadow-sm",
                 "hover:border-zinc-400",
                 "focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)]",
-                !data.audience && "text-[var(--muted)]"
               )}
               style={{
                 borderColor: "#d4d4d8",
                 color: data.audience
                   ? "var(--foreground)"
                   : "var(--muted)",
+                padding: "0.875rem 2.5rem 0.875rem 1rem",
               }}
             >
               {AUDIENCES.map((a) => (
