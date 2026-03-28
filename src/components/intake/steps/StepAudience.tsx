@@ -23,9 +23,9 @@ export function StepAudience({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-8"
+      style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
     >
-      <motion.div variants={fadeUp} className="pb-2">
+      <motion.div variants={fadeUp} style={{ paddingBottom: "0.75rem" }}>
         <h1
           className="text-4xl sm:text-5xl font-bold leading-tight"
           style={{ color: "var(--foreground)" }}
@@ -41,11 +41,11 @@ export function StepAudience({
       </motion.div>
 
       <motion.div variants={fadeUp}>
-        <div className="space-y-2">
+        <div>
           <label
             htmlFor={selectId}
-            className="block text-sm font-semibold mb-1.5"
-            style={{ color: "var(--foreground)" }}
+            className="block text-sm font-semibold"
+            style={{ color: "var(--foreground)", marginBottom: "0.5rem" }}
           >
             Who are you pitching to?
           </label>

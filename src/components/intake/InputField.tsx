@@ -24,19 +24,19 @@ export function InputField({
   const inputId = id ?? generatedId;
 
   return (
-    <div className="space-y-2">
+    <div style={{ marginBottom: "0.5rem" }}>
       <label
         htmlFor={inputId}
-        className="block text-sm font-semibold mb-1.5"
-        style={{ color: "var(--foreground)" }}
+        className="block text-sm font-semibold"
+        style={{ color: "var(--foreground)", marginBottom: "0.5rem" }}
       >
         {label}
       </label>
       <div className="relative">
         {Icon && (
           <div
-            className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
-            style={{ color: "var(--muted)" }}
+            className="absolute top-1/2 pointer-events-none"
+            style={{ left: "1rem", transform: "translateY(-50%)", color: "var(--muted-light)" }}
             aria-hidden="true"
           >
             <Icon className="w-[18px] h-[18px]" />
@@ -49,16 +49,16 @@ export function InputField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "w-full rounded-xl border py-3.5 text-base outline-none transition-all duration-200",
+            "w-full rounded-xl border text-base outline-none transition-all duration-200",
             "bg-white shadow-sm",
             "placeholder:text-zinc-500",
             "hover:border-zinc-400",
             "focus:shadow-[0_0_0_3px_rgba(249,115,22,0.1)] focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500",
-            Icon ? "pl-11 pr-4" : "px-4"
           )}
           style={{
             borderColor: "#d4d4d8",
             color: "var(--foreground)",
+            padding: Icon ? "0.875rem 1rem 0.875rem 2.75rem" : "0.875rem 1rem",
           }}
         />
       </div>

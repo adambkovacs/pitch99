@@ -22,11 +22,11 @@ export function TextareaField({
   const textareaId = id ?? generatedId;
 
   return (
-    <div className="space-y-2">
+    <div style={{ marginBottom: "0.5rem" }}>
       <label
         htmlFor={textareaId}
-        className="block text-sm font-semibold mb-1.5"
-        style={{ color: "var(--foreground)" }}
+        className="block text-sm font-semibold"
+        style={{ color: "var(--foreground)", marginBottom: "0.5rem" }}
       >
         {label}
       </label>
@@ -37,7 +37,7 @@ export function TextareaField({
         placeholder={placeholder}
         rows={rows}
         className={cn(
-          "w-full rounded-xl border px-4 py-3.5 text-base outline-none transition-all duration-200 resize-none",
+          "w-full rounded-xl border text-base outline-none transition-all duration-200 resize-none",
           "bg-white shadow-sm",
           "placeholder:text-zinc-500",
           "hover:border-zinc-400",
@@ -46,6 +46,7 @@ export function TextareaField({
         style={{
           borderColor: "#d4d4d8",
           color: "var(--foreground)",
+          padding: "0.875rem 1rem",
         }}
       />
     </div>

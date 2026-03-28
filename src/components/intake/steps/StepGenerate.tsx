@@ -50,9 +50,9 @@ export function StepGenerate({
       variants={staggerChildren}
       initial="enter"
       animate="center"
-      className="space-y-8"
+      style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
     >
-      <motion.div variants={fadeUp} className="pb-2">
+      <motion.div variants={fadeUp} style={{ paddingBottom: "0.75rem" }}>
         <h1
           className="text-4xl sm:text-5xl font-bold leading-tight"
           style={{ color: "var(--foreground)" }}
