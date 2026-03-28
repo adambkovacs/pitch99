@@ -114,7 +114,7 @@ export function GeneratingScreen({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="space-y-10"
+      style={{ display: "flex", flexDirection: "column", gap: "40px" }}
       aria-live="polite"
       aria-atomic="true"
     >
@@ -124,10 +124,15 @@ export function GeneratingScreen({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <Zap
-            className="w-12 h-12 mx-auto mb-4"
-            style={{ color: "var(--accent)" }}
+            className="w-12 h-12"
+            style={{ color: "var(--accent)", marginBottom: "16px" }}
             aria-hidden="true"
           />
           <h1
@@ -138,10 +143,11 @@ export function GeneratingScreen({
             <span style={{ color: "var(--accent)" }}>pitch</span>
           </h1>
           <p
-            className="mt-3 text-lg"
+            className="text-lg"
             style={{
               color: "var(--foreground)",
               opacity: 0.7,
+              marginTop: "12px",
             }}
           >
             Hang tight — this takes about 30 seconds.
@@ -151,9 +157,9 @@ export function GeneratingScreen({
 
       {/* Progress stages */}
       <div
-        className="space-y-0"
         role="list"
         aria-label="Generation progress"
+        style={{ display: "flex", flexDirection: "column" }}
       >
         {GENERATION_STAGES.map((stage, i) => {
           const isComplete = i < stageIndex;
@@ -166,20 +172,30 @@ export function GeneratingScreen({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 + i * 0.12 }}
-              className="flex items-start gap-4"
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "16px",
+              }}
               role="listitem"
               aria-label={`${stage.label}: ${isComplete ? "completed" : isActive ? "in progress" : "pending"}`}
             >
               {/* Vertical connector + orb */}
               <div
-                className="flex flex-col items-center"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
                 aria-hidden="true"
               >
                 <PulsingOrb active={isActive} complete={isComplete} />
                 {i < GENERATION_STAGES.length - 1 && (
                   <motion.div
-                    className="w-0.5 h-12"
                     style={{
+                      width: "2px",
+                      height: "40px",
+                      borderRadius: "1px",
                       background: isComplete
                         ? "var(--teal)"
                         : "var(--border)",
@@ -195,7 +211,7 @@ export function GeneratingScreen({
               </div>
 
               {/* Label + description */}
-              <div className="pt-2">
+              <div style={{ paddingTop: "8px" }}>
                 <motion.p
                   className="text-base font-semibold"
                   style={{
@@ -231,12 +247,13 @@ export function GeneratingScreen({
                   )}
                 </motion.p>
                 <p
-                  className="text-sm mt-0.5"
+                  className="text-sm"
                   style={{
                     color: isPending
                       ? "var(--muted)"
                       : "var(--foreground)",
                     opacity: isPending ? 0.6 : 0.7,
+                    marginTop: "2px",
                   }}
                 >
                   {stage.description}
@@ -249,8 +266,12 @@ export function GeneratingScreen({
 
       {/* Animated gradient bar at bottom */}
       <motion.div
-        className="h-1.5 rounded-full overflow-hidden"
-        style={{ background: "var(--border)" }}
+        style={{
+          height: "8px",
+          borderRadius: "9999px",
+          overflow: "hidden",
+          background: "var(--border)",
+        }}
         role="progressbar"
         aria-valuenow={stageIndex + 1}
         aria-valuemin={1}
@@ -258,11 +279,12 @@ export function GeneratingScreen({
         aria-label={`Generation progress: stage ${stageIndex + 1} of ${GENERATION_STAGES.length}`}
       >
         <motion.div
-          className="h-full rounded-full"
           style={{
+            height: "100%",
+            borderRadius: "9999px",
             background:
-              "linear-gradient(90deg, var(--accent), var(--coral), var(--teal))",
-            backgroundSize: "200% 100%",
+              "linear-gradient(90deg, var(--accent), var(--coral), var(--accent), var(--teal))",
+            backgroundSize: "300% 100%",
           }}
           animate={{
             width: `${((stageIndex + 1) / GENERATION_STAGES.length) * 100}%`,
@@ -271,7 +293,7 @@ export function GeneratingScreen({
           transition={{
             width: { duration: 0.8, ease: "easeInOut" },
             backgroundPosition: {
-              duration: 4,
+              duration: 5,
               repeat: Infinity,
               ease: "linear",
             },
