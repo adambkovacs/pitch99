@@ -15,6 +15,33 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
   const { id } = use(params);
   const pitch = useQuery(api.pitches.get, { id: id as Id<"pitches"> });
 
+  // useMemo MUST be called before any early returns (React hooks rule)
+  const slides: SlideData[] = useMemo(() => {
+    if (!pitch || !pitch.generatedSlides) return [];
+    try {
+      const raw = pitch.generatedSlides;
+      if (!Array.isArray(raw) || raw.length === 0) return [];
+
+      const typedSlides: GeneratedSlide[] = raw.map((s: Record<string, unknown>) => ({
+        title: typeof s.title === "string" ? s.title : "Untitled",
+        eyebrow: typeof s.eyebrow === "string" ? s.eyebrow : undefined,
+        content_blocks: Array.isArray(s.content_blocks) ? s.content_blocks as GeneratedSlide["content_blocks"] : [],
+        talking_points: typeof s.talking_points === "string" ? s.talking_points : undefined,
+        timing_seconds: typeof s.timing_seconds === "number" ? s.timing_seconds : undefined,
+      }));
+
+      return buildSlidesFromGenerated({
+        productName: pitch.productName,
+        slides: typedSlides,
+        research: pitch.researchData as Record<string, unknown> | undefined,
+        generatedAt: new Date(pitch.createdAt).toISOString(),
+      });
+    } catch (err) {
+      console.error("Failed to parse pitch slides:", err);
+      return [];
+    }
+  }, [pitch]);
+
   // Convex returns undefined while loading, null if not found
   if (pitch === undefined) {
     return (
@@ -109,35 +136,6 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
       </div>
     );
   }
-
-  // Safely transform Convex data to slide format.
-  // Old pitches may have different data shapes — guard against crashes.
-  const slides: SlideData[] = useMemo(() => {
-    try {
-      const raw = pitch.generatedSlides;
-      if (!raw || !Array.isArray(raw) || raw.length === 0) return [];
-
-      const typedSlides: GeneratedSlide[] = raw.map((s: Record<string, unknown>) => ({
-        title: typeof s.title === "string" ? s.title : "Untitled",
-        eyebrow: typeof s.eyebrow === "string" ? s.eyebrow : undefined,
-        content_blocks: Array.isArray(s.content_blocks) ? s.content_blocks as GeneratedSlide["content_blocks"] : [],
-        talking_points: typeof s.talking_points === "string" ? s.talking_points : undefined,
-        timing_seconds: typeof s.timing_seconds === "number" ? s.timing_seconds : undefined,
-      }));
-
-      const generatedPitch: GeneratedPitch = {
-        productName: pitch.productName,
-        slides: typedSlides,
-        research: pitch.researchData as Record<string, unknown> | undefined,
-        generatedAt: new Date(pitch.createdAt).toISOString(),
-      };
-
-      return buildSlidesFromGenerated(generatedPitch);
-    } catch (err) {
-      console.error("Failed to parse pitch slides:", err);
-      return [];
-    }
-  }, [pitch._id, pitch.generatedSlides, pitch.productName, pitch.researchData, pitch.createdAt]);
 
   if (slides.length === 0) {
     return (
