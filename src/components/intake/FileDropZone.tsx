@@ -70,7 +70,7 @@ export function FileDropZone({
           animate={{ y: isDragActive ? -4 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center mx-auto" style={{ marginBottom: "0.75rem" }}>
+          <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center" style={{ marginBottom: "0.75rem", marginLeft: "auto", marginRight: "auto" }}>
             <Upload
               className="w-5 h-5"
               style={{
