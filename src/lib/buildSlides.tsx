@@ -66,11 +66,12 @@ export function buildSlidesFromGenerated(pitch: GeneratedPitch): SlideData[] {
   const barColors = ["#f97316", "#fb923c", "#ef4444", "#dc2626", "#0d9488"];
 
   return genSlides.map((slide, i) => {
-    // Try to extract content from the slide's content_blocks
-    const statBlocks = slide.content_blocks?.filter(b => b.type === "stat_grid") ?? [];
-    const stepBlocks = slide.content_blocks?.filter(b => b.type === "step_flow") ?? [];
-    const metricBlocks = slide.content_blocks?.filter(b => b.type === "metric_bar") ?? [];
-    const paragraphs = slide.content_blocks?.filter(b => b.type === "paragraph" || b.type === "heading") ?? [];
+    // Guard: ensure content_blocks is an array before filtering
+    const blocks = Array.isArray(slide.content_blocks) ? slide.content_blocks : [];
+    const statBlocks = blocks.filter(b => b.type === "stat_grid");
+    const stepBlocks = blocks.filter(b => b.type === "step_flow");
+    const metricBlocks = blocks.filter(b => b.type === "metric_bar");
+    const paragraphs = blocks.filter(b => b.type === "paragraph" || b.type === "heading");
 
     // Determine slide type based on content
     let variant: "title" | "stats" | "content" | "chart" | "cta" = "content";

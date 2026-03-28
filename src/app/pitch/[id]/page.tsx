@@ -4,7 +4,7 @@ import { use, useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import type { Id } from "../../../../convex/_generated/dataModel";
-import { XCircle, Loader2 } from "lucide-react";
+import { XCircle, Loader2, AlertCircle } from "lucide-react";
 import SlidePresentation from "@/components/slides/SlidePresentation";
 import type { SlideData } from "@/components/slides/SlidePresentation";
 import { buildSlidesFromGenerated } from "@/lib/buildSlides";
@@ -110,30 +110,58 @@ export default function PitchByIdPage({ params }: { params: Promise<{ id: string
     );
   }
 
-  // Schema now types generatedSlides as an array of slide objects.
-  // Map to GeneratedSlide[], defaulting content_blocks to [] since the
-  // schema marks it optional while GeneratedSlide requires it.
-  const slides_raw = pitch.generatedSlides ?? [];
-  const typedSlides: GeneratedSlide[] = slides_raw.map((s) => ({
-    title: s.title,
-    eyebrow: s.eyebrow,
-    content_blocks: (s.content_blocks ?? []) as GeneratedSlide["content_blocks"],
-    talking_points: s.talking_points,
-    timing_seconds: s.timing_seconds,
-  }));
+  // Safely transform Convex data to slide format.
+  // Old pitches may have different data shapes — guard against crashes.
+  const slides: SlideData[] = useMemo(() => {
+    try {
+      const raw = pitch.generatedSlides;
+      if (!raw || !Array.isArray(raw) || raw.length === 0) return [];
 
-  const generatedPitch: GeneratedPitch = {
-    productName: pitch.productName,
-    slides: typedSlides,
-    // researchData is still v.any() in the schema — cast for downstream use
-    research: pitch.researchData as Record<string, unknown> | undefined,
-    generatedAt: new Date(pitch.createdAt).toISOString(),
-  };
+      const typedSlides: GeneratedSlide[] = raw.map((s: Record<string, unknown>) => ({
+        title: typeof s.title === "string" ? s.title : "Untitled",
+        eyebrow: typeof s.eyebrow === "string" ? s.eyebrow : undefined,
+        content_blocks: Array.isArray(s.content_blocks) ? s.content_blocks as GeneratedSlide["content_blocks"] : [],
+        talking_points: typeof s.talking_points === "string" ? s.talking_points : undefined,
+        timing_seconds: typeof s.timing_seconds === "number" ? s.timing_seconds : undefined,
+      }));
 
-  const slides: SlideData[] = useMemo(
-    () => buildSlidesFromGenerated(generatedPitch),
-    [pitch._id],
-  );
+      const generatedPitch: GeneratedPitch = {
+        productName: pitch.productName,
+        slides: typedSlides,
+        research: pitch.researchData as Record<string, unknown> | undefined,
+        generatedAt: new Date(pitch.createdAt).toISOString(),
+      };
+
+      return buildSlidesFromGenerated(generatedPitch);
+    } catch (err) {
+      console.error("Failed to parse pitch slides:", err);
+      return [];
+    }
+  }, [pitch._id, pitch.generatedSlides, pitch.productName, pitch.researchData, pitch.createdAt]);
+
+  if (slides.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--background)" }}>
+        <div className="flex flex-col items-center gap-6 text-center px-6">
+          <div className="w-16 h-16 rounded-full bg-orange-500/10 flex items-center justify-center">
+            <AlertCircle className="w-8 h-8 text-orange-500" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--foreground)" }}>Couldn&apos;t display slides</h1>
+            <p className="text-sm max-w-md" style={{ color: "var(--muted)" }}>
+              The slide data for this pitch couldn&apos;t be parsed. Try generating a new pitch.
+            </p>
+          </div>
+          <a
+            href="/intake"
+            className="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-semibold text-sm hover:bg-orange-600 transition-colors"
+          >
+            Create a new pitch
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
