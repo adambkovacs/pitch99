@@ -20,13 +20,13 @@ function SlideHook() {
         </span>
         <motion.div
           className="absolute -inset-12 rounded-full blur-[80px]"
-          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.15) 0%, rgba(249,115,22,0.08) 50%, transparent 70%)" }}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.9, 0.6] }}
+          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.25) 0%, rgba(249,115,22,0.12) 50%, transparent 70%)" }}
+          animate={{ scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      <h1 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight text-zinc-900">
+      <h1 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight leading-tight text-white">
         As an entrepreneur, you have
         <br />
         <span className="text-red-600">99 problems.</span>
@@ -34,8 +34,8 @@ function SlideHook() {
         <span className="gradient-text">But this p*tch ain&apos;t one.</span>
       </h1>
 
-      <p data-animate className="text-base sm:text-lg text-zinc-700 max-w-xl leading-relaxed">
-        Meet <strong className="text-zinc-900">Pitch99</strong> — AI that turns your product into a
+      <p data-animate className="text-base sm:text-lg text-stone-400 max-w-xl leading-relaxed">
+        Meet <strong className="text-white">Pitch99</strong> — AI that turns your product into a
         stunning 99-second pitch. Research, slides, talking points.
         Done in minutes.
       </p>
@@ -45,7 +45,7 @@ function SlideHook() {
         className="mt-10 flex items-center gap-3"
       >
         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="font-mono text-xs text-zinc-600 tracking-wide">
+        <span className="font-mono text-xs text-white/50 tracking-wide">
           BUILT LIVE • FOUNDERS LIVE SEATTLE • 2026
         </span>
       </div>
@@ -58,10 +58,10 @@ function SlideHook() {
    ───────────────────────────────────────── */
 function SlideProblem() {
   const stats = [
-    { icon: <Clock className="w-5 h-5 text-red-500" />, value: "40+", unit: "hours", label: "spent building pitch decks", color: "from-red-500/20 to-transparent", iconBg: "bg-red-50" },
-    { icon: <RefreshCw className="w-5 h-5 text-amber-600" />, value: "40", unit: "pitches", label: "needed to close a round", color: "from-amber-500/20 to-transparent", iconBg: "bg-amber-50" },
-    { icon: <Hourglass className="w-5 h-5 text-orange-600" />, value: "2:24", unit: "min", label: "investors spend reviewing", color: "from-orange-500/20 to-transparent", iconBg: "bg-orange-50" },
-    { icon: <TrendingDown className="w-5 h-5 text-rose-500" />, value: "97%", unit: "", label: "of pitches fail to get funded", color: "from-rose-500/20 to-transparent", iconBg: "bg-rose-50" },
+    { icon: <Clock className="w-5 h-5 text-red-500" />, value: "40+", unit: "hours", label: "spent building pitch decks", color: "from-red-500/20 to-transparent", iconBg: "bg-red-500/20" },
+    { icon: <RefreshCw className="w-5 h-5 text-amber-600" />, value: "40", unit: "pitches", label: "needed to close a round", color: "from-amber-500/20 to-transparent", iconBg: "bg-amber-500/20" },
+    { icon: <Hourglass className="w-5 h-5 text-orange-600" />, value: "2:24", unit: "min", label: "investors spend reviewing", color: "from-orange-500/20 to-transparent", iconBg: "bg-orange-500/20" },
+    { icon: <TrendingDown className="w-5 h-5 text-rose-500" />, value: "97%", unit: "", label: "of pitches fail to get funded", color: "from-rose-500/20 to-transparent", iconBg: "bg-rose-500/20" },
   ];
 
   return (
@@ -72,7 +72,7 @@ function SlideProblem() {
       <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         The Pitch Paradox
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-stone-400 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
         Founders pour weeks into decks that investors skim in seconds.
         Every audience needs a different pitch. Every time.
       </p>
@@ -82,7 +82,7 @@ function SlideProblem() {
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-5 py-4 sm:px-6 sm:py-5 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+            className="rounded-2xl bg-white/5 border border-white/10 px-5 py-4 sm:px-6 sm:py-5 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-10`} />
             <div className="relative flex items-start gap-4">
@@ -91,14 +91,14 @@ function SlideProblem() {
               </div>
               <div className="min-w-0">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black text-zinc-900 font-mono tracking-tight leading-none">
+                  <span className="text-2xl sm:text-3xl font-black text-white font-mono tracking-tight leading-none">
                     {stat.value}
                   </span>
                   {stat.unit && (
-                    <span className="text-xs text-zinc-400 font-mono">{stat.unit}</span>
+                    <span className="text-xs text-white/40 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-xs sm:text-sm text-zinc-500 leading-snug mt-1">{stat.label}</p>
+                <p className="text-xs sm:text-sm text-stone-400 leading-snug mt-1">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ function SlideSolution() {
       <h2 data-animate className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center leading-tight">
         From repo to pitch in <span className="gradient-text">minutes</span>
       </h2>
-      <p data-animate className="text-zinc-600 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-stone-400 text-center mb-10 max-w-lg text-base sm:text-lg leading-relaxed">
         Pitch99 ingests your product, enriches with market research,
         and crafts a presentation you&apos;re proud to deliver.
       </p>
@@ -135,13 +135,13 @@ function SlideSolution() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="relative" data-animate>
-            <div className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-4 py-4 sm:px-5 sm:py-4 shadow-sm h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
+            <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-4 sm:px-5 sm:py-4 shadow-sm h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
               <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br ${step.gradient} shadow-sm shrink-0`}>
                 <span className="text-sm font-bold text-white">{step.num}</span>
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-sm sm:text-base text-zinc-900 leading-snug">{step.title}</h3>
-                <p className="text-xs leading-snug text-zinc-500 mt-0.5">{step.desc}</p>
+                <h3 className="font-bold text-sm sm:text-base text-white leading-snug">{step.title}</h3>
+                <p className="text-xs leading-snug text-stone-400 mt-0.5">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
@@ -178,7 +178,7 @@ function SlideMarket() {
         <h2 data-animate className="text-3xl sm:text-4xl font-bold mb-2 leading-tight">
           <AnimatedCounter to={16.6} prefix="$" suffix="B" decimals={1} delay={0.3} duration={2.5} className="gradient-text font-black text-4xl sm:text-5xl" />
         </h2>
-        <p data-animate className="text-sm text-zinc-700 mb-8">
+        <p data-animate className="text-sm text-stone-300 mb-8">
           presentation market by 2030, growing at <span className="text-orange-600 font-bold">25% CAGR</span> for AI tools
         </p>
 
@@ -191,7 +191,7 @@ function SlideMarket() {
           ].map((item) => (
             <div key={item.text} className="flex items-start gap-3 text-sm">
               <span className="font-mono text-orange-600 font-bold min-w-[4rem] text-right">{item.num}</span>
-              <span className="text-zinc-700">{item.text}</span>
+              <span className="text-stone-400">{item.text}</span>
             </div>
           ))}
         </div>
@@ -217,21 +217,21 @@ function SlideCTA() {
         </span>
         <motion.div
           className="absolute -inset-12 rounded-full blur-[80px]"
-          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.15) 0%, rgba(249,115,22,0.06) 50%, transparent 70%)" }}
-          animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
+          style={{ background: "radial-gradient(circle, rgba(251,146,60,0.25) 0%, rgba(249,115,22,0.10) 50%, transparent 70%)" }}
+          animate={{ scale: [1, 1.12, 1], opacity: [0.6, 0.9, 0.6] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
       {/* Headline */}
-      <h2 data-animate className="text-2xl sm:text-4xl font-bold mb-6 leading-tight text-zinc-900">
+      <h2 data-animate className="text-2xl sm:text-4xl font-bold mb-6 leading-tight text-white">
         You have <span className="text-red-600">99 problems</span>.
         <br />
         <span className="gradient-text">Your p*tch isn&apos;t one anymore.</span>
       </h2>
 
       {/* Subtext */}
-      <p data-animate className="text-zinc-600 mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
+      <p data-animate className="text-stone-400 mb-14 max-w-lg text-base sm:text-lg leading-relaxed">
         Stop spending weeks on decks. Let AI research your market,
         craft your story, and generate slides that move people.
       </p>
@@ -248,22 +248,22 @@ function SlideCTA() {
           href="https://github.com/adambkovacs/pitch99"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-8 py-3.5 rounded-xl border-2 border-zinc-400 bg-white text-zinc-700 text-base font-semibold hover:border-orange-500 hover:bg-white/5 transition-all focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+          className="px-8 py-3.5 rounded-xl border-2 border-white/20 bg-white/5 text-white/80 text-base font-semibold hover:border-orange-500 hover:bg-white/10 transition-all focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
         >
           View on GitHub
         </a>
       </div>
 
       {/* Tech stack */}
-      <div data-animate className="mt-20 flex items-center gap-12 text-xs text-zinc-400 font-mono uppercase tracking-[0.25em]">
+      <div data-animate className="mt-20 flex items-center gap-12 text-xs text-white/40 font-mono uppercase tracking-[0.25em]">
         <span>Next.js</span>
-        <span className="w-1 h-1 rounded-full bg-zinc-300" />
+        <span className="w-1 h-1 rounded-full bg-white/20" />
         <span>OpenRouter</span>
-        <span className="w-1 h-1 rounded-full bg-zinc-300" />
+        <span className="w-1 h-1 rounded-full bg-white/20" />
         <span>Convex</span>
-        <span className="w-1 h-1 rounded-full bg-zinc-300" />
+        <span className="w-1 h-1 rounded-full bg-white/20" />
         <span>GSAP</span>
-        <span className="w-1 h-1 rounded-full bg-zinc-300" />
+        <span className="w-1 h-1 rounded-full bg-white/20" />
         <span>Vercel</span>
       </div>
     </div>
@@ -278,27 +278,27 @@ export default function Pitch99Slides() {
     {
       id: 0,
       content: <SlideHook />,
-      background: "radial-gradient(ellipse at 50% 20%, rgba(251,146,60,0.10) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+      background: "radial-gradient(ellipse at 50% 20%, rgba(251,146,60,0.15) 0%, rgba(249,115,22,0.08) 40%, transparent 70%)",
     },
     {
       id: 1,
       content: <SlideProblem />,
-      background: "radial-gradient(ellipse at 30% 70%, rgba(239,68,68,0.08) 0%, transparent 60%)",
+      background: "radial-gradient(ellipse at 30% 70%, rgba(239,68,68,0.12) 0%, transparent 60%)",
     },
     {
       id: 2,
       content: <SlideSolution />,
-      background: "radial-gradient(ellipse at 70% 30%, rgba(251,146,60,0.09) 0%, rgba(239,68,68,0.06) 40%, transparent 70%)",
+      background: "radial-gradient(ellipse at 70% 30%, rgba(251,146,60,0.15) 0%, rgba(239,68,68,0.08) 40%, transparent 70%)",
     },
     {
       id: 3,
       content: <SlideMarket />,
-      background: "radial-gradient(ellipse at 40% 50%, rgba(251,146,60,0.09) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+      background: "radial-gradient(ellipse at 40% 50%, rgba(251,146,60,0.15) 0%, rgba(249,115,22,0.08) 40%, transparent 70%)",
     },
     {
       id: 4,
       content: <SlideCTA />,
-      background: "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.12) 0%, rgba(249,115,22,0.06) 40%, transparent 70%)",
+      background: "radial-gradient(ellipse at 50% 30%, rgba(251,146,60,0.18) 0%, rgba(249,115,22,0.08) 40%, transparent 70%)",
     },
   ], []);
   return <SlidePresentation slides={slides} />;
