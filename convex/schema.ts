@@ -35,19 +35,9 @@ export default defineSchema({
       v.literal("ready"),
       v.literal("error"),
     ),
-    enrichedData: v.optional(
-      v.object({
-        github: v.optional(v.any()),
-        website: v.optional(
-          v.object({
-            title: v.string(),
-            description: v.string(),
-            text: v.string(),
-          }),
-        ),
-        linkedin: v.optional(v.any()),
-      }),
-    ),
+    // enrichedData: AI-enriched data from GitHub/website/LinkedIn scraping.
+    // Fields can be null (fetch failed) or variable shape. Using v.any().
+    enrichedData: v.optional(v.any()),
     // TODO: researchData is AI-generated JSON with a highly variable shape
     // (tam, sam, som, competitors[], icp, market_trends[], key_stats[]).
     // Fully typing it would be brittle since the LLM output varies. Keeping
