@@ -222,9 +222,13 @@ export default function IntakePage() {
           files: uploadedFiles.length > 0 ? uploadedFiles : undefined,
         });
 
+        // Strip extra AI fields (like slide_number) before storing
+        const rawSlides = (generateData as Record<string, unknown>).slides as Array<Record<string, unknown>>;
+        const cleanSlides = Array.isArray(rawSlides) ? rawSlides.map(({ slide_number, ...rest }) => rest) : rawSlides;
+
         await updatePitch({
           id: pitchId,
-          generatedSlides: (generateData as Record<string, unknown>).slides,
+          generatedSlides: cleanSlides,
           researchData: research,
           enrichedData: enrichment,
           status: "ready",

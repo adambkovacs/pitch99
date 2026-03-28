@@ -53,20 +53,11 @@ export default defineSchema({
     // Fully typing it would be brittle since the LLM output varies. Keeping
     // v.any() until the research prompt stabilises.
     researchData: v.optional(v.any()),
-    generatedSlides: v.optional(
-      v.array(
-        v.object({
-          title: v.string(),
-          eyebrow: v.optional(v.string()),
-          // TODO: content_blocks have a polymorphic "type" discriminator with
-          // varying fields (text, stats, steps, metrics, items). Using v.any()
-          // for the inner block shape until a tagged-union validator is viable.
-          content_blocks: v.optional(v.any()),
-          talking_points: v.optional(v.string()),
-          timing_seconds: v.optional(v.number()),
-        }),
-      ),
-    ),
+    // generatedSlides: AI-generated JSON with variable shape (slide_number,
+    // content_blocks with polymorphic types, extra fields). Using v.any()
+    // since the LLM output varies per model and prompt version. Client-side
+    // code in page.tsx and buildSlides.tsx handles type guards defensively.
+    generatedSlides: v.optional(v.any()),
     talkingPoints: v.optional(v.array(v.string())),
     faq: v.optional(
       v.array(
