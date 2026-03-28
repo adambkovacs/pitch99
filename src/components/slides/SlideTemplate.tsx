@@ -174,34 +174,34 @@ interface SlideStatGridProps {
 
 export function SlideStatGrid({ stats, className }: SlideStatGridProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-5 sm:gap-6 w-full max-w-2xl", className)}>
+    <div className={cn("grid grid-cols-2 gap-4 sm:gap-5 w-full max-w-2xl", className)}>
       {stats.map((stat) => (
         <div
           key={stat.label}
           data-animate
-          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+          className="relative overflow-hidden rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-5 py-4 sm:px-6 sm:py-5 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
         >
           <div
-            className="absolute inset-0 opacity-15 pointer-events-none"
+            className="absolute inset-0 opacity-10 pointer-events-none"
             style={{ background: `linear-gradient(135deg, ${stat.gradientFrom}33 0%, transparent 60%)` }}
           />
-          <div className="relative flex flex-col gap-5">
+          <div className="relative flex items-start gap-4">
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
               style={{ backgroundColor: `${stat.gradientFrom}15` }}
             >
               {stat.icon}
             </div>
-            <div className="space-y-1">
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl sm:text-4xl font-black font-mono text-zinc-900 tracking-tight leading-none">
+            <div className="min-w-0">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-2xl sm:text-3xl font-black font-mono text-zinc-900 tracking-tight leading-none">
                   {stat.value}
                 </span>
                 {stat.unit && (
-                  <span className="text-xs sm:text-sm font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
+                  <span className="text-xs font-mono" style={{ color: tokens.muted }}>{stat.unit}</span>
                 )}
               </div>
-              <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{stat.label}</p>
+              <p className="text-xs sm:text-sm leading-snug mt-1" style={{ color: tokens.muted }}>{stat.label}</p>
             </div>
           </div>
         </div>

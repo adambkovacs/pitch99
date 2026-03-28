@@ -77,28 +77,28 @@ function SlideProblem() {
         Every audience needs a different pitch. Every time.
       </p>
 
-      <div className="grid grid-cols-2 gap-5 sm:gap-6 w-full max-w-2xl">
+      <div className="grid grid-cols-2 gap-4 sm:gap-5 w-full max-w-2xl">
         {stats.map((stat) => (
           <div
             key={stat.label}
             data-animate
-            className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-8 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+            className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-5 py-4 sm:px-6 sm:py-5 shadow-sm relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-15`} />
-            <div className="relative flex flex-col gap-5">
-              <div className={`w-10 h-10 rounded-xl ${stat.iconBg} flex items-center justify-center`}>
+            <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-10`} />
+            <div className="relative flex items-start gap-4">
+              <div className={`w-9 h-9 rounded-lg ${stat.iconBg} flex items-center justify-center shrink-0 mt-0.5`}>
                 {stat.icon}
               </div>
-              <div className="space-y-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl sm:text-5xl font-black text-zinc-900 font-mono tracking-tight leading-none">
+              <div className="min-w-0">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl sm:text-3xl font-black text-zinc-900 font-mono tracking-tight leading-none">
                     {stat.value}
                   </span>
                   {stat.unit && (
-                    <span className="text-xs sm:text-sm text-zinc-400 font-mono">{stat.unit}</span>
+                    <span className="text-xs text-zinc-400 font-mono">{stat.unit}</span>
                   )}
                 </div>
-                <p className="text-sm text-zinc-600 leading-relaxed">{stat.label}</p>
+                <p className="text-xs sm:text-sm text-zinc-500 leading-snug mt-1">{stat.label}</p>
               </div>
             </div>
           </div>
