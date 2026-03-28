@@ -45,7 +45,7 @@ export function FileDropZone({
       <div
         {...getRootProps()}
         className={cn(
-          "relative rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition-colors duration-200 bg-zinc-50/30",
+          "relative rounded-xl border-2 border-dashed text-center cursor-pointer transition-colors duration-200 bg-zinc-50/30",
           "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
         )}
         style={{
@@ -55,6 +55,7 @@ export function FileDropZone({
           background: isDragActive
             ? "var(--accent-soft)"
             : undefined,
+          padding: "2.5rem 1.5rem",
         }}
         aria-labelledby="file-upload-label"
         aria-describedby={dropzoneDescId}
@@ -69,7 +70,7 @@ export function FileDropZone({
           animate={{ y: isDragActive ? -4 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center mb-1 mx-auto">
+          <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center mx-auto" style={{ marginBottom: "0.75rem" }}>
             <Upload
               className="w-5 h-5"
               style={{

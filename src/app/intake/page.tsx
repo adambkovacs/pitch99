@@ -366,14 +366,14 @@ export default function IntakePage() {
           }}
           aria-label="Step navigation"
         >
-          <div className="max-w-2xl mx-auto flex items-center px-6 py-4">
+          <div className="max-w-2xl mx-auto flex items-center px-6 py-5">
             {/* Left: Back button (fixed width so layout stays stable) */}
-            <div className="w-24">
+            <div className="w-32">
               {step > 0 && (
                 <motion.button
                   onClick={goBack}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer",
+                    "flex items-center gap-2 px-6 py-3 rounded-xl text-base font-medium transition-colors duration-200 cursor-pointer",
                     "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
                   )}
                   style={{
@@ -391,7 +391,7 @@ export default function IntakePage() {
 
             {/* Center: counter */}
             <span
-              className="flex-1 text-center text-xs font-mono"
+              className="flex-1 text-center text-sm font-mono font-medium"
               style={{ color: "var(--muted)" }}
               aria-live="polite"
               aria-atomic="true"
@@ -406,7 +406,7 @@ export default function IntakePage() {
                   onClick={goNext}
                   disabled={!canProceed()}
                   className={cn(
-                    "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white cursor-pointer transition-opacity duration-200",
+                    "flex items-center gap-2 px-8 py-3 rounded-xl text-base font-medium text-white cursor-pointer transition-opacity duration-200",
                     "focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2",
                     !canProceed() && "opacity-50 cursor-not-allowed"
                   )}

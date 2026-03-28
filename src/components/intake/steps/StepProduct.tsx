@@ -20,9 +20,9 @@ export function StepProduct({
       animate="center"
       style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
     >
-      <motion.div variants={fadeUp} style={{ paddingBottom: "0.75rem" }}>
+      <motion.div variants={fadeUp} className="text-center" style={{ paddingBottom: "0.75rem" }}>
         <h1
-          className="text-4xl sm:text-5xl font-bold leading-tight"
+          className="text-center text-4xl sm:text-5xl font-bold leading-tight"
           style={{ color: "var(--foreground)" }}
         >
           What are you{" "}
