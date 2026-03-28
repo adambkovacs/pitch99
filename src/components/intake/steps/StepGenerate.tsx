@@ -70,36 +70,44 @@ export function StepGenerate({
       {/* Summary card */}
       <motion.div
         variants={fadeUp}
-        className="rounded-2xl overflow-hidden shadow-sm"
+        className="rounded-2xl overflow-hidden"
         style={{
-          background: "rgb(244 244 245)",
+          background: "#ffffff",
+          border: "1px solid #e4e4e7",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)",
         }}
       >
         <div
-          className="px-6 py-3 border-b font-semibold text-sm tracking-wide uppercase"
+          className="font-mono text-xs font-semibold uppercase"
           style={{
-            borderColor: "var(--border)",
-            background: "rgb(228 228 231)",
-            color: "var(--foreground)",
+            padding: "0.75rem 1.25rem",
+            background: "linear-gradient(135deg, #fff7ed, #fef2f2)",
+            color: "#ea580c",
+            letterSpacing: "0.1em",
+            borderBottom: "1px solid #fed7aa",
           }}
         >
           Pitch Summary
         </div>
-        <dl>
+        <dl style={{ padding: "0.25rem 0" }}>
           {summaryItems.map((item, i) => (
             <div
               key={item.label}
-              className="px-6 py-4 grid grid-cols-[120px_1fr] gap-x-6 items-baseline"
               style={{
+                display: "grid",
+                gridTemplateColumns: "130px 1fr",
+                gap: "0 1rem",
+                alignItems: "baseline",
+                padding: "0.75rem 1.25rem",
                 borderBottom:
                   i < summaryItems.length - 1
-                    ? "1px solid var(--border)"
+                    ? "1px solid #f4f4f5"
                     : "none",
               }}
             >
               <dt
-                className="text-sm font-semibold"
-                style={{ color: "var(--foreground)" }}
+                className="text-xs font-semibold uppercase"
+                style={{ color: "#78716c", letterSpacing: "0.05em" }}
               >
                 {item.label}
               </dt>
@@ -109,10 +117,7 @@ export function StepGenerate({
                   item.accent && "font-mono text-xs break-all"
                 )}
                 style={{
-                  color: item.accent
-                    ? "var(--teal)"
-                    : "var(--foreground)",
-                  opacity: item.accent ? 1 : 0.8,
+                  color: item.accent ? "#0d9488" : "#1c1917",
                 }}
               >
                 {item.value}
