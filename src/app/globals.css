@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../../src";
+@source "../../convex";
 @import "lenis/dist/lenis.css";
 
 :root {
@@ -29,10 +31,12 @@
   --teal-soft: #f0fdfa;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
