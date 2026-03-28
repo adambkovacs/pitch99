@@ -239,20 +239,20 @@ function StepArrowV() {
 
 export function SlideStepFlow({ steps, className }: SlideStepFlowProps) {
   return (
-    <div className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl", className)}>
+    <div className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-4xl", className)}>
       {steps.map((step, i) => (
         <div key={step.num} className="relative" data-animate>
           <div
-            className="text-center h-full rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-7 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center gap-5"
+            className="h-full rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-4 py-4 sm:px-5 sm:py-4 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex items-start gap-3"
           >
             <div
-              className={cn("inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br shadow-md", step.gradient)}
+              className={cn("inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br shadow-sm shrink-0", step.gradient)}
             >
-              <span className="text-base font-bold text-white">{step.num}</span>
+              <span className="text-sm font-bold text-white">{step.num}</span>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-lg text-zinc-900">{step.title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: tokens.muted }}>{step.desc}</p>
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-zinc-900 leading-snug">{step.title}</h3>
+              <p className="text-xs leading-snug mt-0.5" style={{ color: tokens.muted }}>{step.desc}</p>
             </div>
           </div>
           {i < steps.length - 1 && (

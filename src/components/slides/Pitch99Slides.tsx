@@ -132,16 +132,16 @@ function SlideSolution() {
         and crafts a presentation you&apos;re proud to deliver.
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 w-full max-w-4xl">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-4xl">
         {steps.map((step, i) => (
           <div key={step.num} className="relative" data-animate>
-            <div className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 p-6 sm:p-7 shadow-sm text-center h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center gap-5">
-              <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${step.gradient} shadow-md`}>
-                <span className="text-base font-bold text-white">{step.num}</span>
+            <div className="rounded-2xl bg-zinc-50/80 border border-zinc-200/40 px-4 py-4 sm:px-5 sm:py-4 shadow-sm h-full hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-start gap-3">
+              <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br ${step.gradient} shadow-sm shrink-0`}>
+                <span className="text-sm font-bold text-white">{step.num}</span>
               </div>
-              <div className="space-y-2">
-                <h3 className="font-bold text-lg text-zinc-900">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-zinc-600">{step.desc}</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-sm sm:text-base text-zinc-900 leading-snug">{step.title}</h3>
+                <p className="text-xs leading-snug text-zinc-500 mt-0.5">{step.desc}</p>
               </div>
             </div>
             {i < steps.length - 1 && (
